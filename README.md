@@ -23,6 +23,16 @@ Currently all information is shared via Facebook, Whatsapp, SMS, emails. There i
 1. Build mobile applications
 1. Test and deploy live.
 
+### Technology
+
+1. Backend will by MySQL
+1. Web app will be served by Webnotes framwork
+1. Mobile apps in PhoneGap
+1. Chat to implemented by HTTP polling (first cut)
+1. No push-notifications - they are very annoying specially for high message volumes.
+
+First target is to show proof of concept, once it is polished, the backend will be designed to be more scalable.
+
 ### Features for version 0.0.1
 
 1. Zone classification
