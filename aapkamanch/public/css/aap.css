@@ -1,0 +1,42 @@
+@media (min-width: 701px) {
+	html {
+		background: url("../img/splash.jpg") no-repeat center center fixed;
+		background-size: cover;
+	}
+	body {
+		margin: 30px auto;
+		max-width: 700px;
+		background-color: white;
+		border-radius: 15px;
+	    box-shadow: 0 0 25px 15px rgba(0, 0, 0, 0.6);
+		overflow: hidden;
+	}
+
+	header.container {
+		border-top-left-radius: 15px; border-top-right-radius: 15px;	
+	}
+
+}
+
+.container {
+	max-width: 700px;
+}
+
+header.container {
+	background-color: #eee; padding: 10px; 
+}
+
+
+.list-group-item {
+	border-radius: 0px !important;
+}
+
+.topnav-button {
+	font-size: 18px;
+	padding: 0px 5px;
+	cursor: pointer;
+	margin-top: -2px;
+	margin-bottom: -3px;
+}
+
+
