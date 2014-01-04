@@ -1,0 +1,1 @@
+window.all_states = {% include "data/loksabha.json" %};

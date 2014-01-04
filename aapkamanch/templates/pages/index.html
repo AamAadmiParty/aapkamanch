@@ -1,7 +1,56 @@
-{% extends "templates/aap_base.html" %}
-
-{% block content %}
-
-Content here
-
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Aap Ka Manch</title>
+	<meta name="generator" content="wnframework">
+	<script type="text/javascript" src="assets/webnotes/js/lib/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="states.js"></script>
+	<script type="text/javascript" src="assets/js/webnotes-web.min.js"></script>
+	<script type="text/javascript" src="assets/aapkamanch/js/aap.js"></script>
+	<link rel="shortcut icon" href="assets/aapkamanch/img/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="assets/aapkamanch/img/favicon.ico" type="image/x-icon">
+	<meta name="description" content="Communication Platform for Aam Aadmi Party">
+	<link type="text/css" rel="stylesheet" href="assets/css/webnotes-web.css">
+	<link type="text/css" rel="stylesheet" href="assets/aapkamanch/css/aap.css">
+</head>
+<body>
+	<header class="container">
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="left-button topnav-button hide">
+					<a><i class="icon-angle-left"></i> <span class="parent-title"></span></a>
+				</div>
+			</div>
+			<div class="col-xs-4 text-center"><b class="app-title">Aap Ka Manch</b></div>
+			<div class="col-xs-4">
+				<div class="right-button topnav-button text-right hide">
+					<a></a>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6" style="background-color: #F28300; height: 6px;"></div>
+			<div class="col-xs-6" style="background-color: #61a220; height: 6px;"></div>
+		</div>
+	</div>
+	<div class="container" id="content" style="padding: 0px; min-height: 300px;">
+		<div id="login" class="hide">
+			
+		</div>
+		<div id="profile" class="hide">
+			
+		</div>
+	</div>
+	<footer class="container" style="padding: 10px;">
+		<p class="text-muted">आम आदमी पार्टी</p>
+		<p>
+			<img src="assets/aapkamanch/img/symbol.jpg" style="max-width: 120px" />
+			<!--<img src="assets/aapkamanch/img/india.png" class="pull-right" />-->
+		</p>
+	</footer>
+</body>
+</html>

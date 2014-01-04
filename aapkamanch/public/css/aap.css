@@ -9,7 +9,6 @@
 		background-color: white;
 		border-radius: 15px;
 	    box-shadow: 0 0 25px 15px rgba(0, 0, 0, 0.6);
-		overflow: hidden;
 	}
 
 	header.container {
@@ -31,12 +30,14 @@ header.container {
 	border-radius: 0px !important;
 }
 
+.app-title {
+	font-size: 14px;
+}
+
 .topnav-button {
-	font-size: 18px;
+	font-size: 14px;
 	padding: 0px 5px;
 	cursor: pointer;
-	margin-top: -2px;
-	margin-bottom: -3px;
 }
 
 
