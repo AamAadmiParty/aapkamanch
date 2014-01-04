@@ -10,6 +10,13 @@ Prototype of a platform to facilitate communication and information sharing amon
 
 Currently all information is shared via Facebook, Whatsapp, SMS, emails. There is no unified communication platform. If this platform is built, it will lead to information sharing and also enhance engagement of members.
 
+### To Do
+
+1. Login (via Facebook / Twitter Oauth)
+1. Edit Profile
+1. Groups - Group User
+1. Feed
+
 ### Components
 
 1. Database backend of all messages

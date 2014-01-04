@@ -10,66 +10,69 @@ var app = {};
 // profile
 
 $(function() {
-	$(".left-button").click(function() {
-		var parent = app.page.attr("data-parent");
-		parent && app.set_route(parent);
-	})
-
-	app.setup_states();
+	app.setup_units();
 
 	$(window).trigger("hashchange");
 })
 
 app.generators = {
-	"home": {
+	"unit": {
 		render: function(page) { 
-			app.make_list_page(page, app.lists.home); }
-	},
-	"states": {
-		render: function(page) { 
-			app.make_list_page(page, app.lists.states);
-			page.attr("data-parent", "home");
+			var unit_name = app.get_route().split("/")[1];
+			app.make_unit_page(page, unit_name); 
 		},
 	},
-	"state": {
-		render: function(page) { 
-			var state = app.get_route().split("/")[1];
-			app.make_list_page(page, app.lists[state]); 
-			page.attr("data-parent", "states");
-		},
-	},
-}
-
-app.lists = {}
-app.lists.home = {
-	title: "AAP Ka Manch",
-	items: [
-		{ "label": "My Groups" },	
-		{ "label": "All Groups", "route": "states" },	
-		{ "label": "Profile" },	
-	]
-}
-
-
-app.setup_states = function() {
-	var states = Object.keys(all_states);
-	app.lists.states = {
-		title: "States",
-		parent: "home",
-		items: []
-	};
-	$.each(states.sort(), function(i, state) {
-		app.lists.states.items.push({label:state, route:"state/" + state});
-		app.lists[state] = {
-			title: state,
-			parent: "states",
-			items: []
+	"unit-list": {
+		render: function(page) {
+			var unit_name = app.get_route().split("/")[1];
+			app.make_unit_list(page, unit_name);
 		}
-		$.each(all_states[state].sort(), function(i, district) {
-			app.lists[state].items.push({label: district, route:"groups/" + district});
-		})
-	});
+	}
 }
+
+
+app.setup_units = function() {
+	app.unit_map = {"India":all_units};
+	function walk_unit(unit) {
+		$.each(unit.children || [], function(i, child_unit) {
+			app.unit_map[child_unit.unit_name] = child_unit;
+			walk_unit(child_unit);
+		})
+	}
+	
+	walk_unit(all_units);
+}
+
+app.make_unit_page = function(page, unit_name) {
+	var unit = app.unit_map[unit_name];
+
+	page
+		.css({"padding":"15px"})
+		.html('<div class="alert alert-warning">Feed will come here</div>');
+	app.set_title(unit_name);
+	if(unit.parent_unit)
+		app.set_button("left", "unit-list/" + unit.parent_unit, unit.parent_unit);
+	app.set_button("right", "unit-list/" + unit_name, unit.children_name);	
+}
+
+app.make_unit_list = function(page, unit_name) {
+	var unit = app.unit_map[unit_name];
+	
+	var $list_group = $('<div class="list-group">').appendTo(page);
+
+	$.each(unit.children, function(i, v) {
+		$list = $('<a href="#unit/'+ v.unit_name+'" class="list-group-item">' + v.unit_name + 
+			'<i class="icon-angle-right pull-right"></i></a>')
+			.appendTo($list_group)
+	});
+	
+	app.set_title(unit_name);
+	app.set_button("left", "unit/" + unit.unit_name, unit.unit_name);
+	app.set_button("right", null);
+	
+	return page;
+}
+
 
 // utils
 
@@ -95,6 +98,19 @@ app.set_route = function(route) {
 	window.location.hash = route;
 }
 
+app.set_button = function(dir, route, title) {
+	var $btn = $("."+dir+"-button");
+	$btn.toggleClass("hide", !route);
+	if(route) {
+		$btn.find("a").attr("href", "#" + route);
+		$("."+dir+"-title").html(title);
+	} 
+}
+
+app.set_title = function(title) {
+	$(".app-title").html(title);
+}
+
 app.pages = {};
 
 app.add_page = function(route) {
@@ -116,12 +132,6 @@ app.show_page = function(route) {
 			// render parent page too
 			app.generators[parent].render(app.add_page(parent));
 		}
-		parent_title = app.pages[parent].attr("title");
-		$(".parent-title")
-			.html(app.pages[parent].attr("title"));
-		$(".left-button").toggleClass("hide", false);
-	} else {
-		$(".left-button").toggleClass("hide", true);
 	}
 }
 
@@ -130,30 +140,7 @@ app.get_route = function() {
 	if(route.substr(0,1)=='#') 
 		route = route.substr(1);
 	if(!route) 
-		route = "home";
+		route = "unit/India";
 	return route;
-}
-
-// lists
-
-app.make_list_page = function(page, list) {
-	
-	var $list_group = $('<div class="list-group">').appendTo(page);
-
-	$.each(list.items, function(i, v) {
-		$list = $('<a class="list-group-item">' + v.label + 
-			'<i class="icon-angle-right pull-right"></i></a>')
-			.appendTo($list_group)
-			.click(function() { 
-				if(v.click) {
-					v.click();
-				} else if(v.route) {
-					app.set_route(v.route);
-				}
-			});
-	});
-	
-	page.attr("title", list.title);
-	return page;
 }
 
