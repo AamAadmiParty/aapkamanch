@@ -9,3 +9,8 @@ import webnotes
 class DocType:
 	def __init__(self, d, dl):
 		self.doc, self.doclist = d, dl
+		
+	def autoname(self):
+		self.doc.name = self.doc.unit_name
+		print self.doc.name
+		

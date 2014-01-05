@@ -1,9 +1,11 @@
 app_name = aapkamanch
 app_title = AAP Ka Manch
-app_publisher = AAP Unofficial
+app_publisher = Aam Aadmi Party
 app_description = Platform for Aam Aadmi Party
 app_icon = icon-group
 app_color = gray
 app_email = rmehta@gmail.com
 app_url = http://github.com/rmehta/aapkamanch
 app_version = 0.0.1
+
+after_install = aapkamanch.utils.after_install

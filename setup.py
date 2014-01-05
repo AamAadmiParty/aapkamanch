@@ -7,7 +7,7 @@ setup(
     name='aapkamanch',
     version=version,
     description='Portal for Aam Aadmi Party',
-    author='Rushabh Mehta',
+    author='Contributors',
     author_email='rmehta@gmail.com',
     packages=find_packages(),
     zip_safe=False,
