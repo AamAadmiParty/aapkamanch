@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import webnotes, json
 
 @webnotes.whitelist(allow_guest=True)
-def get_parent_and_children(unit_name):
+def get_unit_content(unit_name):
 	# TODO: memcache this
 	return {
 		"parent": webnotes.conn.get_value("Unit", unit_name, "parent_unit"),

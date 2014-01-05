@@ -1,0 +1,31 @@
+<div class="titlebar">
+	<div class="row" style="padding: 10px">
+		<div class="col-xs-4">
+			{% if parent %}
+			<div class="left-button topnav-button">
+				<a href="/{{ parent }}">
+					<i class="icon-angle-left"></i>
+					<span class="left-title">{{ parent }}</span>
+				</a>
+			</div>
+			{% endif %}
+		</div>
+		<div class="col-xs-4 text-center"><b class="app-title">{{ name }}</b></div>
+		<div class="col-xs-4"></div>
+	</div>
+	<div class="row" style="padding-left: 15px; padding-right: 15px;">
+		<div class="col-xs-6" style="background-color: #F28300; height: 6px;"></div>
+		<div class="col-xs-6" style="background-color: #61a220; height: 6px;"></div>
+	</div>
+</div>
+{% if children %}
+<div class="list-group">
+	{% for child in children %}
+	<a href="{{ child }}" class="list-group-item">{{ child }} 
+		<i class="icon-angle-right pull-right"></i></a>
+	{% endfor %}
+</div>
+{% endif %}
+<div class="feed-list">
+	<div class="alert alert-warning">Feed Comes Here.</div>
+</div>

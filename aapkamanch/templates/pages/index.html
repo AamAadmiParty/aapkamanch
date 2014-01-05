@@ -1,34 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Aap Ka Manch</title>
-	<meta name="generator" content="wnframework">
-	<script type="text/javascript" src="assets/webnotes/js/lib/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/js/webnotes-web.min.js"></script>
-	<script type="text/javascript" src="assets/aapkamanch/js/aap.js"></script>
-	<link rel="shortcut icon" href="assets/aapkamanch/img/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="assets/aapkamanch/img/favicon.ico" type="image/x-icon">
-	<meta name="description" content="Communication Platform for Aam Aadmi Party">
-	<link type="text/css" rel="stylesheet" href="assets/css/webnotes-web.css">
-	<link type="text/css" rel="stylesheet" href="assets/aapkamanch/css/aap.css">
-</head>
-<body>
-	<div class="container" id="content" style="padding: 0px; min-height: 300px;">
-		<div id="login" class="hide">
-			
-		</div>
-		<div id="profile" class="hide">
-			
-		</div>
-	</div>
-	<footer class="container" style="padding: 10px;">
-		<p class="text-muted">आम आदमी पार्टी</p>
-		<p>
-			<img src="assets/aapkamanch/img/symbol.jpg" style="max-width: 100px" />
-			<!--<img src="assets/aapkamanch/img/india.png" class="pull-right" />-->
-		</p>
-	</footer>
-</body>
-</html>
+{% extends "templates/aap_base.html" %}
+
+{% block content %}{% include "templates/includes/unit.html" %}{% endblock %}

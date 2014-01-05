@@ -16,6 +16,7 @@ def after_install():
 
 @webnotes.whitelist()
 def import_units():
+	"""rebuild all units from units.json"""
 	webnotes.conn.sql("""delete from tabUnit""")
 	webnotes.conn.auto_commit_on_many_writes = True
 	
