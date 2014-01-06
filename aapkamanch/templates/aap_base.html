@@ -15,15 +15,22 @@
 	<link type="text/css" rel="stylesheet" href="assets/aapkamanch/css/aap.css">
 </head>
 <body>
+	{% include "templates/includes/facebook.html" %}
 	<div class="container" id="content" style="padding: 0px; min-height: 300px;">
 		{% block content %}{% endblock %}
 	</div>
 	<footer class="container" style="padding: 10px;">
-		<p class="text-muted">Aam Aadmi Party</p>
-		<p>
-			<img src="assets/aapkamanch/img/symbol.jpg" style="max-width: 100px" />
-			<!--<img src="assets/aapkamanch/img/india.png" class="pull-right" />-->
-		</p>
+		<div clas="row">
+			<div class="col-xs-6">
+				<p class="text-muted">Aam Aadmi Party</p>
+				<p>
+					<img src="assets/aapkamanch/img/symbol.jpg" style="max-width: 100px" />
+					<!--<img src="assets/aapkamanch/img/india.png" class="pull-right" />-->
+				</p>
+			</div>
+			<div class="col-xs-6">
+				<button class="btn btn-default btn-login pull-right" disabled=disabled>Login With Facebook</button>
+			</div>
 	</footer>
 </body>
 </html>

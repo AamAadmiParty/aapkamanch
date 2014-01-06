@@ -7,9 +7,8 @@ import webnotes, json
 
 def get_context():
 	path = webnotes.request.path[1:]
-	if not path: 
+	if not path or path.lower().split(".")[0]=="index":
 		path = "India"
 	from aapkamanch.helpers import get_unit_content
 	context = get_unit_content(path)
-	context.update({"name": path})
 	return context

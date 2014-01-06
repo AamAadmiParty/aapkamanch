@@ -1,0 +1,54 @@
+<div id="fb-root"></div>
+<script>
+$(document).ready(function() {
+  $.ajaxSetup({ cache: true });
+  $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+    FB.init({
+      appId: '1436293429934338',
+    });     
+    $('.btn-facebook').removeAttr('disabled');
+    FB.getLoginStatus(function(response) {
+		if(response.status==="connected") {
+			$.ajax({
+				url:"/",
+				data: {
+					cmd:"aapkamanch.helpers.get_user_info",
+					userid: response.userID
+				},
+				dataType: "json",
+				success: function(data) {
+					app.setup_user(data.message);
+				}
+			})
+		} else {
+			$(".btn-login").removeAttr("disabled") 
+		}
+	});
+  });
+});
+
+$(function() {
+	$(".btn-login").click(function() {
+		FB.login(function(response) {
+		   if (response.authResponse) {
+		     console.log('Welcome!  Fetching your information.... ');
+		     FB.api('/me', function(response) {
+	 			$.ajax({
+	 				url:"/",
+	 				data: {
+	 					cmd:"aapkamanch.helpers.add_user",
+	 					user_info: JSON.Stringify(response)
+	 				},
+	 				dataType: "json",
+	 				success: function(data) {
+	 					app.setup_user(data.message);
+	 				}
+	 			})
+		     });
+		   } else {
+		     console.log('User cancelled login or did not fully authorize.');
+		   }
+		 });
+	})
+})
+</script>

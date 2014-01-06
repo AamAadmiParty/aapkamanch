@@ -8,8 +8,10 @@ import webnotes, json
 @webnotes.whitelist(allow_guest=True)
 def get_unit_content(unit_name):
 	# TODO: memcache this
+	unit = webnotes.doc("Unit", unit_name)
 	return {
-		"parent": webnotes.conn.get_value("Unit", unit_name, "parent_unit"),
+		"name": unit.name,
+		"parent": unit.parent_unit,
 		"children": webnotes.conn.sql_list("""select name 
 			from tabUnit where parent_unit=%s""", (unit_name))
 	}
