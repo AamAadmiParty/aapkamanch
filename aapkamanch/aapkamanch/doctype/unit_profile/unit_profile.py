@@ -6,13 +6,6 @@
 from __future__ import unicode_literals
 import webnotes
 
-from webnotes.utils.nestedset import DocTypeNestedSet
-
-class DocType(DocTypeNestedSet):
+class DocType:
 	def __init__(self, d, dl):
 		self.doc, self.doclist = d, dl
-		
-	def autoname(self):
-		self.doc.name = self.doc.unit_name
-		print self.doc.name
-		
