@@ -15,6 +15,12 @@
 		border-top-left-radius: 15px; border-top-right-radius: 15px;	
 	}
 
+	.sidebar {
+		padding-right: 0px;
+		box-shadow: 3px 0px 7px -5px rgba(0,0,0,0.5);
+	}
+	
+
 }
 
 .container {
@@ -25,9 +31,18 @@
 	background-color: #eee;
 }
 
+.titlebar .table {
+	margin-bottom: 0px;
+}
+
+.titlebar .table td {
+	padding: 3px;
+}
 
 .list-group-item {
 	border-radius: 0px !important;
+	border-left: 0px;
+	border-right: 0px;
 }
 
 .app-title {

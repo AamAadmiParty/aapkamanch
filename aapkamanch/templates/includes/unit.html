@@ -1,27 +1,18 @@
-<div class="titlebar">
-	<div class="row" style="padding: 10px">
-		<div class="col-xs-4">
-			{% if parent %}
-			<div class="left-button topnav-button">
-				<a href="/{{ parent|lower }}">
-					<i class="icon-angle-left"></i>
-					<span class="left-title">{{ parent }}</span>
-				</a>
-			</div>
-			{% endif %}
-		</div>
-		<div class="col-xs-4 text-center"><b class="app-title">{{ name }}</b></div>
-		<div class="col-xs-4"></div>
-	</div>
-	<div class="row" style="padding-left: 15px; padding-right: 15px;">
-		<div class="col-xs-4" style="background-color: #F28300; height: 6px;"></div>
-		<div class="col-xs-8" style="background-color: #61a220; height: 6px;"></div>
-	</div>
-</div>
+{% include "templates/includes/titlebar.html" %}
 <div class="row">
-	<div class="col-sm-4">
-		<button class="btn btn-default btn-login" style="margin:10px;" disabled=disabled>Login With Facebook</button>
-		<hr>
+	<div class="col-sm-8 col-sm-push-4">
+		<div class="feed-list">
+			{% include "templates/includes/post_editor.html" %}
+			<div class="post-list">
+			{{ post_list_html }}
+			</div>
+			<div class="text-center">
+				<button class="btn btn-default btn-more" style="display:none;">More</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4 col-sm-pull-8 sidebar">
+		{% include "templates/includes/user_profile.html" %}
 		{% if children %}
 		<div class="list-group">
 			{% for child in children %}
@@ -38,10 +29,5 @@
 			{% endfor %}
 		</div>
 		{% endif %}
-	</div>
-	<div class="col-sm-8">
-		<div class="feed-list">
-			<div class="alert alert-warning">Feed Comes Here.</div>
-		</div>
 	</div>
 </div>

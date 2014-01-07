@@ -1,0 +1,16 @@
+<div class="post">
+	<div class="row">
+		<div class="col-xs-2" style="min-height: 50px;">
+			<img src="https://graph.facebook.com/{{ post.fb_username }}/picture" class="img-responsive">
+		</div>
+		<div class="col-xs-10" style="margin-left: -15px;">
+			<div>
+				<b>{{ post.first_name or "" }} {{ post.last_name or "" }}</b>
+				<small class="text-muted wn-timestamp" style="margin-left: 10px;" 
+					data-timestamp="{{ post.creation }}"></small>
+			</div>
+			<div>{{ post.content }}</div>
+		</div>
+	</div>
+	<hr class="row">
+</div>

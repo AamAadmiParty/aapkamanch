@@ -1,33 +1,35 @@
 [
  {
-  "creation": "2014-01-04 12:21:53", 
+  "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-04 12:27:48", 
+  "modified": "2014-01-07 14:11:30", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
  {
-  "autoname": "field:district_name", 
+  "autoname": "P.#######", 
   "doctype": "DocType", 
-  "document_type": "Master", 
+  "document_type": "Transaction", 
   "module": "AAPKaManch", 
   "name": "__common__"
  }, 
  {
   "doctype": "DocField", 
+  "in_list_view": 1, 
   "name": "__common__", 
-  "parent": "District", 
+  "parent": "Post", 
   "parentfield": "fields", 
   "parenttype": "DocType", 
   "permlevel": 0, 
   "reqd": 1
  }, 
  {
+  "cancel": 1, 
   "create": 1, 
   "doctype": "DocPerm", 
   "export": 1, 
   "name": "__common__", 
-  "parent": "District", 
+  "parent": "Post", 
   "parentfield": "permissions", 
   "parenttype": "DocType", 
   "permlevel": 0, 
@@ -38,20 +40,21 @@
  }, 
  {
   "doctype": "DocType", 
-  "name": "District"
+  "name": "Post"
  }, 
  {
   "doctype": "DocField", 
-  "fieldname": "district_name", 
-  "fieldtype": "Data", 
-  "label": "District Name"
+  "fieldname": "content", 
+  "fieldtype": "Text", 
+  "label": "Content"
  }, 
  {
   "doctype": "DocField", 
-  "fieldname": "state", 
+  "fieldname": "unit", 
   "fieldtype": "Link", 
-  "label": "State", 
-  "options": "State"
+  "label": "Unit", 
+  "options": "Unit", 
+  "search_index": 1
  }, 
  {
   "doctype": "DocPerm"

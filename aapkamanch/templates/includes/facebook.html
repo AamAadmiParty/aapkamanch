@@ -2,66 +2,40 @@
 <script>
 $(document).ready(function() {
   $.ajaxSetup({ cache: true });
-  var user_id = get_cookie("user_id");
+  var user_id = wn.get_cookie("user_id");
+  var sid = wn.get_cookie("sid");
   
   // logged in?
-  if(get_cookie("sid")==="Guest") {
-	  // fallback on facebook login
-	  $.getScript('//connect.facebook.net/en_UK/all.js', function(){
-	    FB.init({
-	      appId: '1436293429934338',
-	    }); 
-
-		// fallback
-	    FB.getLoginStatus(function(response) {
-			if(response.status==="connected") {
-				// yes logged in via facebook, now log me in
-				app.setup_user({"user": user_id, "fb_access_token": 					
-					response.authResponse.accessToken || "[none]"})
-			} else {
-				// not logged in to facebook either
-				$(".btn-login").removeAttr("disabled") 
-			}
-		});
-	  });
-  	
+  if(!sid || sid==="Guest") {
+	  // fallback on facebook login -- no login again
+	  $(".btn-login").html("Login via Facebook").removeAttr("disabled");
   } else {
 	  // get private stuff (if access)
-	  app.setup_user({"user": user_id})
+	  app.setup_user({"user": user_id});
   }
   
 });
 
 $(function() {
 	$(".btn-login").click(function() {
-		FB.login(function(response) {
-		   if (response.authResponse) {
-			   // yes logged in via facebook
-			   console.log('Welcome!  Fetching your information.... ');
-			   var fb_access_token = response.authResponse.accessToken;
-			   
-			   // get user graph
-			   FB.api('/me', function(response) {
-				   response.fb_access_token = fb_access_token || "[none]";
-				   response.unit = app.get_unit();
-				   $.ajax({
-						url:"/",
-						type: "POST",
-						data: {
-							cmd:"aapkamanch.helpers.add_user",
-							data: JSON.stringify(response)
-						},
-						dataType: "json",
-						success: function(data) {
-							if(data.exc) console.log(data.exc);
-							app.render_authenticated_user(data);
-						}
-					})
-				});
-			} else {
-				console.log('User cancelled login or did not fully authorize.');
-			}
-		},{scope:"email"});
+		$(this).prop("disabled", true).html("Logging In...");
+		$.getScript('//connect.facebook.net/en_UK/all.js', function() {
+		    var user_id = wn.get_cookie("user_id");
+			FB.init({
+			  appId: '1436293429934338',
+			}); 
+
+			// fallback
+			FB.getLoginStatus(function(response) {
+				if(response.status==="connected") {
+					// yes logged in via facebook, now log me in
+					app.setup_user({"user": user_id, "fb_access_token": 					
+						response.authResponse.accessToken || "[none]"})
+				} else {
+					app.login_via_facebook();
+				}
+			});
+		});
 	});
 });
 </script>

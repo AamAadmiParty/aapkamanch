@@ -1,0 +1,22 @@
+<div class="titlebar">
+	<div class="row" style="padding: 10px">
+		<div class="col-xs-4">
+			{% if parent %}
+			<div class="left-button topnav-button">
+				<a href="/{{ parent|lower }}">
+					<i class="icon-angle-left"></i>
+					<span class="left-title">{{ parent }}</span>
+				</a>
+			</div>
+			{% endif %}
+		</div>
+		<div class="col-xs-4 text-center"><b class="app-title">{{ name }}</b></div>
+		<div class="col-xs-4"></div>
+	</div>
+	<table class="table">
+		<tr>
+			<td style="width: 32.5%; background-color: #F28300;"></td>
+			<td style="width: 67.5%; background-color: #61a220;"></td>
+		</tr>
+	</table>
+</div>

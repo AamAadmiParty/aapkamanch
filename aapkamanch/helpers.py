@@ -63,11 +63,14 @@ def get_user_details(unit, user, fb_access_token=None):
 	access = get_access(unit)
 
 	out = {
-		"access": access
+		"access": access,
+		"fb_username": get_fb_username()
 	}
-	#if access.get("read"):
-		# add private children
 	return out
+
+def get_fb_username():
+	return webnotes.cache().get_value(webnotes.session.user + ":fb_username", 
+		lambda: webnotes.conn.get_value("Profile", webnotes.session.user, "fb_username"))
 
 def get_fb_userid(fb_access_token):
 	import requests
@@ -84,18 +87,21 @@ def get_access(unit):
 	profile = webnotes.session.user
 	lft, rgt = webnotes.conn.get_value("Unit", unit, ["lft", "rgt"])
 	
-	read = write = False
+	read = write = admin = False
 	
 	for perm in webnotes.conn.sql("""select 
-		up.`read`, up.`write`, u.lft, u.rgt 
+		up.`read`, up.`write`, up.`admin`, u.lft, u.rgt 
 		from `tabUnit Profile` up, tabUnit u
 		where up.profile = %s
 			and up.parent = u.name""", profile, as_dict=True):
 		if perm.lft <= lft and perm.rgt >= rgt:
 			if not read: read = perm.read
-			if not write: read = perm.write
+			if not write: write = perm.write
+			if not admin: admin = perm.admin
+			if write: read = write
 
 	return {
 		"read": read,
-		"write": write
+		"write": write,
+		"admin": admin
 	}
