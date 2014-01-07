@@ -2,6 +2,9 @@
 <div class="row">
 	<div class="col-sm-8 col-sm-push-4">
 		<div class="feed-list">
+			{% if not public %}<div class="alert alert-warning">
+				<i class="icon-lock"></i> Private
+			</div>{% endif %}
 			{% include "templates/includes/post_editor.html" %}
 			<div class="post-list">
 			{{ post_list_html }}
@@ -14,19 +17,8 @@
 	<div class="col-sm-4 col-sm-pull-8 sidebar">
 		{% include "templates/includes/user_profile.html" %}
 		{% if children %}
-		<div class="list-group">
-			{% for child in children %}
-			<a href="{{ child.name|lower }}" class="list-group-item">
-				<div class="row">
-					<div class="col-xs-10">
-						{{ child.unit_title }} 
-					</div>
-					<div class="col-xs-2">
-						<i class="icon-angle-right pull-right"></i>
-					</div>
-				</div>
-			</a>
-			{% endfor %}
+		<div class="list-group unit-list-group">
+			{% include "templates/includes/unit_list.html" %}
 		</div>
 		{% endif %}
 	</div>

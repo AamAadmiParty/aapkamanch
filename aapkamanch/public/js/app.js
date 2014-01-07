@@ -22,8 +22,9 @@ $(function() {
 			success: function(data) {
 				$(btn).prop("disabled", false);
 				if(data.exc){
-					console.log(data.exc)
+					console.log(data.exc);
 				} else {
+					$(".post-add-control").val("");
 					$(data.message).prependTo($(".post-list"));
 					wn.datetime.refresh_when();
 				}
@@ -50,7 +51,7 @@ app.setup_user = function(data) {
 }
 
 app.get_unit = function() {
-	return window.location.pathname.substr(1) || "india";
+	return decodeURIComponent(window.location.pathname.substr(1) || "india");
 }
 
 app.render_authenticated_user = function(data) {
@@ -59,10 +60,14 @@ app.render_authenticated_user = function(data) {
 	$(".full-name").html(wn.get_cookie("full_name"));
 	$(".user-picture").attr("src", "http://graph.facebook.com/" + data.fb_username + "/picture")
 
-	// render private groups
 	// render editor / add button if has access
 	if(data.access.write) {
 		$(".feed-editor").toggle(true);
+	}
+
+	// render private groups
+	if(data.private_units) {
+		$(data.private_units).prependTo(".unit-list-group")
 	}
 }
 

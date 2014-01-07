@@ -16,3 +16,8 @@ class DocType(DocTypeNestedSet):
 		self.doc.name = self.doc.unit_name
 		print self.doc.name
 		
+	def on_update(self):
+		cache = webnotes.cache()
+		for key in ("is_public", "unit_html"):
+			cache.delete_value(key + ":" + self.doc.name)
+		

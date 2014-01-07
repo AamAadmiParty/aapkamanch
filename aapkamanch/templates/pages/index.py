@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 
 import webnotes, json
 
+from aapkamanch.helpers import get_child_unit_items, get_access, is_public
+
 no_cache = True
 
 def get_context():
@@ -13,9 +15,15 @@ def get_context():
 		if not unit or unit.lower().split(".")[0]=="index":
 			unit = "India"
 		
+		if not is_public(unit):
+			if not get_access(unit).get("read"):
+				raise webnotes.PermissionError
+		
 		return {"content": get_unit_html(unit)}
 	except webnotes.DoesNotExistError:
-		return {"content": '<div class="alert alert-warning">The page you are looking for does not exist.</div>'}
+		return {"content": '<div class="alert alert-danger full-page">The page you are looking for does not exist.</div>'}
+	except webnotes.PermissionError:
+		return {"content": '<div class="alert alert-danger full-page">You are not permitted to view this page.</div>'}
 	
 def get_unit_html(unit):
 	def _get_unit_html(unit):
@@ -23,12 +31,11 @@ def get_unit_html(unit):
 
 		context = {
 			"name": unit.name,
+			"public": unit.public,
+			"title": unit.unit_title,
 			"parent": unit.parent_unit,
 			"parent_title": webnotes.conn.get_value("Unit", unit.parent_unit, "unit_title"),
-			"children": webnotes.conn.sql("""select name, unit_title 
-				from tabUnit where 
-					ifnull(`public`,0) = 1 
-					and parent_unit=%s""", (unit.name), as_dict=1),
+			"children": get_child_unit_items(unit.name, public=1),
 			"post_list_html": get_post_list_html(unit.name)
 		}
 	

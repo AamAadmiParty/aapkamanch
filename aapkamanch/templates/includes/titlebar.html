@@ -10,13 +10,14 @@
 			</div>
 			{% endif %}
 		</div>
-		<div class="col-xs-4 text-center"><b class="app-title">{{ name }}</b></div>
+		<div class="col-xs-4 text-center">
+			<b class="app-title">{% if not public %}<i class="icon-lock"></i> {% endif %}{{ title }}</b></div>
 		<div class="col-xs-4"></div>
 	</div>
 	<table class="table">
 		<tr>
-			<td style="width: 32.5%; background-color: #F28300;"></td>
-			<td style="width: 67.5%; background-color: #61a220;"></td>
+			<td style="width: 32.7%; background-color: #F28300;"></td>
+			<td style="width: 67.3%; background-color: #61a220;"></td>
 		</tr>
 	</table>
 </div>

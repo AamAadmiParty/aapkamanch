@@ -64,8 +64,13 @@ def get_user_details(unit, user, fb_access_token=None):
 
 	out = {
 		"access": access,
-		"fb_username": get_fb_username()
+		"fb_username": get_fb_username(),
 	}
+	
+	if access.get("read"):
+		out["private_units"] = webnotes.get_template("templates/includes/unit_list.html")\
+			.render({"children":get_child_unit_items(unit, public=0)})
+
 	return out
 
 def get_fb_username():
@@ -105,3 +110,12 @@ def get_access(unit):
 		"write": write,
 		"admin": admin
 	}
+	
+def is_public(unit):
+	return webnotes.cache().get_value("is_public:" + unit, lambda: webnotes.conn.get_value("Unit", unit, "public"))
+	
+def get_child_unit_items(unit, public):
+	return webnotes.conn.sql("""select name, unit_title, public 
+		from tabUnit where 
+		ifnull(`public`,0) = %s 
+		and parent_unit=%s""", (public, unit), as_dict=1)	
