@@ -13,12 +13,13 @@ def get_context():
 		"show_back_btn": True,
 		"title": "Tasks",
 		"post_list_html": get_task_list_html(tasks=tasks),
-		"public": 1
+		"public": 1,
 	}
 
 def get_task_list(limit_start=0, limit_length=20):
 	return webnotes.conn.sql("""select p.name, p.unit,
-		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name
+		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name,
+		p.assigned_to, p.event_datetime
 		from tabPost p, tabProfile pr
 		where p.assigned_to=%s and pr.name = p.owner 
 			order by p.creation desc limit %s, %s""", 
@@ -34,4 +35,4 @@ def get_task_list_html(tasks=None, limit_start=0, limit_length=20):
 		tasks = get_task_list(limit_start, limit_length)
 			
 	return webnotes.get_template("templates/includes/post_list.html").render({"posts": tasks, 
-		"limit_start":limit_start, "with_unit": True, "unit_map": get_unit_map(tasks)})
+		"limit_start":limit_start, "with_unit": True, "unit_map": get_unit_map(tasks), "write": 1})

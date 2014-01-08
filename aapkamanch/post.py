@@ -8,19 +8,21 @@ from helpers import get_access
 
 @webnotes.whitelist()
 def get_post_list_html(unit, limit_start=0, limit_length=20):
+	access = get_access(unit)
 	if webnotes.local.form_dict.cmd=="get_post_list_html":
 		# for paging
-		if not get_access(unit).get("read"):
+		if not access.get("read"):
 			raise webnotes.PermissionError
 	
 	posts = webnotes.conn.sql("""select p.name, p.unit,
+		p.assigned_to, p.event_datetime,
 		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name 
 		from tabPost p, tabProfile pr
 		where p.unit=%s and pr.name = p.owner order by p.creation desc limit %s, %s""", 
 			(unit, limit_start, limit_length), as_dict=True)
 			
 	return webnotes.get_template("templates/includes/post_list.html").render({"posts": posts, 
-		"limit_start":limit_start})
+		"limit_start":limit_start, "write": access.get("write")})
 
 @webnotes.whitelist()
 def add_post(unit, content):

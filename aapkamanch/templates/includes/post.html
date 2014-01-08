@@ -18,12 +18,18 @@
 							<span class="label label-default">{{ post.unit }}</span></a>
 					{% endif %}
 					
-					<span class="label label-info">Event <span class="event-when"></span></span>
-					<span class="label label-success"></span>
+					{% if post.event_datetime -%}
+					<span class="label label-info">Event<span class="event-when"></span></span>
+					{%- endif %}
+					{% if post.assigned_to -%}
+					<span class="label label-success">Assigned</span>
+					{%- endif %}
 				</div>
 				<div class="col-sm-6 text-right buttons">
+					{% if write -%}
 					<a class="btn btn-default btn-post-settings" style="padding: 2px 5px;">
 						<small><i class="icon-cog"></i></small></a>
+					{%- endif %}
 				</div>
 			</div>
 			<div class="post-settings-area"></div>
