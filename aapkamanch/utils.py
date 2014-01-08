@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import webnotes, json
 
 def after_install():
-	from aapkamanch.import_units import import_units
+	from .import_units import import_units
 	import_units()
 	
 	website_settings = webnotes.bean("Website Settings", "Website Settings")

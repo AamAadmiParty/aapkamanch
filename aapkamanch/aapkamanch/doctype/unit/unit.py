@@ -7,7 +7,6 @@ from __future__ import unicode_literals
 import webnotes
 
 from webnotes.utils.nestedset import DocTypeNestedSet
-from aapkamanch.permissions import set_unit_access
 
 class DocType(DocTypeNestedSet):
 	def __init__(self, d, dl):
