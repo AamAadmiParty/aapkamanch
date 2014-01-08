@@ -4,8 +4,13 @@
 from __future__ import unicode_literals
 
 import webnotes, json
+from webnotes.core.page.data_import_tool import data_import_tool
 
 def after_install():
+	# import custom fields
+	data_import_tool.import_doclist(webnotes.get_pymodule_path("aapkamanch", "data", "custom_fields.csv"), 
+		overwrite=True)
+	
 	from .import_units import import_units
 	import_units()
 	

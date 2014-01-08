@@ -1,0 +1,30 @@
+Data Import Template,,,,,,,,,,,,,,,,,,,,,,,
+Table:,Custom Field,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+Notes:,,,,,,,,,,,,,,,,,,,,,,,
+Please do not change the template headings.,,,,,,,,,,,,,,,,,,,,,,,
+First data column must be blank.,,,,,,,,,,,,,,,,,,,,,,,
+"If you are uploading new records, leave the ""name"""" (ID) column blank.""",,,,,,,,,,,,,,,,,,,,,,,
+"If you are uploading new records, ""Naming Series"""" becomes mandatory"," if present.""",,,,,,,,,,,,,,,,,,,,,,
+Only mandatory fields are necessary for new records. You can delete non-mandatory columns if you wish.,,,,,,,,,,,,,,,,,,,,,,,
+"For updating, you can update only selective columns.",,,,,,,,,,,,,,,,,,,,,,,
+You can only upload upto 5000 records in one go. (may be less in some cases),,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,
+DocType:,Custom Field,,,,,,,,,,,,,,,,,,,,,,
+Column Labels:,ID,Document,Label,Field Type,Insert After,Options,Field Description,Fieldname,Permission Level,Is Mandatory Field,Read Only,Ignore Restrictions,Width,Default Value,Hidden,Depends On,Print Hide,Print Width,No Copy,Allow on Submit,In Report Filter,In List View,Report Hide
+Column Name:,name,dt,label,fieldtype,insert_after,options,description,fieldname,permlevel,reqd,read_only,ignore_restrictions,width,default,hidden,depends_on,print_hide,print_width,no_copy,allow_on_submit,in_filter,in_list_view,report_hide
+Mandatory:,Yes,Yes,Yes,Yes,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No,No
+Type:,Data (text),Link,Data,Select,Select,Text,Text,Data,Int,Check,Check,Check,Data,Text,Check,Data,Check,Data,Check,Check,Check,Check,Check
+Info:,,Valid DocType,,"One of: Button, Check, Code, Column Break, Currency, Data, Date, Datetime, Float, HTML, Image, Int, Link, Long Text, Password, Percent, Read Only, Section Break, Select, Small Text, Table, Text, Text Editor, Time",,,,,Integer,0 or 1,0 or 1,0 or 1,,,0 or 1,,0 or 1,,0 or 1,0 or 1,0 or 1,0 or 1,0 or 1
+Start entering data below this line,,,,,,,,,,,,,,,,,,,,,,,
+,"""Profile-user_details""""""",Profile,User Details,Section Break,Roles Assigned,,,user_details,0,,,,,,,,,,,,,,
+,"""Profile-fb_userid""""""",Profile,FB Userid,Data,User Details,,,fb_userid,0,,1,,,,,,,,,,,,
+,"""Profile-fb_bio""""""",Profile,FB Bio,Text,User Details,,,fb_bio,0,,1,,,,,,,,,,,,
+,"""Profile-fb_location""""""",Profile,FB Location,Data,FB Bio,,,fb_location,0,,1,,,,,,,,,,,,
+,"""Profile-fb_username""""""",Profile,FB Username,Data,User Type,,,fb_username,0,,1,,,,,,,,,,,,
+,"""Profile-unit_access""""""",Profile,Unit Access,Link,User Details,Unit,User has access to private units below this one.,unit_access,0,,,,,,,,,,,,,,
+,"""Profile-fb_education""""""",Profile,FB Education,Data,FB Bio,,,fb_education,0,,1,,,,,,,,,,,,
+,"""Profile-fb_website""""""",Profile,FB Website,Data,FB Location,,,fb_website,0,,1,,,,,,,,,,,,
+,"""Profile-fb_hometown""""""",Profile,FB Hometown,Data,User Details,,,fb_hometown,0,,1,,,,,,,,,,,,
+,"""Profile-fb_age_range""""""",Profile,FB Age Range,Data,FB Userid,,,fb_age_range,0,,1,,,,,,,,,,,,
