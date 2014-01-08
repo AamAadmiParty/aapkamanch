@@ -2,6 +2,8 @@
 	"js/aapkamanch.min.js": [
 		["webnotes", "public/js/wn/provide.js"],
 		["webnotes", "public/js/wn/misc/pretty_date.js"],
-		"public/js/app.js"
+		"public/js/app.js",
+		"public/js/permissions.js",
+		"public/js/post.js"
 	]
 }

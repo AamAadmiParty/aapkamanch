@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-07 14:11:30", 
+  "modified": "2014-01-08 10:24:21", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -15,13 +15,11 @@
  }, 
  {
   "doctype": "DocField", 
-  "in_list_view": 1, 
   "name": "__common__", 
   "parent": "Post", 
   "parentfield": "fields", 
   "parenttype": "DocType", 
-  "permlevel": 0, 
-  "reqd": 1
+  "permlevel": 0
  }, 
  {
   "cancel": 1, 
@@ -46,15 +44,32 @@
   "doctype": "DocField", 
   "fieldname": "content", 
   "fieldtype": "Text", 
-  "label": "Content"
+  "in_list_view": 1, 
+  "label": "Content", 
+  "reqd": 1
  }, 
  {
   "doctype": "DocField", 
   "fieldname": "unit", 
   "fieldtype": "Link", 
+  "in_list_view": 1, 
   "label": "Unit", 
   "options": "Unit", 
+  "reqd": 1, 
   "search_index": 1
+ }, 
+ {
+  "doctype": "DocField", 
+  "fieldname": "event_datetime", 
+  "fieldtype": "Datetime", 
+  "label": "Event Datetime"
+ }, 
+ {
+  "doctype": "DocField", 
+  "fieldname": "assigned_to", 
+  "fieldtype": "Link", 
+  "label": "Assigned To", 
+  "options": "Profile"
  }, 
  {
   "doctype": "DocPerm"

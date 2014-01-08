@@ -27,7 +27,7 @@
 }
 
 @media (max-width: 750px) {
-	.user-profile {
+	.user-nav {
 		box-shadow: 0px -3px 7px -5px rgba(0,0,0,0.5);
 	}
 }
@@ -65,7 +65,7 @@
 	cursor: pointer;
 }
 
-.feed-list {
+.feed {
 	padding: 15px;
 }
 
@@ -79,4 +79,8 @@
 
 .img-responsive {
 	border-radius: 4px;
+}
+
+.user-profile {
+	min-height: 50px;
 }

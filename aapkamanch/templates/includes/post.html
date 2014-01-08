@@ -1,15 +1,26 @@
-<div class="post">
+<div class="post" data-name="{{ post.name }}">
 	<div class="row">
 		<div class="col-xs-2" style="min-height: 50px;">
 			<img src="https://graph.facebook.com/{{ post.fb_username }}/picture" class="img-responsive">
 		</div>
-		<div class="col-xs-10" style="margin-left: -15px;">
+		<div class="col-xs-10" style="margin-left: -15px; padding-right: 0px;">
 			<div>
 				<b>{{ post.first_name or "" }} {{ post.last_name or "" }}</b>
 				<small class="text-muted wn-timestamp" style="margin-left: 10px;" 
 					data-timestamp="{{ post.creation }}"></small>
 			</div>
 			<div>{{ post.content }}</div>
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-sm-6 tags">
+					<span class="label label-info">Event <span class="event-when"></span></span>
+					<span class="label label-success"></span>
+				</div>
+				<div class="col-sm-6 text-right buttons">
+					<a class="btn btn-default btn-post-settings" style="padding: 2px 5px;">
+						<small><i class="icon-cog"></i></small></a>
+				</div>
+			</div>
+			<div class="post-settings-area"></div>
 		</div>
 	</div>
 	<hr class="row">

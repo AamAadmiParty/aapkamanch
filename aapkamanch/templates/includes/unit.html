@@ -1,7 +1,7 @@
 {% include "templates/includes/titlebar.html" %}
 <div class="row">
 	<div class="col-sm-8 col-sm-push-4">
-		<div class="feed-list">
+		<div class="feed">
 			{% if not public %}<div class="alert alert-warning">
 				<i class="icon-lock"></i> Private
 			</div>{% endif %}
@@ -16,7 +16,7 @@
 		</div>
 	</div>
 	<div class="col-sm-4 col-sm-pull-8 sidebar">
-		{% include "templates/includes/user_profile.html" %}
+		{% include "templates/includes/user_nav.html" %}
 		{% if children %}
 		<div class="list-group unit-list-group">
 			{% include "templates/includes/unit_list.html" %}
@@ -24,3 +24,5 @@
 		{% endif %}
 	</div>
 </div>
+
+{% include "templates/includes/post_settings.html" %}
