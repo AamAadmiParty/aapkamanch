@@ -46,8 +46,6 @@ app.render_authenticated_user = function(data) {
 	if(data.access.admin) {
 		$(".btn-settings").toggle(true);
 	}
-	
-	$(".task-count").html(data.task_count ? "("+data.task_count+")" : "");
 }
 
 app.setup_autosuggest = function(opts) {
@@ -80,7 +78,7 @@ app.setup_autosuggest = function(opts) {
 		}
 	});
 	
-	$user_suggest.data("ui-autocomplete")._renderItem = function(ul, item) {
+	$user_suggest.data( "ui-autocomplete" )._renderItem = function(ul, item) {
 		return $("<li>").html("<a style='padding: 5px;'>" + item.profile_html + "</a>")
 			.css("padding", "5px")
 			.appendTo(ul);
@@ -147,7 +145,7 @@ app.login_via_facebook = function() {
 					},
 					success: function(data) {
 						if(data.exc) console.log(data.exc);
-						app.render_authenticated_user(data);
+						app.render_authenticated_user(data.message);
 					}
 				})
 			});
