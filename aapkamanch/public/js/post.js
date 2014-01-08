@@ -47,8 +47,9 @@ app.toggle_post_settings = function() {
 		$.ajax({
 			url: "/",
 			data: {
-				cmd: "appkamanch.post.get_post_settings",
-				post_name: $post.attr("data-name")
+				cmd: "aapkamanch.post.get_post_settings",
+				post_name: $post.attr("data-name"),
+				unit: app.get_unit()
 			},
 			success: function(data) {
 				if(data.exc) {
@@ -70,12 +71,35 @@ app.setup_post_settings = function($post, data) {
 	app.setup_datepicker({
 		$control: $control_event
 	});
+	
+	if($post_settings.find(".control-assign").length) {
+		app.setup_autosuggest({
+			$control: $control_assign,
+			select: function(value) {
+				app.set_in_post($post, "assigned_to", value);
+			},
+			method: "aapkamanch.post.suggest_user"
+		});
+	} else {
+		$post_settings.find("a.close").on("click", function() {
+			app.assign_to_profile($post, null);
+		});
+	}
+}
 
-	app.setup_autosuggest({
-		$control: $control_assign,
-		select: function(value) {
-
+app.set_in_post = function($post, fieldname, value) {
+	$.ajax({
+		url: "/",
+		type: "POST",
+		data: {
+			cmd: "aapkamanch.post.set_in_post",
+			post: $post.attr("data-name"),
+			fieldname: fieldname,
+			value: value
 		},
-		method: "aapkamanch.post.suggest_user"
-	})
+		success: function(data) {
+			$(".post-settings").remove();
+			app.setup_post_settings($post, data);
+		}
+	});
 }

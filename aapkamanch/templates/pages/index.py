@@ -29,6 +29,15 @@ def get_context():
 def get_unit_html(unit):
 	def _get_unit_html(unit):
 		unit = webnotes.doc("Unit", unit)
+		
+		# TODO show only for certain units
+		event = {
+			"name": unit.name,
+			"url": unit.name + "-Events", 
+			"unit_title": "Events", 
+			"public": 1,
+			"unit_type": "Events"
+		}
 
 		context = {
 			"name": unit.name,
@@ -36,7 +45,7 @@ def get_unit_html(unit):
 			"title": unit.unit_title,
 			"parent": unit.parent_unit,
 			"parent_title": webnotes.conn.get_value("Unit", unit.parent_unit, "unit_title"),
-			"children": get_child_unit_items(unit.name, public=1),
+			"children": [event] + get_child_unit_items(unit.name, public=1),
 			"post_list_html": get_post_list_html(unit.name)
 		}
 	

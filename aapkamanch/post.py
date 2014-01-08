@@ -46,7 +46,39 @@ def add_post(unit, content):
 def get_post_settings(unit, post_name):
 	if not get_access(unit).get("write"):
 		raise webnotes.PermissionError
+	
+	post = webnotes.bean("Post", post_name).doc
+	if post.unit != unit:
+		raise webnotes.ValidationError("Post does not belong to unit.")
+	
+	profile = None
+	if post.assigned_to:
+		profile = webnotes.conn.get_value("Profile", post.assigned_to, 
+			["first_name", "last_name", "fb_username", "fb_location", "fb_hometown"], as_dict=True)
+		
+	return webnotes.get_template("templates/includes/post_settings.html").render({
+		"post": post,
+		"unit_profile": profile
+	})
 
+@webnotes.whitelist()
+def set_in_post(post, fieldname=None, value=None):
+	post = webnotes.bean("Post", post)
+	if not get_access(post.doc.unit).get("write"):
+		raise webnotes.PermissionError("You cannot assign post")
+	
+	if fieldname not in ("assigned_to", "event_datetime"):
+		raise webnotes.ValidationError
+		
+	if fieldname=="assigned_to":
+		if not get_access(post.doc.unit, value).get("write"):
+			raise webnotes.PermissionError("Cannot assign this post to selected user")
+		
+	post.doc.fields[fieldname] = value or None
+	post.ignore_permissions = True
+	post.save()
+	
+	return get_post_settings(post.doc.unit, post.doc.name)
 
 @webnotes.whitelist()
 def suggest_user(unit, term):

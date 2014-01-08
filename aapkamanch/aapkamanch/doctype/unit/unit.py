@@ -29,6 +29,7 @@ class DocType(DocTypeNestedSet):
 			self.doclist.remove(d)
 			
 	def on_update(self):
+		DocTypeNestedSet.on_update(self)
 		cache = webnotes.cache()
 		for key in ("is_public", "unit_html"):
 			cache.delete_value(key + ":" + self.doc.name)

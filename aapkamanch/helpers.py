@@ -59,33 +59,42 @@ def get_user_details(unit, user, fb_access_token=None):
 		webnotes.local.login_manager.user = profile
 		webnotes.local.login_manager.post_login()
 	
-	access = get_access(unit)
+	access = None
+	
+	if unit != "tasks":
+		access = get_access(unit)
 
 	out = {
 		"access": access,
 		"fb_username": get_fb_username(),
+		"task_count": webnotes.conn.count("Post", {"assigned_to": webnotes.session.user})
 	}
 	
-	if access.get("read"):
+	if access and access.get("read"):
 		out["private_units"] = webnotes.get_template("templates/includes/unit_list.html")\
 			.render({"children":get_child_unit_items(unit, public=0)})
 
 	return out
 
 @webnotes.whitelist()
-def get_access(unit):
+def get_access(unit, profile=None):
 	# TODO: memcache this
-		
-	profile = webnotes.session.user
+	
+	if not profile:
+		profile = webnotes.session.user
+	
 	lft, rgt = webnotes.conn.get_value("Unit", unit, ["lft", "rgt"])
 	
-	read = write = admin = False
+	if not (lft and rgt):
+		raise webnotes.ValidationError("Please rebuild Unit Tree")
+	
+	read = write = admin = 0
 	
 	for perm in webnotes.conn.sql("""select 
-		up.`read`, up.`write`, up.`admin`, u.lft, u.rgt 
+		up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
 		from `tabUnit Profile` up, tabUnit u
 		where up.profile = %s
-			and up.parent = u.name order by lft asc""", profile, as_dict=True):
+			and up.parent = u.name order by lft asc""", (profile,), as_dict=True):
 		if perm.lft <= lft and perm.rgt >= rgt:
 			if not read: read = perm.read
 			if not write: write = perm.write
@@ -118,7 +127,7 @@ def is_public(unit):
 	return webnotes.cache().get_value("is_public:" + unit, lambda: webnotes.conn.get_value("Unit", unit, "public"))
 	
 def get_child_unit_items(unit, public):
-	return webnotes.conn.sql("""select name, unit_title, public 
+	return webnotes.conn.sql("""select name, name as url, unit_title, public, unit_type
 		from tabUnit where 
 		ifnull(`public`,0) = %s 
-		and parent_unit=%s""", (public, unit), as_dict=1)	
+		and parent_unit=%s""", (public, unit), as_dict=1)
