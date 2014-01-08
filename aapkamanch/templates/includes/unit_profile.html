@@ -1,0 +1,8 @@
+<tr data-profile="{{ unit_profile.profile }}">
+	<td>
+		{% include "templates/includes/profile_display.html" %}
+	</td>
+	<td><input type="checkbox" data-perm="read" {% if unit_profile.read %}checked{% endif %}></td>
+	<td><input type="checkbox" data-perm="write" {% if unit_profile.write %}checked{% endif %}></td>
+	<td><input type="checkbox" data-perm="admin" {% if unit_profile.admin %}checked{% endif %}></td>
+</tr>

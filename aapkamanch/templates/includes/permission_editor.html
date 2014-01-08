@@ -1,0 +1,20 @@
+<div class="well permission-editor">
+	<h4>Manage Users</h4>
+	<input class="form-control add-user-control" type="text" placeholder="Select User" />
+	<br>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th style="width: 55%">User</th>
+				<th style="width: 15%">Read</th>
+				<th style="width: 15%">Write</th>
+				<th style="width: 15%">Admin</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for unit_profile in unit_profiles %}
+				{% include "templates/includes/unit_profile.html" %}
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

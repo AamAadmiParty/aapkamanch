@@ -16,6 +16,15 @@ class DocType(DocTypeNestedSet):
 		self.doc.name = self.doc.unit_name
 		print self.doc.name
 		
+	def validate(self):
+		to_remove = []
+		for i, d in enumerate(self.doclist.get({"doctype":"Unit Profile"})):
+			if not (d.read or d.write or d.admin):
+				to_remove.append(d)
+				
+		for d in to_remove:
+			self.doclist.remove(d)
+		
 	def on_update(self):
 		cache = webnotes.cache()
 		for key in ("is_public", "unit_html"):

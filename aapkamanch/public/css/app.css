@@ -73,10 +73,10 @@
 	margin-top: 15px;
 }
 
-.list-group-item-private {
-	background-color: #fcf8e3;
-}
-
 .full-page {
 	margin: 30px;
+}
+
+.img-responsive {
+	border-radius: 4px;
 }
