@@ -17,25 +17,16 @@ $(document).ready(function() {
 });
 
 $(function() {
-	$(".btn-login").click(function() {
-		$(this).prop("disabled", true).html("Logging In...");
-		$.getScript('//connect.facebook.net/en_UK/all.js', function() {
-		    var user_id = wn.get_cookie("user_id");
-			FB.init({
-			  appId: '1436293429934338',
-			}); 
-
-			// fallback
-			FB.getLoginStatus(function(response) {
-				if(response.status==="connected") {
-					// yes logged in via facebook, now log me in
-					app.setup_user({"user": user_id, "fb_access_token": 					
-						response.authResponse.accessToken || "[none]"})
-				} else {
-					app.login_via_facebook();
-				}
-			});
-		});
+	$login = $(".btn-login").prop("disabled", true);
+	$.getScript('//connect.facebook.net/en_UK/all.js', function() {
+		$login.prop("disabled", false);
+		FB.init({
+		  appId: '1436293429934338',
+		}); 
+		$login.click(function() {
+			$login.prop("disabled", true).html("Logging In...");
+			app.login_via_facebook();
+		}
 	});
 });
 </script>
