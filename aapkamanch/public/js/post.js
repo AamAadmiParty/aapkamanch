@@ -49,7 +49,7 @@ app.toggle_post_settings = function() {
 			data: {
 				cmd: "aapkamanch.post.get_post_settings",
 				post_name: $post.attr("data-name"),
-				unit: app.get_unit()
+				unit: $post.attr("data-unit")
 			},
 			success: function(data) {
 				if(data.exc) {
@@ -82,7 +82,7 @@ app.setup_post_settings = function($post, data) {
 		});
 	} else {
 		$post_settings.find("a.close").on("click", function() {
-			app.assign_to_profile($post, null);
+			app.set_in_post($post, "assigned_to", null);
 		});
 	}
 }

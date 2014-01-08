@@ -13,7 +13,7 @@ def get_post_list_html(unit, limit_start=0, limit_length=20):
 		if not get_access(unit).get("read"):
 			raise webnotes.PermissionError
 	
-	posts = webnotes.conn.sql("""select p.name,
+	posts = webnotes.conn.sql("""select p.name, p.unit,
 		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name 
 		from tabPost p, tabProfile pr
 		where p.unit=%s and pr.name = p.owner order by p.creation desc limit %s, %s""", 

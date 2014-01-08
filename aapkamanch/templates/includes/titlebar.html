@@ -3,9 +3,16 @@
 		<div class="col-xs-4">
 			{% if parent %}
 			<div class="left-button topnav-button">
-				<a href="/{{ parent }}">
+				<a href="/{{ parent|lower }}">
 					<i class="icon-angle-left"></i>
 					<span class="left-title">{{ parent }}</span>
+				</a>
+			</div>
+			{% elif show_back_btn %}
+			<div class="left-button topnav-button">
+				<a onclick="window.history.back()">
+					<i class="icon-angle-left"></i>
+					<span class="left-title">Back</span>
 				</a>
 			</div>
 			{% endif %}

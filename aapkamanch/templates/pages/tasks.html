@@ -1,0 +1,23 @@
+{% extends "templates/app_base.html" %}
+
+{% block content %}
+{% include "templates/includes/titlebar.html" %}
+<div class="row">
+	<div class="col-sm-8 col-sm-push-4">
+		<div class="feed">
+			<div class="post-list">
+			{{ post_list_html }}
+			</div>
+			<div class="text-center">
+				<button class="btn btn-default btn-more" style="display:none;">More</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4 col-sm-pull-8 sidebar">
+		{% include "templates/includes/user_nav.html" %}
+		<div class="list-group unit-list-group">
+			<!-- link to home -->
+		</div>
+	</div>
+</div>
+{% endblock %}

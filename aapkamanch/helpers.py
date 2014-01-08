@@ -44,10 +44,10 @@ def add_user(data):
 	webnotes.local.login_manager.user = user
 	webnotes.local.login_manager.post_login()
 
-	return get_user_details(data["unit"], user)
+	return get_user_details(data["unit"])
 
 @webnotes.whitelist(allow_guest=True)
-def get_user_details(unit, user, fb_access_token=None):
+def get_user_details(unit, fb_access_token=None):
 	if fb_access_token:
 		fb_userid = get_fb_userid(fb_access_token)
 		profile = webnotes.conn.get_value("Profile", {"fb_userid": fb_userid})

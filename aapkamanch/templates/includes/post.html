@@ -1,4 +1,4 @@
-<div class="post" data-name="{{ post.name }}">
+<div class="post" data-name="{{ post.name }}" data-unit="{{ post.unit }}">
 	<div class="row">
 		<div class="col-xs-2" style="min-height: 50px;">
 			<img src="https://graph.facebook.com/{{ post.fb_username }}/picture" class="img-responsive">
@@ -12,6 +12,12 @@
 			<div>{{ post.content }}</div>
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-sm-6 tags">
+					{% if with_unit %}
+						{% if not unit_map.get(post.unit) %}<i class="icon-lock"></i>{% endif %}
+						<a href="/{{ post.unit|lower }}">
+							<span class="label label-default">{{ post.unit }}</span></a>
+					{% endif %}
+					
 					<span class="label label-info">Event <span class="event-when"></span></span>
 					<span class="label label-success"></span>
 				</div>
