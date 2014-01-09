@@ -1,7 +1,17 @@
-<div class="feed-editor" style="display:none;">
+<div class="post-editor" style="display:none;">
 	<textarea class="form-control post-add-control" style="height: 100px;" placeholder="Enter text"></textarea>
-	<div class="text-muted"><small>tab + enter to post</small></div>
-	<div class="text-right">
-		<button class="btn btn-default btn-post-add">Add</button>
+	<div class="post-picture" style="margin-top: 10px; display: none;">
+		<img src="" class="img-responsive" />
 	</div>
+	<div class="text-muted"><small>tab + enter to post</small></div>
+	<div class="clearfix">
+		<button class="btn btn-default btn-post-add pull-right"><i class="icon-plus"></i> Add Post</button>
+		<button class="btn btn-default btn-post-add-picture pull-right">
+			<i class="icon-camera"></i> Add Picture
+		</button>
+		<!-- hidden file input -->
+		<input type="file" class="control-post-add-picture" 
+			style="position: absolute; top: 0; width: 0; height: 0">
+	</div>
+	<br>
 </div>

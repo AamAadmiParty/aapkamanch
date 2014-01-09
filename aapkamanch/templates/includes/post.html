@@ -10,6 +10,11 @@
 					data-timestamp="{{ post.creation }}"></small>
 			</div>
 			<div>{{ post.content }}</div>
+			{% if post.picture_url %}
+			<div style="margin: 10px 0px">
+				<img src="{{ post.picture_url }}" class="img-responsive" />
+			</div>
+			{% endif %}
 			<div class="row" style="margin-top: 10px;">
 				<div class="col-sm-6 tags">
 					{% if with_unit %}

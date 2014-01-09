@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-09 14:57:36", 
+  "modified": "2014-01-09 18:27:24", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -47,6 +47,12 @@
   "in_list_view": 1, 
   "label": "Content", 
   "reqd": 1
+ }, 
+ {
+  "doctype": "DocField", 
+  "fieldname": "picture_url", 
+  "fieldtype": "Attach", 
+  "label": "Picture URL"
  }, 
  {
   "doctype": "DocField", 

@@ -1,7 +1,12 @@
 // AAP Ka Manch, License GNU General Public License v3
 
 $(function() {
+	$pic_input = $(".control-post-add-picture");
 	$(".btn-post-add").on("click", app.add_post);
+	$(".btn-post-add-picture").on("click", function() { 
+		$pic_input.click();
+	});
+	$pic_input.on("change", app.add_picture)
 	$(".feed").on("click", ".btn-post-settings", function() {
 		app.toggle_post_settings.apply(this);
 	})
@@ -9,32 +14,67 @@ $(function() {
 
 app.add_post = function() {
 	var btn = this;
-	$(btn).prop("disabled", true);
 	var content = $(".post-add-control").val();
 	if(!content) {
 		wn.msgprint("Please enter some text!");
 		return;
 	}
+	var dataurl = $(".post-picture img").attr("src");
+	
+	$(btn).prop("disabled", true);
 	$.ajax({
 		type: "POST",
 		url: "/",
 		data: {
 			cmd: "aapkamanch.post.add_post",
 			unit: app.get_unit(),
-			content: content
+			content: content,
+			picture_name: $(".control-post-add-picture").val(),
+			picture: dataurl ? dataurl.split(",")[1] : ""
 		},
 		success: function(data) {
-			$(btn).prop("disabled", false);
 			if(data.exc){
 				console.log(data.exc);
 			} else {
 				$(".post-add-control").val("");
+				$(".post-picture").toggle(false).find("img").attr("src", "");
 				$(data.message).prependTo($(".post-list"));
 				wn.datetime.refresh_when();
 			}
 		}
-	})	
+	}).always(function() {
+		$(btn).prop("disabled", false);
+	})
 };
+
+app.add_picture = function() {
+	if (this.type === 'file' && this.files && this.files.length > 0) {
+		$.each(this.files, function (idx, fileobj) {
+			if (/^image\//.test(fileobj.type)) {
+				var reader = new FileReader();
+				reader.onload = function() {
+					// resize
+					var tmp = new Image();
+					tmp.src = reader.result;
+					tmp.onload = function() {
+						var w = tmp.width, h = tmp.height;
+						if(tmp.width > 500) {
+							w = 500; h = h * (500.0 / tmp.width);
+						}
+						var canvas = document.createElement('canvas');
+						canvas.width = w; canvas.height = h;
+						var ctx = canvas.getContext("2d");
+						ctx.drawImage(this, 0, 0, w, h);
+						var dataurl = canvas.toDataURL("image/jpeg");
+						$(".post-picture").toggle(true).find("img").attr("src", dataurl);
+					}
+				};
+				reader.readAsDataURL(fileobj);
+			}
+		});
+	}
+	return false;
+}
 
 app.toggle_post_settings = function() {
 	var $btn = $(this),

@@ -6,7 +6,7 @@ import webnotes, json
 
 from webnotes.utils import get_fullname
 from helpers import get_access
-
+from webnotes.utils.file_manager import get_file_url, save_file
 
 @webnotes.whitelist()
 def get_post_list_html(unit, limit_start=0, limit_length=20):
@@ -17,7 +17,7 @@ def get_post_list_html(unit, limit_start=0, limit_length=20):
 			raise webnotes.PermissionError
 	
 	posts = webnotes.conn.sql("""select p.name, p.unit,
-		p.assigned_to, p.event_datetime, p.assigned_to_fullname,
+		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
 		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name 
 		from tabPost p, tabProfile pr
 		where p.unit=%s and pr.name = p.owner order by p.creation desc limit %s, %s""", 
@@ -27,11 +27,11 @@ def get_post_list_html(unit, limit_start=0, limit_length=20):
 		"limit_start":limit_start, "write": access.get("write")})
 
 @webnotes.whitelist()
-def add_post(unit, content):
+def add_post(unit, content, picture, picture_name):
 	access = get_access(unit)
 	if not access.get("write"):
 		raise webnotes.PermissionError
-		
+			
 	post = webnotes.bean({
 		"doctype":"Post",
 		"content": content,
@@ -39,6 +39,11 @@ def add_post(unit, content):
 	})
 	post.ignore_permissions = True
 	post.insert()
+
+	if picture_name and picture:
+		file_data = save_file(picture_name, picture, "Post", post.doc.name, decode=True)
+		post.doc.picture_url = file_data.file_name or file_data.file_url
+		webnotes.conn.set_value("Post", post.doc.name, "picture_url", post.doc.picture_url)
 	
 	post.doc.fields.update(webnotes.conn.get_value("Profile", webnotes.session.user, 
 		["first_name", "last_name", "fb_username"], as_dict=True))

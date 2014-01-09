@@ -72,6 +72,12 @@
 	padding: 15px;
 }
 
+.post-editor button {
+	padding: 5px;
+	font-size: 90%;
+	margin-left: 5px;
+}
+
 .no-posts {
 	margin-top: 15px;
 }
