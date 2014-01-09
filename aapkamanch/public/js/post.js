@@ -35,7 +35,7 @@ app.add_post = function() {
 };
 
 app.toggle_post_settings = function() {
-	var $btn = %(this).prop("disabled", true),
+	var $btn = $(this).prop("disabled", true),
 		$post = $btn.parents(".post:first"),
 		$post_settings = $(".post-settings");
 

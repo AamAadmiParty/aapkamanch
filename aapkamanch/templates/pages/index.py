@@ -20,7 +20,7 @@ def get_context():
 			if not get_access(unit).get("read"):
 				raise webnotes.PermissionError
 		
-		return {"content": get_unit_html(unit)}
+		return {"content": get_unit_html(unit) }
 	except webnotes.DoesNotExistError:
 		return {"content": '<div class="alert alert-danger full-page">The page you are looking for does not exist.</div>'}
 	except webnotes.PermissionError:
@@ -30,22 +30,15 @@ def get_unit_html(unit):
 	def _get_unit_html(unit):
 		unit = webnotes.doc("Unit", unit)
 		
-		# TODO show only for certain units
-		event = {
-			"name": unit.name,
-			"url": unit.name + "-Events", 
-			"unit_title": "Events", 
-			"public": 1,
-			"unit_type": "Events"
-		}
+		parents = webnotes.conn.sql("""select name, unit_title from tabUnit 
+			where lft < %s and rgt > %s order by lft asc""", (unit.lft, unit.rgt), as_dict=1)
 
 		context = {
 			"name": unit.name,
 			"public": unit.public,
 			"title": unit.unit_title,
-			"parent": unit.parent_unit,
-			"parent_title": webnotes.conn.get_value("Unit", unit.parent_unit, "unit_title"),
-			"children": [event] + get_child_unit_items(unit.name, public=1),
+			"parents": parents,
+			"children": get_child_unit_items(unit.name, public=1),
 			"post_list_html": get_post_list_html(unit.name)
 		}
 	

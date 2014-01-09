@@ -11,8 +11,9 @@
 	    box-shadow: 0 0 25px 15px rgba(0, 0, 0, 0.6);
 	}
 
-	.titlebar {
-		border-top-left-radius: 15px; border-top-right-radius: 15px;	
+	.titlebar, .titlebar-head {
+		border-top-left-radius: 15px; border-top-right-radius: 15px;
+		overflow: hidden;
 	}
 
 	.sidebar {
@@ -37,7 +38,9 @@
 }
 
 .titlebar {
-	background-color: #eee;
+}
+
+.titlebar-head {
 }
 
 .titlebar .table {
