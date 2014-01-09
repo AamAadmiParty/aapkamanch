@@ -16,7 +16,7 @@
 			</div>
 			{% endif %}
 			<div class="row" style="margin-top: 10px;">
-				<div class="col-sm-6 tags">
+				<div class="col-xs-10 tags">
 					{% if with_unit %}
 						{% if not unit_map.get(post.unit) %}<i class="icon-lock"></i>{% endif %}
 						<a href="/{{ post.unit|lower }}" class="label label-default">
@@ -24,14 +24,18 @@
 					{% endif %}
 					
 					<span class="label label-info event-label
-						{% if not post.event_datetime -%}hide{%- endif %}">Event
-						<span class="event-when"></span>
+						{% if not post.event_datetime -%}hide{%- endif %}">Event:
+						<span class="event-timestamp" 
+							data-timestamp="{{ post.event_datetime or ''}}"></span>
 					</span>
-					<span class="label label-success assigned-label
-						{% if not post.assigned_to -%}hide{%- endif %}">{{ post.assigned_to_fullname }}
+					
+					<span class="label 
+						{% if post.status=='Completed' -%}label-success{% else %}label-warning{%- endif %}
+						{% if not post.assigned_to -%}hide{%- endif %}
+						assigned-label">{{ post.assigned_to_fullname }}
 					</span>
 				</div>
-				<div class="col-sm-6 text-right buttons">
+				<div class="col-xs-2 text-right buttons">
 					{% if write -%}
 					<a class="btn btn-default btn-post-settings" style="padding: 2px 5px;">
 						<small><i class="icon-cog"></i></small></a>

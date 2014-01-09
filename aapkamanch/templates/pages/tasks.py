@@ -14,14 +14,15 @@ def get_context():
 		"title": "Tasks",
 		"post_list_html": get_task_list_html(tasks=tasks),
 		"public": 1,
+		"parents": [{"name": "/", "unit_title": "Home"}]
 	}
 
 def get_task_list(limit_start=0, limit_length=20):
 	return webnotes.conn.sql("""select p.name, p.unit,
 		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name,
-		p.assigned_to, p.event_datetime
+		p.assigned_to, p.event_datetime, p.assigned_to_fullname
 		from tabPost p, tabProfile pr
-		where p.assigned_to=%s and pr.name = p.owner 
+		where p.assigned_to=%s and pr.name = p.owner and ifnull(p.status, '')!='Completed'
 			order by p.creation desc limit %s, %s""", 
 			(webnotes.session.user, limit_start, limit_length), as_dict=True)
 			

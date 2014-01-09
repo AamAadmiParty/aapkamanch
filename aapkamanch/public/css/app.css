@@ -93,3 +93,15 @@
 .user-profile {
 	min-height: 50px;
 }
+
+.event-label, .assigned-label {
+	margin-right: 4px;
+}
+
+.titlebar .breadcrumb {
+	margin-bottom: 0px;
+}
+
+.label {
+	font-weight: normal;
+}

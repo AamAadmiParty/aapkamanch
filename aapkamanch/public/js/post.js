@@ -9,7 +9,8 @@ $(function() {
 	$pic_input.on("change", app.add_picture)
 	$(".feed").on("click", ".btn-post-settings", function() {
 		app.toggle_post_settings.apply(this);
-	})
+	});
+	app.format_event_timestamps();
 })
 
 app.add_post = function() {
@@ -40,6 +41,7 @@ app.add_post = function() {
 				$(".post-picture").toggle(false).find("img").attr("src", "");
 				$(data.message).prependTo($(".post-list"));
 				wn.datetime.refresh_when();
+				app.format_event_timestamps();
 			}
 		}
 	}).always(function() {
@@ -113,8 +115,12 @@ app.setup_post_settings = function($post, post_settings_html) {
 	app.setup_datepicker({
 		$control: $control_event
 	});
+	$control_event.val(app.toggle_date_format($control_event.val()));
 	
 	// set event
+	$(".btn-set-event").on("click", function() {
+		app.set_event($post, app.toggle_date_format($control_event.val()), $(this));
+	});
 	
 	
 	// assign events
@@ -132,10 +138,13 @@ app.setup_post_settings = function($post, post_settings_html) {
 			app.assign_post($post, null, $(this));
 		});
 	}
+	
+	var $control_status = $post_settings.find(".control-status").on("change", function() {
+		app.update_task_status($post, $(this).val(), $(this));
+	});
 }
 
 app.assign_post = function($post, profile, $control) {
-	var post_name = $post.attr("data-name");
 	$control.prop("disabled", true);
 	$.ajax({
 		url: "/",
@@ -159,6 +168,9 @@ app.assign_post = function($post, profile, $control) {
 					$post.find(".assigned-label")
 						.html(fullname || "")
 						.toggleClass("hide", !fullname);
+					if(app.get_unit()==="tasks" && !fullname) {
+						$post.remove();
+					}
 				}
 			}
 		}
@@ -166,3 +178,75 @@ app.assign_post = function($post, profile, $control) {
 		$control.val("").prop("disabled", false);
 	});
 };
+
+app.set_event = function($post, event_datetime, $btn) {
+	$btn.prop("disabled", true);
+	$.ajax({
+		url: "/",
+		type: "POST",
+		data: {
+			cmd: "aapkamanch.post.set_event",
+			post: $post.attr("data-name"),
+			event_datetime: event_datetime
+		},
+		statusCode: {
+			403: function(xhr) {
+				wn.msgprint("Not Permitted");
+			},
+			200: function(data) {
+				if(data.exc) {
+					console.log(data.exc);
+				} else {
+					$(".post-settings").remove();
+					app.setup_post_settings($post, data.message);
+					$post.find(".event-label")
+						.toggleClass("hide", !event_datetime)
+						.find(".event-timestamp").attr("data-timestamp", event_datetime);
+						app.format_event_timestamps();
+				}
+			}
+		}
+	}).always(function() {
+		$btn.prop("disabled", false);
+	});
+};
+
+app.update_task_status = function($post, status, $control) {
+	$control.prop("disabled", true);
+	$.ajax({
+		url: "/",
+		type: "POST",
+		data: {
+			cmd: "aapkamanch.post.update_task_status",
+			post: $post.attr("data-name"),
+			status: status
+		},
+		statusCode: {
+			403: function(xhr) {
+				wn.msgprint("Not Permitted");
+			},
+			200: function(data) {
+				if(data._server_messages) {
+					wn.msgprint(JSON.parse(data._server_messages).join("\n"));
+				} else {
+					$(".post-settings").remove();
+					app.setup_post_settings($post, data.message);
+					$post.find(".assigned-label")
+						.toggleClass("label-warning", status!=="Completed")
+						.toggleClass("label-success", status==="Completed");
+					if(app.get_unit()==="tasks" && status==="Completed") {
+						$post.remove();
+					}
+				}
+			}
+		}
+	}).always(function() {
+		$control.val("").prop("disabled", false);
+	});
+};
+
+app.format_event_timestamps = function() {
+	$(".event-timestamp").each(function() {
+		$(this).html(app.toggle_date_format($(this).attr("data-timestamp")));
+	})
+}

@@ -59,21 +59,21 @@ def get_user_details(unit, fb_access_token=None):
 		webnotes.local.login_manager.user = profile
 		webnotes.local.login_manager.post_login()
 	
-	access = None
-	
-	if unit != "tasks":
-		access = get_access(unit)
-
 	out = {
-		"access": access,
 		"fb_username": get_fb_username(),
 		"task_count": get_task_count()
 	}
 	
+	access = None
+	if unit != "tasks":
+		access = get_access(unit)
+		
+	out["access"] = access
+	
 	if access and access.get("read"):
 		out["private_units"] = webnotes.get_template("templates/includes/unit_list.html")\
-			.render({"children":get_child_unit_items(unit, public=0)})
-
+			.render({"children": get_child_unit_items(unit, public=0)})
+	
 	return out
 
 @webnotes.whitelist()

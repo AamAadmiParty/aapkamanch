@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-09 18:27:24", 
+  "modified": "2014-01-09 19:19:46", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -82,6 +82,13 @@
   "fieldname": "assigned_to_fullname", 
   "fieldtype": "Data", 
   "label": "Assigned To Fullname"
+ }, 
+ {
+  "doctype": "DocField", 
+  "fieldname": "status", 
+  "fieldtype": "Select", 
+  "label": "Status", 
+  "options": "\nAssigned\nCompleted"
  }, 
  {
   "doctype": "DocPerm"

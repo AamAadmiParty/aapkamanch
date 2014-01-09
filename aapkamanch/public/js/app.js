@@ -107,6 +107,13 @@ app.setup_datepicker = function(opts) {
 	return opts.$control;
 }
 
+app.toggle_date_format = function(datetime) {
+	if(!datetime) return "";
+	var date = datetime.split(" ")[0].split("-");
+	var time = datetime.split(" ")[1];
+	return [date[2], date[1], date[0]].join("-") + " " + time;
+}
+
 app.get_unit = function() {
 	var unit = decodeURIComponent(window.location.pathname.substr(1) || "india").toLowerCase();
 	if(!unit || unit==="index" || unit==="index.html") unit = "india";

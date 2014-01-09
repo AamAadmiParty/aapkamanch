@@ -16,7 +16,7 @@ def get_post_list_html(unit, limit_start=0, limit_length=20):
 		if not access.get("read"):
 			raise webnotes.PermissionError
 	
-	posts = webnotes.conn.sql("""select p.name, p.unit,
+	posts = webnotes.conn.sql("""select p.name, p.unit, p.status,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
 		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name 
 		from tabPost p, tabProfile pr
@@ -69,7 +69,8 @@ def get_post_settings(unit, post_name):
 		
 	return webnotes.get_template("templates/includes/post_settings.html").render({
 		"post": post,
-		"unit_profile": profile
+		"unit_profile": profile,
+		"status_options": (webnotes.get_doctype("Post").get_options("status") or "").split("\n")
 	})
 	
 @webnotes.whitelist()
@@ -84,15 +85,22 @@ def assign_post(post, profile=None):
 		
 	if profile and post.doc.assigned_to:
 		webnotes.throw("Someone is already assigned to this post. Please refresh.")
+		
+	if not profile and post.doc.status == "Completed":
+		webnotes.throw("You cannot revoke assignment of a completed task.")
+		
+	post.doc.status = "Assigned" if profile else None
 	
 	post.doc.assigned_to = profile
 	post.doc.assigned_to_fullname = get_fullname(profile) if profile else None
+	
 	post.ignore_permissions = True
 	post.save()
 	
 	return {
 		"post_settings_html": get_post_settings(post.doc.unit, post.doc.name),
-		"assigned_to_fullname": post.doc.assigned_to_fullname
+		"assigned_to_fullname": post.doc.assigned_to_fullname,
+		"status": post.doc.status
 	}
 
 @webnotes.whitelist()
@@ -105,6 +113,20 @@ def set_event(post, event_datetime):
 	post.doc.event_datetime = event_datetime
 	post.ignore_permissions = True
 	post.save()
+	
+	return get_post_settings(post.doc.unit, post.doc.name)
+	
+@webnotes.whitelist()
+def update_task_status(post, status):
+	post = webnotes.bean("Post", post)
+
+	if not get_access(post.doc.unit).get("write"):
+		raise webnotes.PermissionError("You are not allowed edit this post")
+
+	if post.doc.assigned_to and status:
+		post.doc.status = status
+		post.ignore_permissions = True
+		post.save()
 	
 	return get_post_settings(post.doc.unit, post.doc.name)
 
