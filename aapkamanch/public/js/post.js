@@ -2,7 +2,9 @@
 
 $(function() {
 	$(".btn-post-add").on("click", app.add_post);
-	$(".feed").on("click", ".btn-post-settings", app.toggle_post_settings)
+	$(".feed").on("click", ".btn-post-settings", function() {
+		app.toggle_post_settings.apply(this);
+	})
 })
 
 app.add_post = function() {
@@ -35,7 +37,7 @@ app.add_post = function() {
 };
 
 app.toggle_post_settings = function() {
-	var $btn = $(this).prop("disabled", true),
+	var $btn = $(this),
 		$post = $btn.parents(".post:first"),
 		$post_settings = $(".post-settings");
 
@@ -44,6 +46,7 @@ app.toggle_post_settings = function() {
 		return;
 	} else {
 		$post_settings.remove();
+		$btn.prop("disabled", true);
 		$.ajax({
 			url: "/",
 			data: {
@@ -77,18 +80,18 @@ app.setup_post_settings = function($post, data) {
 		app.setup_autosuggest({
 			$control: $control_assign,
 			select: function(value) {
-				app.set_in_post($post, "assigned_to", value);
+				app.set_in_post($post, $control_assign, "assigned_to", value);
 			},
 			method: "aapkamanch.post.suggest_user"
 		});
 	} else {
 		$post_settings.find("a.close").on("click", function() {
-			app.set_in_post($post, "assigned_to", null);
+			app.set_in_post($post, $control_event, "assigned_to", null);
 		});
 	}
 }
 
-app.set_in_post = function($post, fieldname, value) {
+app.set_in_post = function($post, $control, fieldname, value) {
 	$.ajax({
 		url: "/",
 		type: "POST",
@@ -98,9 +101,15 @@ app.set_in_post = function($post, fieldname, value) {
 			fieldname: fieldname,
 			value: value
 		},
-		success: function(data) {
-			$(".post-settings").remove();
-			app.setup_post_settings($post, data);
+		statusCode: {
+			403: function(xhr) {
+				wn.msgprint("Not Permitted");
+				$control.val("");
+			},
+			200: function(data) {
+				$(".post-settings").remove();
+				app.setup_post_settings($post, data);
+			}
 		}
 	});
 }

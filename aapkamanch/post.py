@@ -4,7 +4,9 @@ from __future__ import unicode_literals
 
 import webnotes, json
 
+from webnotes.utils import get_fullname
 from helpers import get_access
+
 
 @webnotes.whitelist()
 def get_post_list_html(unit, limit_start=0, limit_length=20):
@@ -15,7 +17,7 @@ def get_post_list_html(unit, limit_start=0, limit_length=20):
 			raise webnotes.PermissionError
 	
 	posts = webnotes.conn.sql("""select p.name, p.unit,
-		p.assigned_to, p.event_datetime,
+		p.assigned_to, p.event_datetime, p.assigned_to_fullname,
 		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name 
 		from tabPost p, tabProfile pr
 		where p.unit=%s and pr.name = p.owner order by p.creation desc limit %s, %s""", 
@@ -75,7 +77,8 @@ def set_in_post(post, fieldname=None, value=None):
 	if fieldname=="assigned_to":
 		if not get_access(post.doc.unit, value).get("write"):
 			raise webnotes.PermissionError("Cannot assign this post to selected user")
-		
+		post.doc.assigned_to_fullname = get_fullname(value)
+
 	post.doc.fields[fieldname] = value or None
 	post.ignore_permissions = True
 	post.save()

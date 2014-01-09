@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-08 10:24:21", 
+  "modified": "2014-01-09 14:57:36", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -70,6 +70,12 @@
   "fieldtype": "Link", 
   "label": "Assigned To", 
   "options": "Profile"
+ }, 
+ {
+  "doctype": "DocField", 
+  "fieldname": "assigned_to_fullname", 
+  "fieldtype": "Data", 
+  "label": "Assigned To Fullname"
  }, 
  {
   "doctype": "DocPerm"

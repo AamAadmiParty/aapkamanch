@@ -12,10 +12,15 @@
 	            <label>Assign To</label>
 				{% if post.assigned_to %}
 				<div class="assigned-to alert alert-success" style="margin: 10px 0px;">
-					<!-- TODO -->
-					<a class="close">&times;</a>
-					<div class="assigned-profile user-profile">
-						{% include "templates/includes/profile_display.html" %}
+					<div class="row">
+						<div class="col-xs-10">
+							<div class="assigned-profile user-profile">
+								{% include "templates/includes/profile_display.html" %}
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<a class="close">&times;</a>
+						</div>
 					</div>
 				</div>
 				{% else %}

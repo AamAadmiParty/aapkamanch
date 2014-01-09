@@ -22,7 +22,7 @@
 					<span class="label label-info">Event<span class="event-when"></span></span>
 					{%- endif %}
 					{% if post.assigned_to -%}
-					<span class="label label-success">Assigned</span>
+					<span class="label label-success">{{ post.assigned_to_fullname }}</span>
 					{%- endif %}
 				</div>
 				<div class="col-sm-6 text-right buttons">

@@ -108,7 +108,9 @@ app.setup_datepicker = function(opts) {
 }
 
 app.get_unit = function() {
-	return decodeURIComponent(window.location.pathname.substr(1) || "india");
+	var unit = decodeURIComponent(window.location.pathname.substr(1) || "india").toLowerCase();
+	if(!unit || unit==="index" || unit==="index.html") unit = "india";
+	return unit;
 }
 
 app.logout = function() {
