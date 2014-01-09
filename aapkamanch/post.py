@@ -64,22 +64,38 @@ def get_post_settings(unit, post_name):
 		"post": post,
 		"unit_profile": profile
 	})
+	
+@webnotes.whitelist()
+def assign_post(post, profile=None):
+	post = webnotes.bean("Post", post)
+
+	if not get_access(post.doc.unit).get("write"):
+		raise webnotes.PermissionError("You are not allowed edit this post")
+	
+	if profile and not get_access(post.doc.unit, profile).get("write"):
+		raise webnotes.PermissionError("Selected user does not have 'write' access to this post")
+		
+	if profile and post.doc.assigned_to:
+		webnotes.throw("Someone is already assigned to this post. Please refresh.")
+	
+	post.doc.assigned_to = profile
+	post.doc.assigned_to_fullname = get_fullname(profile) if profile else None
+	post.ignore_permissions = True
+	post.save()
+	
+	return {
+		"post_settings_html": get_post_settings(post.doc.unit, post.doc.name),
+		"assigned_to_fullname": post.doc.assigned_to_fullname
+	}
 
 @webnotes.whitelist()
-def set_in_post(post, fieldname=None, value=None):
+def set_event(post, event_datetime):
 	post = webnotes.bean("Post", post)
-	if not get_access(post.doc.unit).get("write"):
-		raise webnotes.PermissionError("You cannot assign post")
-	
-	if fieldname not in ("assigned_to", "event_datetime"):
-		raise webnotes.ValidationError
-		
-	if fieldname=="assigned_to":
-		if not get_access(post.doc.unit, value).get("write"):
-			raise webnotes.PermissionError("Cannot assign this post to selected user")
-		post.doc.assigned_to_fullname = get_fullname(value)
 
-	post.doc.fields[fieldname] = value or None
+	if not get_access(post.doc.unit).get("write"):
+		raise webnotes.PermissionError("You are not allowed edit this post")
+		
+	post.doc.event_datetime = event_datetime
 	post.ignore_permissions = True
 	post.save()
 	

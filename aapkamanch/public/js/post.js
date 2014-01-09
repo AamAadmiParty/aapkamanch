@@ -59,57 +59,70 @@ app.toggle_post_settings = function() {
 				if(data.exc) {
 					console.log(data.exc);
 				} else {
-					app.setup_post_settings($post, data);
+					app.setup_post_settings($post, data.message);
 				}
 			}
 		});
 	}
 }
 
-app.setup_post_settings = function($post, data) {
-	var $post_settings = $(data.message).appendTo($post.find(".post-settings-area"));
+app.setup_post_settings = function($post, post_settings_html) {
+	var $post_settings = $(post_settings_html).appendTo($post.find(".post-settings-area"));
 
 	var $control_event = $post_settings.find(".control-event").empty();
-	var $control_assign = $post_settings.find(".control-assign").empty();
-
 	app.setup_datepicker({
 		$control: $control_event
 	});
 	
-	if($post_settings.find(".control-assign").length) {
+	// set event
+	
+	
+	// assign events
+	var $control_assign = $post_settings.find(".control-assign").empty();
+	if($control_assign.length) {
 		app.setup_autosuggest({
 			$control: $control_assign,
 			select: function(value) {
-				app.set_in_post($post, $control_assign, "assigned_to", value);
+				app.assign_post($post, value, $control_assign);
 			},
 			method: "aapkamanch.post.suggest_user"
 		});
 	} else {
 		$post_settings.find("a.close").on("click", function() {
-			app.set_in_post($post, $control_event, "assigned_to", null);
+			app.assign_post($post, null, $(this));
 		});
 	}
 }
 
-app.set_in_post = function($post, $control, fieldname, value) {
+app.assign_post = function($post, profile, $control) {
+	var post_name = $post.attr("data-name");
+	$control.prop("disabled", true);
 	$.ajax({
 		url: "/",
 		type: "POST",
 		data: {
-			cmd: "aapkamanch.post.set_in_post",
+			cmd: "aapkamanch.post.assign_post",
 			post: $post.attr("data-name"),
-			fieldname: fieldname,
-			value: value
+			profile: profile
 		},
 		statusCode: {
 			403: function(xhr) {
 				wn.msgprint("Not Permitted");
-				$control.val("");
 			},
 			200: function(data) {
-				$(".post-settings").remove();
-				app.setup_post_settings($post, data);
+				if(data._server_messages) {
+					wn.msgprint(JSON.parse(data._server_messages).join("\n"));
+				} else {
+					$(".post-settings").remove();
+					app.setup_post_settings($post, data.message.post_settings_html);
+					var fullname = data.message.assigned_to_fullname || "";
+					$post.find(".assigned-label")
+						.html(fullname || "")
+						.toggleClass("hide", !fullname);
+				}
 			}
 		}
+	}).always(function() {
+		$control.val("").prop("disabled", false);
 	});
-}
+};

@@ -14,16 +14,17 @@
 				<div class="col-sm-6 tags">
 					{% if with_unit %}
 						{% if not unit_map.get(post.unit) %}<i class="icon-lock"></i>{% endif %}
-						<a href="/{{ post.unit|lower }}">
-							<span class="label label-default">{{ post.unit }}</span></a>
+						<a href="/{{ post.unit|lower }}" class="label label-default">
+							{{ post.unit }}</a>
 					{% endif %}
 					
-					{% if post.event_datetime -%}
-					<span class="label label-info">Event<span class="event-when"></span></span>
-					{%- endif %}
-					{% if post.assigned_to -%}
-					<span class="label label-success">{{ post.assigned_to_fullname }}</span>
-					{%- endif %}
+					<span class="label label-info event-label
+						{% if not post.event_datetime -%}hide{%- endif %}">Event
+						<span class="event-when"></span>
+					</span>
+					<span class="label label-success assigned-label
+						{% if not post.assigned_to -%}hide{%- endif %}">{{ post.assigned_to_fullname }}
+					</span>
 				</div>
 				<div class="col-sm-6 text-right buttons">
 					{% if write -%}
