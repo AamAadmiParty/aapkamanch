@@ -28,7 +28,8 @@ def get_post_list_html(unit, limit_start=0, limit_length=20):
 
 @webnotes.whitelist()
 def add_post(unit, content):
-	if not get_access(unit).get("write"):
+	access = get_access(unit)
+	if not access.get("write"):
 		raise webnotes.PermissionError
 		
 	post = webnotes.bean({
@@ -44,7 +45,8 @@ def add_post(unit, content):
 	
 	webnotes.cache().delete_value("unit_html:" + unit)
 	
-	return webnotes.get_template("templates/includes/post.html").render({"post":post.doc.fields})
+	return webnotes.get_template("templates/includes/post.html").render({"post":post.doc.fields,
+		"write": access.get("write")})
 
 @webnotes.whitelist()
 def get_post_settings(unit, post_name):
