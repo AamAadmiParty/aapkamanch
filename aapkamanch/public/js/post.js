@@ -35,9 +35,9 @@ app.add_post = function() {
 };
 
 app.toggle_post_settings = function() {
-	// hide if exists
-	var $post = $(this).parents(".post:first");
-	var $post_settings = $(".post-settings");
+	var $btn = %(this).prop("disabled", true),
+		$post = $btn.parents(".post:first"),
+		$post_settings = $(".post-settings");
 
 	if($post_settings.parents(".post:first").attr("data-name") === $post.attr("data-name")) {
 		$post_settings.remove();
@@ -52,6 +52,7 @@ app.toggle_post_settings = function() {
 				unit: $post.attr("data-unit")
 			},
 			success: function(data) {
+				$btn.prop("disabled", false);
 				if(data.exc) {
 					console.log(data.exc);
 				} else {
