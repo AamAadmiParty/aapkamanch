@@ -7,7 +7,7 @@ import webnotes, json
 from helpers import get_access
 
 @webnotes.whitelist()
-def get_permission_html(unit):
+def get_unit_settings_html(unit):
 	if not get_access(unit).get("admin"):
 		raise webnotes.PermissionError
 	
@@ -16,7 +16,8 @@ def get_permission_html(unit):
 		up.`read`, up.`write`, up.`admin`
 		from tabProfile pr, `tabUnit Profile` up where up.profile = pr.name and up.parent=%s""", (unit,), as_dict=1)
 		
-	return webnotes.get_template("templates/includes/permission_editor.html").render({
+	return webnotes.get_template("templates/includes/unit_settings.html").render({
+		"public": webnotes.conn.get_value("Unit", unit, "public"),
 		"unit_profiles": unit_profiles
 	})
 

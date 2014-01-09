@@ -17,10 +17,10 @@
 	</div>
 	<div class="col-sm-4 col-sm-pull-8 sidebar">
 		{% include "templates/includes/user_nav.html" %}
-		{% if children %}
 		<div class="list-group unit-list-group">
+		{% if children %}
 			{% include "templates/includes/unit_list.html" %}
-		</div>
 		{% endif %}
+	</div>
 	</div>
 </div>

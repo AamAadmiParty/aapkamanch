@@ -1,0 +1,37 @@
+<div class="well permission-editor">
+	<h4>1. Add Sub Groups</h4>
+	<div class="row">
+		<div class="col-xs-10">
+			<input class="form-control control-add-group" placeholder="New Group Name"/>
+			<div class="text-muted"><small>Only letters, numbers and spaces</small></div>
+	        <div class="checkbox" style="position: static;">
+	            <label>
+	                <input type="checkbox" class="control-add-group-public" 
+						{{ "checked" if public else "disabled" }}> <span>Public</span>
+	            </label>
+	        </div>
+		</div>
+		<div class="col-xs-2">
+			<button class="btn btn-default btn-add-group"><i class="icon-plus"></i></button>
+		</div>
+	</div>
+	<hr>
+	<h4>2. Manage Users</h4>
+	<input class="form-control add-user-control" type="text" placeholder="Select User" />
+	<br>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th style="width: 55%">User</th>
+				<th style="width: 15%">Read</th>
+				<th style="width: 15%">Write</th>
+				<th style="width: 15%">Admin</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for unit_profile in unit_profiles %}
+				{% include "templates/includes/unit_profile.html" %}
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
