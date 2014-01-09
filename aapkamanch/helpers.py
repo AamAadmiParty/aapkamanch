@@ -67,7 +67,7 @@ def get_user_details(unit, fb_access_token=None):
 	out = {
 		"access": access,
 		"fb_username": get_fb_username(),
-		"task_count": webnotes.conn.count("Post", {"assigned_to": webnotes.session.user})
+		"task_count": get_task_count()
 	}
 	
 	if access and access.get("read"):
@@ -131,3 +131,6 @@ def get_child_unit_items(unit, public):
 		from tabUnit where 
 		ifnull(`public`,0) = %s 
 		and parent_unit=%s""", (public, unit), as_dict=1)
+		
+def get_task_count():
+	return webnotes.conn.count("Post", {"assigned_to": webnotes.session.user})
