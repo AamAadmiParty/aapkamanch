@@ -33,8 +33,11 @@ def suggest_user(term, unit):
 		{"term": "%{}%".format(term), "unit": unit}, as_dict=True)
 	
 	template = webnotes.get_template("templates/includes/profile_display.html")
-	return [{"value": pr.name, "profile_html": template.render({"unit_profile": pr})}
-		for pr in profiles]
+	return [{
+		"value": "{} {}".format(pr.first_name, pr.last_name), 
+		"profile_html": template.render({"unit_profile": pr}),
+		"profile": pr.name
+	} for pr in profiles]
 
 @webnotes.whitelist()
 def add_unit_profile(unit, profile):

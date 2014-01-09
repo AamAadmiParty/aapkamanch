@@ -34,13 +34,13 @@ app.render_authenticated_user = function(data) {
 	$(".user-picture").attr("src", "http://graph.facebook.com/" + data.fb_username + "/picture")
 
 	// render editor / add button if has access
-	if(data.access.write) {
-		$(".post-editor").toggle(true);
+	if(data.access && data.access.write) {
+		$(".feed-editor").toggle(true);
 	}
 
 	// render private groups
 	if(data.private_units) {
-		$(data.private_units).prependTo(".unit-list-group")
+		$(data.private_units).prependTo(".unit-list-group");
 	}
 	
 	if(data.access.admin) {
@@ -74,7 +74,7 @@ app.setup_autosuggest = function(opts) {
         },
 		select: function(event, ui) {
 			opts.$control.val("");
-			opts.select(ui.item.value);
+			opts.select(ui.item.profile);
 		}
 	});
 	
