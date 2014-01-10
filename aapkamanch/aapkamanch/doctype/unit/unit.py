@@ -23,7 +23,7 @@ class DocType(DocTypeNestedSet):
 		self.make_private_if_parent_is_private()
 		
 	def make_private_if_parent_is_private(self):
-		if not webnotes.conn.get_value("Unit", self.doc.parent_unit, "public"):
+		if self.doc.parent_unit and not webnotes.conn.get_value("Unit", self.doc.parent_unit, "public"):
 			self.doc.public = 0
 	
 	def validate_name(self):
