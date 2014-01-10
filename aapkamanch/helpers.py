@@ -81,12 +81,16 @@ def get_access(unit, profile=None):
 	if not profile:
 		profile = webnotes.session.user
 	
-	lft, rgt = webnotes.conn.get_value("Unit", unit, ["lft", "rgt"])
+	lft, rgt, public = webnotes.conn.get_value("Unit", unit, ["lft", "rgt", "public"])
 	
 	if not (lft and rgt):
 		raise webnotes.ValidationError("Please rebuild Unit Tree")
 	
 	read = write = admin = 0
+	
+	# give read access for public pages
+	if public:
+		read = 1
 	
 	for perm in webnotes.conn.sql("""select 
 		up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
