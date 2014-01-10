@@ -44,8 +44,6 @@ def add_user(data):
 	webnotes.local.login_manager.user = user
 	webnotes.local.login_manager.post_login()
 
-	return get_user_details(data["unit"])
-
 @webnotes.whitelist(allow_guest=True)
 def get_user_details(unit, fb_access_token=None):
 	if fb_access_token:

@@ -156,7 +156,7 @@ app.login_via_facebook = function() {
 					},
 					success: function(data) {
 						if(data.exc) console.log(data.exc);
-						app.render_authenticated_user(data.message);
+						window.location.reload();
 					}
 				})
 			});
