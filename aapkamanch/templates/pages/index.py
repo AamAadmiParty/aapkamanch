@@ -47,7 +47,8 @@ def get_unit_html(unit):
 	
 		return webnotes.get_template("templates/includes/unit.html").render(context)
 
-	return webnotes.cache().get_value("unit_html:" + unit, lambda:_get_unit_html(unit))
+	return _get_unit_html(unit)
+	#return webnotes.cache().get_value("unit_html:" + unit, lambda:_get_unit_html(unit))
 
 def get_unit_title(unit_name):
 	def _get_unit_title(unit_name):

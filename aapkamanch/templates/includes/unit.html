@@ -2,6 +2,12 @@
 <div class="row">
 	<div class="col-sm-8 col-sm-push-4">
 		<div class="feed">
+			<div class="unit-toolbar text-right clearfix hide">
+				<button class="btn btn-default btn-small btn-right btn-settings pull-right hide">
+					<i class="icon-cog"></i> Settings</button>
+				<button class="btn btn-default btn-small btn-right btn-follow pull-right">
+					<i class="icon-plus"></i> Follow</button>
+			</div>
 			{% if not public %}<div class="alert alert-warning">
 				<i class="icon-lock"></i> Private
 			</div>{% endif %}

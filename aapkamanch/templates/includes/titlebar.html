@@ -1,20 +1,8 @@
 <div class="titlebar">
 	<div class="titlebar-head">
 		<div class="row" style="padding: 10px">
-			<div class="col-xs-4">
-				{% if show_back_btn %}
-				<div class="left-button topnav-button">
-					<a onclick="window.history.back()">
-						<i class="icon-angle-left"></i>
-						<span class="left-title">Back</span>
-					</a>
-				</div>
-				{% endif %}
-			</div>
-			<div class="col-xs-4 text-center">
-				<b class="app-title">{% if not public %}<i class="icon-lock"></i> {% endif %}{{ title }}</b></div>
-			<div class="col-xs-4 text-right">
-				<a style="display: none; margin-right: 5px;" class="btn-settings"><i class="icon-cog"></i></a>
+			<div class="col-xs-12 text-center">
+				<b class="app-title">{% if not public %}<i class="icon-lock"></i> {% endif %}{{ title }}</b>
 			</div>
 		</div>
 		<table class="table">

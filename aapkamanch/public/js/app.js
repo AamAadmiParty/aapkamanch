@@ -43,8 +43,10 @@ app.render_authenticated_user = function(data) {
 		$(data.private_units).prependTo(".unit-list-group");
 	}
 	
+	$(".unit-toolbar").removeClass("hide");
+	
 	if(data.access.admin) {
-		$(".btn-settings").toggle(true);
+		$(".btn-settings").removeClass("hide");
 	}
 }
 

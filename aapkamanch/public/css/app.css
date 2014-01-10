@@ -16,6 +16,10 @@
 		overflow: hidden;
 	}
 
+	.footer-baseline {
+		border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
+	}
+	
 	.sidebar {
 		padding-right: 0px;
 		box-shadow: 3px 0px 7px -5px rgba(0,0,0,0.5);
@@ -68,13 +72,20 @@
 	cursor: pointer;
 }
 
+.unit-toolbar {
+	margin-bottom: 10px;
+}
+
 .feed {
 	padding: 15px;
 }
 
-.post-editor button {
+.btn-small, .post-editor .btn {
 	padding: 5px;
 	font-size: 90%;
+}
+
+.btn-right, .post-editor .btn {
 	margin-left: 5px;
 }
 
@@ -104,4 +115,11 @@
 
 .label {
 	font-weight: normal;
+}
+
+.footer-baseline {
+	background-color: #eee;
+	padding-top: 5px;
+	border-top: 1px dashed #aaa;
+	margin: 10px -15px 0px -15px;
 }
