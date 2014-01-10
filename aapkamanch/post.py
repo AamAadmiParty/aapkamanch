@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 import webnotes, json
+import markdown2
 
 from webnotes.utils import get_fullname
 from helpers import get_access, scrub_url
@@ -33,10 +34,10 @@ def add_post(unit, content, picture, picture_name, parent_post=None):
 	access = get_access(unit)
 	if not access.get("write"):
 		raise webnotes.PermissionError
-			
+	
 	post = webnotes.bean({
 		"doctype":"Post",
-		"content": content,
+		"content": markdown2.markdown(content),
 		"unit": unit,
 		"parent_post": parent_post or None
 	})
