@@ -20,7 +20,10 @@ def get_context():
 			if not get_access(unit).get("read"):
 				raise webnotes.PermissionError
 		
-		return {"content": get_unit_html(unit) }
+		return {
+			"title": "Aam Aadmi Party: " + get_unit_title(unit),
+			"content": get_unit_html(unit) 
+		}
 	except webnotes.DoesNotExistError:
 		return {"content": '<div class="alert alert-danger full-page">The page you are looking for does not exist.</div>'}
 	except webnotes.PermissionError:
@@ -44,6 +47,15 @@ def get_unit_html(unit):
 	
 		return webnotes.get_template("templates/includes/unit.html").render(context)
 
-	return _get_unit_html(unit)
-	#return webnotes.cache().get_value("unit_html:" + unit, lambda:_get_unit_html(unit))
+	return webnotes.cache().get_value("unit_html:" + unit, lambda:_get_unit_html(unit))
 
+def get_unit_title(unit_name):
+	def _get_unit_title(unit_name):
+		unit = webnotes.conn.get_value("Unit", unit_name, ["unit_title", "parent_unit", "unit_type"], as_dict=1)
+		title = unit.unit_title
+		if unit.parent_unit and unit.unit_type in ("Group", "Forum"):
+			title = webnotes.conn.get_value("Unit", unit.parent_unit, "unit_title") + " " + title
+			
+		return title
+	
+	return webnotes.cache().get_value("unit_title:" + unit_name, lambda: _get_unit_title(unit_name))
