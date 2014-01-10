@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 import webnotes
-from helpers import scrub_url
+from aapkamanch.helpers import scrub_url
 
 no_cache = 1
 

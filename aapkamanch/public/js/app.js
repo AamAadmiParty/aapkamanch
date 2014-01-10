@@ -53,8 +53,8 @@ app.render_authenticated_user = function(data) {
 app.setup_autosuggest = function(opts) {
 	if(opts.$control.hasClass("ui-autocomplete-input")) return;
 	
-	wn.require("assets/webnotes/js/lib/jquery/jquery.ui.min.js");
-	wn.require("assets/webnotes/js/lib/jquery/bootstrap_theme/jquery-ui.selected.css");
+	wn.require("/assets/webnotes/js/lib/jquery/jquery.ui.min.js");
+	wn.require("/assets/webnotes/js/lib/jquery/bootstrap_theme/jquery-ui.selected.css");
 
 	var $user_suggest = opts.$control.autocomplete({
 		source: function(request, response) {
@@ -93,12 +93,12 @@ app.setup_datepicker = function(opts) {
 	if(opts.$control.hasClass("hasDatetimepicker")) return;
 	
 	// libs required for datetime picker
-	wn.require("assets/webnotes/js/lib/jquery/jquery.ui.min.js");
-	wn.require("assets/webnotes/js/lib/jquery/bootstrap_theme/jquery-ui.selected.css");
-	wn.require("assets/webnotes/js/lib/jquery/jquery.ui.slider.min.js");
-	wn.require("assets/webnotes/js/lib/jquery/jquery.ui.sliderAccess.js");
-	wn.require("assets/webnotes/js/lib/jquery/jquery.ui.timepicker-addon.css");
-	wn.require("assets/webnotes/js/lib/jquery/jquery.ui.timepicker-addon.js");	
+	wn.require("/assets/webnotes/js/lib/jquery/jquery.ui.min.js");
+	wn.require("/assets/webnotes/js/lib/jquery/bootstrap_theme/jquery-ui.selected.css");
+	wn.require("/assets/webnotes/js/lib/jquery/jquery.ui.slider.min.js");
+	wn.require("/assets/webnotes/js/lib/jquery/jquery.ui.sliderAccess.js");
+	wn.require("/assets/webnotes/js/lib/jquery/jquery.ui.timepicker-addon.css");
+	wn.require("/assets/webnotes/js/lib/jquery/jquery.ui.timepicker-addon.js");	
 
 	opts.$control.datetimepicker({
 		timeFormat: "hh:mm:ss",

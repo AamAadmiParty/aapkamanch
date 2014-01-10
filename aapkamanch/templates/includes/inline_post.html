@@ -2,7 +2,8 @@
 		data-name="{{ post.name }}" data-unit="{{ post.unit }}">
 	<div class="row">
 		<div class="col-xs-2" style="min-height: 50px;">
-			<img src="https://graph.facebook.com/{{ post.fb_username }}/picture" class="img-responsive">
+			<img src="https://graph.facebook.com/{{ post.fb_username }}/picture" 
+				class="img-responsive post-avatar">
 		</div>
 		<div class="col-xs-10" style="margin-left: -15px; padding-right: 0px;">
 			<div>
@@ -35,20 +36,30 @@
 					assigned-label">{{ post.assigned_to_fullname }}
 				</span>
 			</div>
-			{% if "post_reply_count" in post %}
 			<div style="margin-top: 10px;">
-				<a href="post/{{ post.name }}" class="small">
-					{% if not post.post_reply_count -%}
-					<i class="icon-reply"></i> Reply
-					{% elif post.post_reply_count == 1 %}
-					{{ post.post_reply_count }} Reply
-					{% else %}
-					{{ post.post_reply_count }} Replies
-					{%- endif %}
-				</a>
+				<ul class="list-inline">
+					{% if "post_reply_count" in post %}
+					<li>
+						<a href="/post/{{ post.name }}" class="small">
+							{% if not post.post_reply_count -%}
+								{% if write -%}<i class="icon-reply"></i> Reply
+								{% else %}No Replies Yet{%- endif %}
+							{% elif post.post_reply_count == 1 %}
+							{{ post.post_reply_count }} Reply
+							{% else %}
+							{{ post.post_reply_count }} Replies
+							{%- endif %}
+						</a>
+					</li>
+					{% endif %}
+					{% if write %}
+					<li>
+						<a class="small btn-post-settings"><i class="icon-cog"></i> Set Event / Assign</a>
+					</li>
+					{% endif %}
+				</ul>
 			</div>
-			{% endif %}
-			<div class="post-settings-area"></div>
 		</div>
 	</div>
+	<div class="post-settings-area"></div>
 </div>

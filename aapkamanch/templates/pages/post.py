@@ -25,20 +25,20 @@ def get_context():
 	return {
 		"name": post.unit,
 		"title": title,
-		"parent_post_html": get_parent_post_html(post),
+		"parent_post_html": get_parent_post_html(post, access),
 		"post_list_html": get_child_posts_html(post),
 		"public": 1,
 		"parents": parents,
 		"parent_post": post.name
 	}
 	
-def get_parent_post_html(post):
+def get_parent_post_html(post, access):
 	profile = webnotes.bean("Profile", post.owner).doc
 	for fieldname in ("first_name", "last_name", "fb_username", "fb_hometown", "fb_location"):
 		post.fields[fieldname] = profile.fields[fieldname]
 	
 	return webnotes.get_template("templates/includes/inline_post.html", filters={"scrub_url": scrub_url})\
-		.render({"post": post.fields})
+		.render({"post": post.fields, "write": access.get("write")})
 
 @webnotes.whitelist()
 def get_child_posts_html(post, limit_start=0, limit_length=20):
