@@ -14,7 +14,7 @@
 	</div>
 	<ul class="breadcrumb">
 		{% for parent in parents %}
-			<li><a href="{{ parent.name|lower }}">{{ parent.unit_title }}</a></li>
+			<li><a href="/{{ parent.name|lower }}">{{ parent.unit_title }}</a></li>
 		{% endfor %}
 		<li class="active">{{ title }}</li>
 	</ul>

@@ -132,3 +132,8 @@ def get_child_unit_items(unit, public):
 		
 def get_task_count():
 	return webnotes.conn.count("Post", {"assigned_to": webnotes.session.user})
+	
+def scrub_url(url):
+	if not url or url.startswith("http"):
+		return url
+	return "/" + url

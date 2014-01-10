@@ -123,3 +123,12 @@
 	border-top: 1px dashed #aaa;
 	margin: 10px -15px 0px -15px;
 }
+
+.post {
+	border-bottom: 1px solid #eee;
+	padding: 15px 0px;
+}
+
+.parent-post .post {
+	border: none;
+}

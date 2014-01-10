@@ -31,7 +31,8 @@ app.add_post = function() {
 			unit: app.get_unit(),
 			content: content,
 			picture_name: $(".control-post-add-picture").val(),
-			picture: dataurl ? dataurl.split(",")[1] : ""
+			picture: dataurl ? dataurl.split(",")[1] : "",
+			parent_post: $(".post-editor").attr("data-parent-post") 
 		},
 		success: function(data) {
 			if(data.exc){

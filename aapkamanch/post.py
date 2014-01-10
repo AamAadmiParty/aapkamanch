@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import webnotes, json
 
 from webnotes.utils import get_fullname
-from helpers import get_access
+from helpers import get_access, scrub_url
 from webnotes.utils.file_manager import get_file_url, save_file
 
 @webnotes.whitelist()
@@ -18,16 +18,18 @@ def get_post_list_html(unit, limit_start=0, limit_length=20):
 	
 	posts = webnotes.conn.sql("""select p.name, p.unit, p.status,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
-		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name 
+		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name,
+		(select count(pc.name) from `tabPost` pc where pc.parent_post=p.name) as post_reply_count
 		from tabPost p, tabProfile pr
-		where p.unit=%s and pr.name = p.owner order by p.creation desc limit %s, %s""", 
+		where p.unit=%s and pr.name = p.owner and ifnull(p.parent_post, '')=''
+		order by p.creation desc limit %s, %s""", 
 			(unit, limit_start, limit_length), as_dict=True)
 			
-	return webnotes.get_template("templates/includes/post_list.html").render({"posts": posts, 
-		"limit_start":limit_start, "write": access.get("write")})
+	return webnotes.get_template("templates/includes/post_list.html", filters={"scrub_url": scrub_url})\
+		.render({"posts": posts, "limit_start":limit_start, "write": access.get("write")})
 
 @webnotes.whitelist()
-def add_post(unit, content, picture, picture_name):
+def add_post(unit, content, picture, picture_name, parent_post=None):
 	access = get_access(unit)
 	if not access.get("write"):
 		raise webnotes.PermissionError
@@ -35,7 +37,8 @@ def add_post(unit, content, picture, picture_name):
 	post = webnotes.bean({
 		"doctype":"Post",
 		"content": content,
-		"unit": unit
+		"unit": unit,
+		"parent_post": parent_post or None
 	})
 	post.ignore_permissions = True
 	post.insert()
@@ -50,7 +53,7 @@ def add_post(unit, content, picture, picture_name):
 	
 	webnotes.cache().delete_value("unit_html:" + unit)
 	
-	return webnotes.get_template("templates/includes/post.html").render({"post":post.doc.fields,
+	return webnotes.get_template("templates/includes/inline_post.html").render({"post":post.doc.fields,
 		"write": access.get("write")})
 
 @webnotes.whitelist()

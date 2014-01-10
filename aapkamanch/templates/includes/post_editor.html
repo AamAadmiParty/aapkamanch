@@ -1,4 +1,5 @@
-<div class="post-editor well" style="display:none;">
+<div class="post-editor well" style="display:none;" 
+		{% if parent_post %}data-parent-post="{{ parent_post }}"{% endif %}>
 	<textarea class="form-control post-add-control" style="height: 100px;" placeholder="Enter text"></textarea>
 	<div class="post-picture" style="margin-top: 10px; display: none;">
 		<img src="" class="img-responsive" />

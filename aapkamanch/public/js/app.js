@@ -117,9 +117,7 @@ app.toggle_date_format = function(datetime) {
 }
 
 app.get_unit = function() {
-	var unit = decodeURIComponent(window.location.pathname.substr(1) || "india").toLowerCase();
-	if(!unit || unit==="index" || unit==="index.html") unit = "india";
-	return unit;
+	return window.app.unit || "india";
 }
 
 app.logout = function() {
