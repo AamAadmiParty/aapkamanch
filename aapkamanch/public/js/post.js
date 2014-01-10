@@ -22,6 +22,9 @@ app.add_post = function() {
 	}
 	var dataurl = $(".post-picture img").attr("src");
 	
+	// convert links in content
+	content = app.process_external_links(content);
+	
 	$(btn).prop("disabled", true);
 	$.ajax({
 		type: "POST",
@@ -250,4 +253,8 @@ app.format_event_timestamps = function() {
 	$(".event-timestamp").each(function() {
 		$(this).html(app.toggle_date_format($(this).attr("data-timestamp")));
 	})
+}
+
+app.process_external_links = function(content) {
+	return content.replace(/((ht|f)tp[s]?:\/\/[^\s]*)/g, '<a href="$1" target="_blank">$1</a>');
 }
