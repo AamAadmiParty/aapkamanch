@@ -15,7 +15,7 @@ def get_context():
 		"title": "Tasks",
 		"post_list_html": get_task_list_html(tasks=tasks),
 		"public": 1,
-		"parents": [{"name": "/", "unit_title": "Home"}]
+		"parents": [{"name": "", "unit_title": "Home"}]
 	}
 
 def get_task_list(limit_start=0, limit_length=20):
