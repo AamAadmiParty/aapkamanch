@@ -1,33 +1,35 @@
 {% include "templates/includes/titlebar.html" %}
-<div class="row">
-	<div class="col-sm-8 col-sm-push-4">
-		<div class="feed">
-			<div class="unit-toolbar text-right clearfix hide">
-				<button class="btn btn-default btn-small btn-right btn-settings pull-right hide">
-					<i class="icon-cog"></i> Settings</button>
-				<button class="btn btn-default btn-small btn-right btn-follow pull-right">
-					<i class="icon-plus"></i> Follow</button>
-			</div>
-			{% if not public %}<div class="alert alert-warning">
-				<i class="icon-lock"></i> Private
-			</div>{% endif %}
-			<div class="permission-editor-area"></div>
-			{% include "templates/includes/post_editor.html" %}
-			<div class="post-list">
-			{{ post_list_html }}
-			</div>
-			<div class="text-center">
-				<button class="btn btn-default btn-more" style="display:none;">More</button>
+<div class="container" style="padding:0px;">
+	<div class="row">
+		<div class="col-sm-8 col-sm-push-4">
+			<div class="feed">
+				<div class="unit-toolbar text-right clearfix hide">
+					<button class="btn btn-default btn-small btn-right btn-settings pull-right hide">
+						<i class="icon-cog"></i> Settings</button>
+					<button class="btn btn-default btn-small btn-right btn-follow pull-right">
+						<i class="icon-plus"></i> Follow</button>
+				</div>
+				{% if not public %}<div class="alert alert-warning">
+					<i class="icon-lock"></i> Private
+				</div>{% endif %}
+				<div class="permission-editor-area"></div>
+				{% include "templates/includes/post_editor.html" %}
+				<div class="post-list">
+				{{ post_list_html }}
+				</div>
+				<div class="text-center">
+					<button class="btn btn-default btn-more" style="display:none;">More</button>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-sm-4 col-sm-pull-8 sidebar">
-		{% include "templates/includes/user_nav.html" %}
-		<div class="list-group unit-list-group">
-		{% if children %}
-			{% include "templates/includes/unit_list.html" %}
-		{% endif %}
-	</div>
+		<div class="col-sm-4 col-sm-pull-8 sidebar">
+			{% include "templates/includes/user_nav.html" %}
+			<div class="list-group unit-list-group">
+			{% if children %}
+				{% include "templates/includes/unit_list.html" %}
+			{% endif %}
+		</div>
+		</div>
 	</div>
 </div>
 <script>
