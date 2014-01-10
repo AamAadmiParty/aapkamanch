@@ -12,3 +12,5 @@ class DocType:
 	def __init__(self, d, dl):
 		self.doc, self.doclist = d, dl
 	
+	def on_update(self):
+		webnotes.cache().delete_value("unit_html:" + self.doc.unit)
