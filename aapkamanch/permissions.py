@@ -14,10 +14,14 @@ def get_unit_settings_html(unit):
 	unit_profiles = webnotes.conn.sql("""select pr.first_name, pr.last_name, 
 		pr.fb_username, pr.fb_location, pr.fb_hometown, up.profile,
 		up.`read`, up.`write`, up.`admin`
-		from tabProfile pr, `tabUnit Profile` up where up.profile = pr.name and up.parent=%s""", (unit,), as_dict=1)
-		
+		from tabProfile pr, `tabUnit Profile` up 
+		where up.profile = pr.name and up.parent=%s""", (unit,), as_dict=1)
+	
+	unit = webnotes.conn.get_value("Unit", unit, ["public", "forum"], as_dict=True)
+	
 	return webnotes.get_template("templates/includes/unit_settings.html").render({
-		"public": webnotes.conn.get_value("Unit", unit, "public"),
+		"public": unit.public,
+		"forum": unit.forum,
 		"unit_profiles": unit_profiles
 	})
 

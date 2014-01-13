@@ -49,12 +49,13 @@ def get_unit_html(unit, view=None):
 			"name": unit.name,
 			"public": unit.public,
 			"title": title,
+			"forum": unit.forum,
 			"parents": parents,
 			"children": get_child_unit_items(unit.name, public=1),
 			"post_list_html": get_post_list_html(unit.name, view=view),
 			"view": view
 		}
-	
+		
 		return webnotes.get_template("templates/includes/unit.html").render(context)
 
 	return _get_unit_html(unit, view=view)
