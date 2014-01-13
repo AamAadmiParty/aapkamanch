@@ -36,7 +36,8 @@ def add_user(data):
 			"fb_age_range": data.get("age_range") and "{min}-{max}".format(**data.get("age_range")),
 			"birth_date":  data.get("birthday"),
 			"fb_bio": data.get("bio"),
-			"fb_education": data.get("education") and data.get("education")[-1].get("type")
+			"fb_education": data.get("education") and data.get("education")[-1].get("type"),
+			"user_type": "Website User"
 		})
 		profile.ignore_permissions = True
 		profile.insert()

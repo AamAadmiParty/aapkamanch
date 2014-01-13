@@ -54,11 +54,14 @@ def add_post(unit, content, picture, picture_name, parent_post=None):
 		file_data = save_file(picture_name, picture, "Post", post.doc.name, decode=True)
 		post.doc.picture_url = file_data.file_name or file_data.file_url
 		webnotes.conn.set_value("Post", post.doc.name, "picture_url", post.doc.picture_url)
+		
+	webnotes.cache().delete_value("unit_html:" + unit)
+	
+	# send email
+	post.run_method("send_email_on_reply")
 	
 	post.doc.fields.update(webnotes.conn.get_value("Profile", webnotes.session.user, 
 		["first_name", "last_name", "fb_username"], as_dict=True))
-	
-	webnotes.cache().delete_value("unit_html:" + unit)
 	
 	return webnotes.get_template("templates/includes/inline_post.html").render({"post":post.doc.fields,
 		"write": access.get("write")})

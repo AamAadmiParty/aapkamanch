@@ -40,10 +40,13 @@
 				</span>
 			</div>
 			<div style="margin-top: 10px;" class="inline-post-actions">
-				<ul class="list-inline">
-					{% if "post_reply_count" in post %}
+				<ul class="list-inline small">
+					{% if not parent_post and post.parent_post %}
+					<li><a href="/post/{{ post.parent_post }}" class="text-muted">
+						<i class="icon-reply-all"></i> Reply on Main Post</a></li>
+					{% elif "post_reply_count" in post %}
 					<li>
-						<a href="/post/{{ post.name }}" class="small">
+						<a href="/post/{{ post.name }}">
 							{% if not post.post_reply_count -%}
 								{% if write -%}<i class="icon-reply"></i> Reply
 								{% else %}No Replies Yet{%- endif %}
@@ -57,7 +60,7 @@
 					{% endif %}
 					{% if write %}
 					<li>
-						<a class="small btn-post-settings text-muted"><i class="icon-cog"></i> Set Event / Task</a>
+						<a class="btn-post-settings text-muted"><i class="icon-cog"></i> Set Event / Task</a>
 					</li>
 					{% endif %}
 				</ul>
