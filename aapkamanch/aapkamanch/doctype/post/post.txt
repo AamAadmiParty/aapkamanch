@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-13 12:33:58", 
+  "modified": "2014-01-13 17:12:17", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -94,7 +94,8 @@
   "fieldname": "status", 
   "fieldtype": "Select", 
   "label": "Status", 
-  "options": "\nAssigned\nCompleted"
+  "options": "Open\nAssigned\nCompleted", 
+  "reqd": 0
  }, 
  {
   "doctype": "DocField", 

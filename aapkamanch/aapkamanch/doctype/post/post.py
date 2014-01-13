@@ -13,8 +13,12 @@ class DocType:
 		self.doc, self.doclist = d, dl
 		
 	def validate(self):
-		if not self.doc.is_task:
+		if self.doc.is_task:
+			if not self.doc.status:
+				self.doc.status = "Open"
+		else:
 			self.doc.assigned_to = self.doc.status = None
+		
 	
 	def on_update(self):
 		webnotes.cache().delete_value("unit_html:" + self.doc.unit)
