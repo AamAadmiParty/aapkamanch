@@ -19,7 +19,7 @@ def get_context():
 	}
 
 def get_task_list(limit_start=0, limit_length=20):
-	return webnotes.conn.sql("""select p.name, p.unit,
+	return webnotes.conn.sql("""select p.name, p.unit, p.is_task,
 		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname,
 		(select count(pc.name) from `tabPost` pc where pc.parent_post=p.name) as post_reply_count

@@ -1,1 +1,2 @@
 aapkamanch.patches.add_missing_hyphen
+aapkamanch.patches.convert_to_task

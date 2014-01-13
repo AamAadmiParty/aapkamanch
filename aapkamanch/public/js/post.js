@@ -122,30 +122,64 @@ app.setup_post_settings = function($post, post_settings_html) {
 	$control_event.val(app.toggle_date_format($control_event.val()));
 	
 	// set event
-	$(".btn-set-event").on("click", function() {
+	$post_settings.find(".btn-set-event").on("click", function() {
 		app.set_event($post, app.toggle_date_format($control_event.val()), $(this));
 	});
 	
-	
-	// assign events
-	var $control_assign = $post_settings.find(".control-assign").empty();
-	if($control_assign.length) {
-		app.setup_autosuggest({
-			$control: $control_assign,
-			select: function(value) {
-				app.assign_post($post, value, $control_assign);
-			},
-			method: "aapkamanch.post.suggest_user"
+	// tasks
+	var $control_task = $post_settings.find(".control-task")
+		.on("change", function() {
+			app.convert_to_task($post, $(this).prop("checked"), $(this));
 		});
-	} else {
-		$post_settings.find("a.close").on("click", function() {
-			app.assign_post($post, null, $(this));
+	
+	if($control_task.prop("checked")) {
+		// assign events
+		var $control_assign = $post_settings.find(".control-assign").empty();
+		if($control_assign.length) {
+			app.setup_autosuggest({
+				$control: $control_assign,
+				select: function(value) {
+					app.assign_post($post, value, $control_assign);
+				},
+				method: "aapkamanch.post.suggest_user"
+			});
+		} else {
+			$post_settings.find("a.close").on("click", function() {
+				app.assign_post($post, null, $(this));
+			});
+		}
+	
+		var $control_status = $post_settings.find(".control-status").on("change", function() {
+			app.update_task_status($post, $(this).val(), $(this));
 		});
 	}
+}
+
+app.convert_to_task = function($post, checked, $control) {
+	$control.prop("disabled", true);
+	$.ajax({
+		url: "/",
+		type: "POST",
+		data: {
+			cmd: "aapkamanch.post.convert_to_task",
+			post: $post.attr("data-name"),
+			is_task: checked ? "1": "0"
+		},
+		statusCode: {
+			403: function(xhr) {
+				wn.msgprint("Not Permitted");
+			},
+			200: function(data) {
+				$(".post-settings").remove();
+				app.setup_post_settings($post, data.message);
+				$post.find(".assigned-label").toggleClass("hide", !checked);
+				$post.find(".assigned-label-fullname").html("");
+			}
+		}
+	}).always(function() {
+		$control.prop("disabled", false);
+	})
 	
-	var $control_status = $post_settings.find(".control-status").on("change", function() {
-		app.update_task_status($post, $(this).val(), $(this));
-	});
 }
 
 app.assign_post = function($post, profile, $control) {
@@ -169,9 +203,7 @@ app.assign_post = function($post, profile, $control) {
 					$(".post-settings").remove();
 					app.setup_post_settings($post, data.message.post_settings_html);
 					var fullname = data.message.assigned_to_fullname || "";
-					$post.find(".assigned-label")
-						.html(fullname || "")
-						.toggleClass("hide", !fullname);
+					$post.find(".assigned-label-fullname").html(fullname || "");
 					if(app.get_unit()==="tasks" && !fullname) {
 						$post.remove();
 					}

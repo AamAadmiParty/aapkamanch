@@ -5,25 +5,31 @@ from __future__ import unicode_literals
 import webnotes, json
 import markdown2
 
-from webnotes.utils import get_fullname
+from webnotes.utils import get_fullname, cint
 from helpers import get_access, scrub_url
 from webnotes.utils.file_manager import get_file_url, save_file
 
 @webnotes.whitelist()
-def get_post_list_html(unit, limit_start=0, limit_length=20):
+def get_post_list_html(unit, view=None, limit_start=0, limit_length=20):
 	access = get_access(unit)
 	if webnotes.local.form_dict.cmd=="get_post_list_html":
 		# for paging
 		if not access.get("read"):
 			raise webnotes.PermissionError
 	
-	posts = webnotes.conn.sql("""select p.name, p.unit, p.status,
+	conditions = ""
+	if view=="tasks":
+		conditions = "and p.is_task=1"
+	elif view=="events":
+		conditions = "and ifnull(p.event_datetime, '')!=''"
+	
+	posts = webnotes.conn.sql("""select p.name, p.unit, p.status, p.is_task,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
 		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name,
 		(select count(pc.name) from `tabPost` pc where pc.parent_post=p.name) as post_reply_count
 		from tabPost p, tabProfile pr
-		where p.unit=%s and pr.name = p.owner and ifnull(p.parent_post, '')=''
-		order by p.creation desc limit %s, %s""", 
+		where p.unit=%s and pr.name = p.owner and ifnull(p.parent_post, '')='' {conditions}
+		order by p.creation desc limit %s, %s""".format(conditions=conditions), 
 			(unit, limit_start, limit_length), as_dict=True)
 			
 	return webnotes.get_template("templates/includes/post_list.html", filters={"scrub_url": scrub_url})\
@@ -76,6 +82,19 @@ def get_post_settings(unit, post_name):
 		"unit_profile": profile,
 		"status_options": (webnotes.get_doctype("Post").get_options("status") or "").split("\n")
 	})
+	
+@webnotes.whitelist()
+def convert_to_task(post, is_task):
+	post = webnotes.bean("Post", post)
+
+	if not get_access(post.doc.unit).get("write"):
+		raise webnotes.PermissionError("You are not allowed edit this post")
+	
+	post.doc.is_task = cint(is_task)
+	post.ignore_permissions = True
+	post.save()
+	
+	return get_post_settings(post.doc.unit, post.doc.name)
 	
 @webnotes.whitelist()
 def assign_post(post, profile=None):

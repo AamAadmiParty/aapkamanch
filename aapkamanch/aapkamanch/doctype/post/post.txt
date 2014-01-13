@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-10 10:55:30", 
+  "modified": "2014-01-13 12:33:58", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -69,6 +69,12 @@
   "fieldname": "event_datetime", 
   "fieldtype": "Datetime", 
   "label": "Event Datetime"
+ }, 
+ {
+  "doctype": "DocField", 
+  "fieldname": "is_task", 
+  "fieldtype": "Check", 
+  "label": "Is Task"
  }, 
  {
   "doctype": "DocField", 

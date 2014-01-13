@@ -7,7 +7,7 @@ $(function() {
 app.toggle_unit_settings = function() {
 	if(app.settings_shown) {
 		$(".permission-editor-area").toggle(false);
-		$(".btn-settings").removeClass("btn-primary").addClass("btn-default");
+		$(".btn-settings").parent().removeClass("active");
 		app.settings_shown = false;
 	} else {
 		if(!app.settings_loaded) {
@@ -38,11 +38,11 @@ app.toggle_unit_settings = function() {
 					$(".permission-editor-area").on("click", ".unit-profile [type='checkbox']", 
 						app.update_permission);
 					$(".permission-editor-area").find(".btn-add-group").on("click", app.add_group);
-					$(".btn-settings").removeClass("btn-default").addClass("btn-primary");				}
+					$(".btn-settings").parent().addClass("active");				}
 			})
 		} else {
 			$(".permission-editor-area").toggle(true);
-			$(".btn-settings").removeClass("btn-default").addClass("btn-primary");
+			$(".btn-settings").parent().addClass("active");
 		}
 		app.settings_shown = true;
 	}

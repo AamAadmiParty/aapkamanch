@@ -3,12 +3,24 @@
 	<div class="row">
 		<div class="col-sm-8 col-sm-push-4">
 			<div class="feed">
-				<div class="unit-toolbar text-right clearfix hide">
+				<!-- <div class="unit-toolbar text-right clearfix hide">
 					<button class="btn btn-default btn-small btn-right btn-settings pull-right hide">
 						<i class="icon-cog"></i> Settings</button>
 					<button class="btn btn-default btn-small btn-right btn-follow pull-right">
 						<i class="icon-plus"></i> Follow</button>
+				</div> -->
+				<div class="unit-toolbar hide pull-right">
+					<ul class="nav nav-pills">
+						<li><a class="btn-follow"><i class="icon-plus"></i> Follow</a></li>
+						<li {% if view=="events" %}class="active"{% endif %}>
+							<a href="/{{ name|lower }}/events"><i class="icon-calendar"></i> Events</a></li>
+						<li {% if view=="tasks" %}class="active"{% endif %}>
+							<a href="/{{ name|lower }}/tasks"><i class="icon-pencil"></i> Tasks</a></li>
+						<li><a class="btn-settings hide"><i class="icon-cog"></i> Settings</a></li>
+					</ul>
 				</div>
+				<div class="clearfix"></div>
+				
 				{% if not public %}<div class="alert alert-warning">
 					<i class="icon-lock"></i> Private
 				</div>{% endif %}

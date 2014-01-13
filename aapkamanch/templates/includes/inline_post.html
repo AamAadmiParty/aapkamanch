@@ -25,18 +25,21 @@
 				{% endif %}
 				
 				<span class="label label-info event-label
-					{% if not post.event_datetime -%}hide{%- endif %}">Event:
+					{% if not post.event_datetime -%}hide{%- endif %}"><i class="icon-calendar"></i>
 					<span class="event-timestamp" 
 						data-timestamp="{{ post.event_datetime or ''}}"></span>
 				</span>
 				
 				<span class="label 
 					{% if post.status=='Completed' -%}label-success{% else %}label-warning{%- endif %}
-					{% if not post.assigned_to -%}hide{%- endif %}
-					assigned-label">{{ post.assigned_to_fullname }}
+					{% if not post.is_task -%}hide{%- endif %}
+					assigned-label"><i class="icon-pencil"></i>
+					{% if post.assigned_to %}
+					<span class="assigned-label-fullname">{{ post.assigned_to_fullname }}</span>
+					{% endif %}
 				</span>
 			</div>
-			<div style="margin-top: 10px;">
+			<div style="margin-top: 10px;" class="inline-post-actions">
 				<ul class="list-inline">
 					{% if "post_reply_count" in post %}
 					<li>
@@ -54,7 +57,7 @@
 					{% endif %}
 					{% if write %}
 					<li>
-						<a class="small btn-post-settings"><i class="icon-cog"></i> Set Event / Assign</a>
+						<a class="small btn-post-settings text-muted"><i class="icon-cog"></i> Set Event / Task</a>
 					</li>
 					{% endif %}
 				</ul>

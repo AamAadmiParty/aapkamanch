@@ -51,7 +51,7 @@ def get_child_posts_html(post, limit_start=0, limit_length=20):
 		if not access.get("read"):
 			raise webnotes.PermissionError
 	
-	posts = webnotes.conn.sql("""select p.name, p.unit, p.status,
+	posts = webnotes.conn.sql("""select p.name, p.unit, p.status, p.is_task,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
 		p.creation, p.content, p.parent_post, pr.fb_username, pr.first_name, pr.last_name
 		from tabPost p, tabProfile pr
