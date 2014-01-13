@@ -58,7 +58,8 @@ def add_post(unit, content, picture, picture_name, parent_post=None):
 	webnotes.cache().delete_value("unit_html:" + unit)
 	
 	# send email
-	post.run_method("send_email_on_reply")
+	if parent_post:
+		post.run_method("send_email_on_reply")
 	
 	post.doc.fields.update(webnotes.conn.get_value("Profile", webnotes.session.user, 
 		["first_name", "last_name", "fb_username"], as_dict=True))
