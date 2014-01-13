@@ -1,1 +1,2 @@
 aapkamanch.patches.add_missing_hyphen
+aapkamanch.patches.make_all_forums_public
