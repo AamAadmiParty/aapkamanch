@@ -145,3 +145,7 @@ def scrub_url(url):
 	if not url or url.startswith("http"):
 		return url
 	return "/" + url
+
+def clear_unit_cache(key, unit):
+	for view in ("feed", "tasks", "events"):
+		webnotes.cache().delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view))

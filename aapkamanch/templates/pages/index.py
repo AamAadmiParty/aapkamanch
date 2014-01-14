@@ -19,7 +19,7 @@ def get_context():
 		
 		if "/" in unit:
 			unit, view = unit.split("/", 1)
-		
+			
 		if not is_public(unit):
 			if not get_access(unit).get("read"):
 				raise webnotes.PermissionError
@@ -59,7 +59,8 @@ def get_unit_context(unit, view=None):
 			"children": get_child_unit_items(unit.name, public=1),
 		}
 		
-	return webnotes.cache().get_value("unit_context:" + unit, lambda:_get_unit_context(unit, view))
+	return webnotes.cache().get_value("unit_context:{unit}:{view}".format(unit=unit, view=view or "feed"), 
+		lambda:_get_unit_context(unit, view))
 
 def get_unit_html(context, view=None):
 	def _get_unit_html(context, view=None):
@@ -69,7 +70,8 @@ def get_unit_html(context, view=None):
 		})
 		return webnotes.get_template("templates/includes/unit.html").render(context)
 
-	return webnotes.cache().get_value("unit_html:" + context.get("name"), lambda:_get_unit_html(context, view))
+	return webnotes.cache().get_value("unit_html:{unit}:{view}".format(unit=context.get("name"), view=view or "feed"), 
+		lambda:_get_unit_html(context, view))
 
 def get_unit_title(unit_name):
 	def _get_unit_title(unit_name):
