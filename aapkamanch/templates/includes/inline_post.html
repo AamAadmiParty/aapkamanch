@@ -19,7 +19,7 @@
 			{% endif %}
 			<div style="margin-top: 10px;">
 				{% if with_unit %}
-					{% if not unit_map.get(post.unit) %}<i class="icon-lock"></i>{% endif %}
+					{% if not post.public %}<i class="icon-lock"></i>{% endif %}
 					<a href="/{{ post.unit|lower }}" class="label label-default">
 						{{ post.unit }}</a>
 				{% endif %}

@@ -13,3 +13,6 @@ after_install = aapkamanch.utils.after_install
 website_catch_all = index
 
 base_template = templates/app_base.html
+jenv_filter = scrub_url:aapkamanch.helpers.scrub_url
+
+scheduler_event = daily:aapkamanch.summary.send_daily_summary
