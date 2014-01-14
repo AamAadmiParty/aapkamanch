@@ -43,6 +43,6 @@ class DocType(DocTypeNestedSet):
 	def on_update(self):
 		DocTypeNestedSet.on_update(self)
 		cache = webnotes.cache()
-		for key in ("is_public", "unit_html", "unit_title"):
+		for key in ("is_public", "unit_html", "unit_title", "unit_context"):
 			cache.delete_value(key + ":" + self.doc.name)
 		

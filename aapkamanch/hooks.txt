@@ -11,3 +11,5 @@ app_version = 0.0.1
 after_install = aapkamanch.utils.after_install
 
 website_catch_all = index
+
+base_template = templates/app_base.html

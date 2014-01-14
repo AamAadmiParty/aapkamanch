@@ -24,17 +24,22 @@ def get_context():
 			if not get_access(unit).get("read"):
 				raise webnotes.PermissionError
 		
-		return {
+		unit_context = get_unit_context(unit, view)
+		
+		unit_context.update({
 			"title": "Aam Aadmi Party: " + get_unit_title(unit),
-			"content": get_unit_html(unit, view)
-		}
+			"content": get_unit_html(unit_context, view)
+		})
+		
+		return unit_context
+		
 	except webnotes.DoesNotExistError:
 		return {"content": '<div class="alert alert-danger full-page">The page you are looking for does not exist.</div>'}
 	except webnotes.PermissionError:
 		return {"content": '<div class="alert alert-danger full-page">You are not permitted to view this page.</div>'}
-	
-def get_unit_html(unit, view=None):
-	def _get_unit_html(unit, view=None):
+
+def get_unit_context(unit, view=None):
+	def _get_unit_context(unit, view=None):
 		unit = webnotes.doc("Unit", unit)
 		
 		parents = webnotes.conn.sql("""select name, unit_title from tabUnit 
@@ -44,22 +49,27 @@ def get_unit_html(unit, view=None):
 		if view:
 			title += ": {}".format(view.title())
 			parents += [{"name": unit.name, "unit_title": unit.unit_title}]
-
-		context = {
+			
+		return {
 			"name": unit.name,
 			"public": unit.public,
-			"title": title,
+			"unit_title": title,
 			"forum": unit.forum,
 			"parents": parents,
 			"children": get_child_unit_items(unit.name, public=1),
-			"post_list_html": get_post_list_html(unit.name, view=view),
-			"view": view
 		}
 		
+	return webnotes.cache().get_value("unit_context:" + unit, lambda:_get_unit_context(unit, view))
+
+def get_unit_html(context, view=None):
+	def _get_unit_html(context, view=None):
+		context.update({
+			"post_list_html": get_post_list_html(context.get("name"), view=view),
+			"view": view
+		})
 		return webnotes.get_template("templates/includes/unit.html").render(context)
 
-	return _get_unit_html(unit, view=view)
-	#return webnotes.cache().get_value("unit_html:" + unit, lambda:_get_unit_html(unit))
+	return webnotes.cache().get_value("unit_html:" + context.get("name"), lambda:_get_unit_html(context, view))
 
 def get_unit_title(unit_name):
 	def _get_unit_title(unit_name):
