@@ -27,7 +27,6 @@ def get_context():
 		"title": title,
 		"parent_post_html": get_parent_post_html(post, access),
 		"post_list_html": get_child_posts_html(post),
-		"public": 1,
 		"parents": parents,
 		"parent_post": post.name
 	}
@@ -51,7 +50,7 @@ def get_child_posts_html(post, limit_start=0, limit_length=20):
 		if not access.get("read"):
 			raise webnotes.PermissionError
 	
-	posts = webnotes.conn.sql("""select p.name, p.unit, p.status,
+	posts = webnotes.conn.sql("""select p.name, p.unit, p.status, p.is_task,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
 		p.creation, p.content, p.parent_post, pr.fb_username, pr.first_name, pr.last_name
 		from tabPost p, tabProfile pr
@@ -60,4 +59,9 @@ def get_child_posts_html(post, limit_start=0, limit_length=20):
 			(post.name, limit_start, limit_length), as_dict=True)
 			
 	return webnotes.get_template("templates/includes/post_list.html", filters={"scrub_url": scrub_url})\
-		.render({"posts": posts, "limit_start":limit_start, "write": access.get("write")})
+		.render({
+			"posts": posts, 
+			"limit_start":limit_start, 
+			"write": access.get("write"),
+			"parent_post": post.name
+		})

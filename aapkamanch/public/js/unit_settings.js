@@ -7,7 +7,7 @@ $(function() {
 app.toggle_unit_settings = function() {
 	if(app.settings_shown) {
 		$(".permission-editor-area").toggle(false);
-		$(".btn-settings").removeClass("btn-primary").addClass("btn-default");
+		$(".btn-settings").parent().removeClass("active");
 		app.settings_shown = false;
 	} else {
 		if(!app.settings_loaded) {
@@ -18,34 +18,48 @@ app.toggle_unit_settings = function() {
 					unit: app.get_unit()
 				},
 				success: function(data) {
-					if(data.exc) 
-						console.log(data.exc)
-					$(".permission-editor-area").toggle(true)
-						.empty().html(data.message);
-					app.settings_loaded = true;
-					
-					// autosuggest
-					app.setup_autosuggest({
-						$control: $(".add-user-control"),
-						select: function(value) { 
-							app.add_unit_profile(value); 
-						},
-						method: "aapkamanch.permissions.suggest_user"
-					});
-
-					
-					// trigger for change permission
-					$(".permission-editor-area").on("click", ".unit-profile [type='checkbox']", 
-						app.update_permission);
-					$(".permission-editor-area").find(".btn-add-group").on("click", app.add_group);
-					$(".btn-settings").removeClass("btn-default").addClass("btn-primary");				}
-			})
+					app.show_unit_settings(data);
+				}
+			});
 		} else {
 			$(".permission-editor-area").toggle(true);
-			$(".btn-settings").removeClass("btn-default").addClass("btn-primary");
+			$(".btn-settings").parent().addClass("active");
 		}
 		app.settings_shown = true;
 	}
+}
+
+app.show_unit_settings = function(data) {
+	if(data.exc) 
+		console.log(data.exc)
+	$(".permission-editor-area").toggle(true)
+		.empty().html(data.message);
+	app.settings_loaded = true;
+	
+	// autosuggest
+	app.setup_autosuggest({
+		$control: $(".add-user-control"),
+		select: function(value) { 
+			app.add_unit_profile(value); 
+		},
+		method: "aapkamanch.permissions.suggest_user"
+	});
+
+	
+	// trigger for change permission
+	$(".permission-editor-area").on("click", ".unit-profile [type='checkbox']", 
+		app.update_permission);
+	$(".permission-editor-area").find(".btn-add-group").on("click", app.add_group);
+	$(".btn-settings").parent().addClass("active");
+	
+	// disabled forum if not public
+	$(".control-add-group-public").click(function() {
+		if(!$(this).prop("checked")) {
+			$(".control-add-group-forum").prop("checked", false).prop("disabled", true);
+		} else {
+			$(".control-add-group-forum").prop("disabled", false);
+		}
+	});
 }
 
 app.add_group = function() {
@@ -60,7 +74,8 @@ app.add_group = function() {
 				cmd:"aapkamanch.unit.add_unit",
 				unit: app.get_unit(),
 				new_unit: $control.val(),
-				public: $(".control-add-group-public").is(":checked") ? 1 : 0
+				public: $(".control-add-group-public").is(":checked") ? 1 : 0,
+				forum: $(".control-add-group-forum").is(":checked") ? 1 : 0
 			},
 			statusCode: {
 				403: function() {

@@ -35,7 +35,7 @@ app.render_authenticated_user = function(data) {
 
 	// render editor / add button if has access
 	if(data.access && data.access.write) {
-		$(".post-editor").toggle(true);
+		$(".post-editor").toggleClass("hide", false);
 	}
 
 	// render private groups

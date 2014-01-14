@@ -2,19 +2,21 @@
 	<h5>Post Settings</h5>
 	<div class="form-group" style="position: static;">
 		<label>Add Date and Time</label>
-		<div class="row">
-			<div class="col-xs-10">
-				<input type="text" class="form-control control-event" 
-					placeholder="Enter Event Date and Time" 
-					{% if post.event_datetime %}value="{{ post.event_datetime }}"{% endif %}/>
-			</div>
-			<div class="col-xs-2">
+		<div class="input-group">
+			<input type="text" class="form-control control-event" 
+				placeholder="Enter Event Date and Time" 
+				{% if post.event_datetime %}value="{{ post.event_datetime }}"{% endif %}/>
+			<span class="input-group-btn">
 				<button class="btn btn-default btn-set-event"><i class="icon-ok"></i></button>
-			</div>
+			</span>
 		</div>
 	</div>
 	<div class="form-group" style="position: static;">
-		<label>Assign To</label>
+		<label>
+			<input type="checkbox" class="control-task" {% if post.is_task %}checked{% endif %}>
+				<span>Convert To Task</span>
+		</label>
+		{%- if post.is_task -%}
 		{% if post.assigned_to %}
 		<div class="assigned-to alert alert-success" style="margin: 10px 0px;">
 			<div class="row">
@@ -29,7 +31,7 @@
 			</div>
 		</div>
 		<!-- status -->
-		<label>Task Status</label>
+		<label>Status</label>
 		<select class="form-control control-status">
 		    {% for opt in status_options %}
 			<option value="{{ opt }}" {% if opt==post.status %}selected{% endif %}>{{ opt }}</option>
@@ -37,7 +39,8 @@
 		</select>
 		{% else %}
 		<input type="text" class="form-control control-assign"
-			placeholder="Enter assignment" />
+			placeholder="Assign this task to someone." />
 		{% endif %}
+		{%- endif -%}
 	</div>
 </div>

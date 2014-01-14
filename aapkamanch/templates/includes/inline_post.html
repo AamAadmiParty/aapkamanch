@@ -25,22 +25,28 @@
 				{% endif %}
 				
 				<span class="label label-info event-label
-					{% if not post.event_datetime -%}hide{%- endif %}">Event:
+					{% if not post.event_datetime -%}hide{%- endif %}"><i class="icon-calendar"></i>
 					<span class="event-timestamp" 
 						data-timestamp="{{ post.event_datetime or ''}}"></span>
 				</span>
 				
 				<span class="label 
 					{% if post.status=='Completed' -%}label-success{% else %}label-warning{%- endif %}
-					{% if not post.assigned_to -%}hide{%- endif %}
-					assigned-label">{{ post.assigned_to_fullname }}
+					{% if not post.is_task -%}hide{%- endif %}
+					assigned-label"><i class="icon-pencil"></i>
+					{% if post.assigned_to %}
+					<span class="assigned-label-fullname">{{ post.assigned_to_fullname }}</span>
+					{% endif %}
 				</span>
 			</div>
-			<div style="margin-top: 10px;">
-				<ul class="list-inline">
-					{% if "post_reply_count" in post %}
+			<div style="margin-top: 10px;" class="inline-post-actions">
+				<ul class="list-inline small">
+					{% if not parent_post and post.parent_post %}
+					<li><a href="/post/{{ post.parent_post }}" class="text-muted">
+						<i class="icon-reply-all"></i> Reply on Main Post</a></li>
+					{% elif "post_reply_count" in post %}
 					<li>
-						<a href="/post/{{ post.name }}" class="small">
+						<a href="/post/{{ post.name }}">
 							{% if not post.post_reply_count -%}
 								{% if write -%}<i class="icon-reply"></i> Reply
 								{% else %}No Replies Yet{%- endif %}
@@ -54,7 +60,7 @@
 					{% endif %}
 					{% if write %}
 					<li>
-						<a class="small btn-post-settings"><i class="icon-cog"></i> Set Event / Assign</a>
+						<a class="btn-post-settings text-muted"><i class="icon-cog"></i> Set Event / Task</a>
 					</li>
 					{% endif %}
 				</ul>
