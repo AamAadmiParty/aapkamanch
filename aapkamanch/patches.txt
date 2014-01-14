@@ -1,3 +1,4 @@
 aapkamanch.patches.add_missing_hyphen
 aapkamanch.patches.convert_to_task
 aapkamanch.patches.make_all_forums_public
+aapkamanch.patches.convert_to_website_user

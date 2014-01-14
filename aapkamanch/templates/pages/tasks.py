@@ -3,7 +3,6 @@
 
 from __future__ import unicode_literals
 import webnotes
-from aapkamanch.helpers import scrub_url
 
 no_cache = 1
 
@@ -36,12 +35,14 @@ def get_unit_map(tasks):
 def get_task_list_html(tasks=None, limit_start=0, limit_length=20):
 	if not tasks:
 		tasks = get_task_list(limit_start, limit_length)
+	
+	unit_map = get_unit_map(tasks)
+	for post in tasks:
+		post["public"] = unit_map.get(post.unit)
 			
-	return webnotes.get_template("templates/includes/post_list.html", filters={"scrub_url": scrub_url})\
-		.render({
-			"posts": tasks, 
-			"limit_start":limit_start, 
-			"with_unit": True, 
-			"unit_map": get_unit_map(tasks), 
-			"write": 1
-		})
+	return webnotes.get_template("templates/includes/post_list.html").render({
+		"posts": tasks, 
+		"limit_start":limit_start, 
+		"with_unit": True, 
+		"write": 1
+	})

@@ -31,7 +31,7 @@ def suggest_user(term, unit):
 		pr.fb_username, pr.fb_location, pr.fb_hometown
 		from `tabProfile` pr 
 		where (pr.first_name like %(term)s or pr.last_name like %(term)s)
-		and pr.fb_username is not null
+		and pr.fb_username is not null and pr.enabled=1
 		and not exists(select up.parent from `tabUnit Profile` up 
 			where up.parent=%(unit)s and up.profile=pr.name)""", 
 		{"term": "%{}%".format(term), "unit": unit}, as_dict=True)

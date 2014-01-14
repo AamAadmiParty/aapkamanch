@@ -6,7 +6,7 @@ import webnotes, json
 import markdown2
 
 from webnotes.utils import get_fullname, cint
-from helpers import get_access, scrub_url
+from helpers import get_access
 from webnotes.utils.file_manager import get_file_url, save_file
 
 @webnotes.whitelist()
@@ -32,7 +32,7 @@ def get_post_list_html(unit, view=None, limit_start=0, limit_length=20):
 		order by p.creation desc limit %s, %s""".format(conditions=conditions), 
 			(unit, limit_start, limit_length), as_dict=True)
 			
-	return webnotes.get_template("templates/includes/post_list.html", filters={"scrub_url": scrub_url})\
+	return webnotes.get_template("templates/includes/post_list.html")\
 		.render({"posts": posts, "limit_start":limit_start, "write": access.get("write")})
 
 @webnotes.whitelist()
@@ -165,7 +165,7 @@ def suggest_user(unit, term):
 		pr.fb_username, pr.fb_location, pr.fb_hometown
 		from `tabProfile` pr
 		where (pr.first_name like %(term)s or pr.last_name like %(term)s)
-		and pr.fb_username is not null""", 
+		and pr.fb_username is not null and pr.enabled=1""", 
 		{"term": "%{}%".format(term), "unit": unit}, as_dict=True)
 	
 	template = webnotes.get_template("templates/includes/profile_display.html")

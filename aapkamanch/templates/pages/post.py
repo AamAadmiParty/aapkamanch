@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 import webnotes
 from webnotes.utils import get_fullname
-from aapkamanch.helpers import get_access, scrub_url
+from aapkamanch.helpers import get_access
 
 no_cache = 1
 
@@ -36,7 +36,7 @@ def get_parent_post_html(post, access):
 	for fieldname in ("first_name", "last_name", "fb_username", "fb_hometown", "fb_location"):
 		post.fields[fieldname] = profile.fields[fieldname]
 	
-	return webnotes.get_template("templates/includes/inline_post.html", filters={"scrub_url": scrub_url})\
+	return webnotes.get_template("templates/includes/inline_post.html")\
 		.render({"post": post.fields, "write": access.get("write")})
 
 @webnotes.whitelist()
@@ -58,7 +58,7 @@ def get_child_posts_html(post, limit_start=0, limit_length=20):
 		order by p.creation desc limit %s, %s""", 
 			(post.name, limit_start, limit_length), as_dict=True)
 			
-	return webnotes.get_template("templates/includes/post_list.html", filters={"scrub_url": scrub_url})\
+	return webnotes.get_template("templates/includes/post_list.html")\
 		.render({
 			"posts": posts, 
 			"limit_start":limit_start, 
