@@ -46,8 +46,8 @@ footer {
 }
 
 @media (max-width: 750px) {
-	.user-nav {
-		box-shadow: 0px -3px 7px -5px rgba(0,0,0,0.5);
+	.sidebar {
+		box-shadow: 0px -3px 7px -5px rgba(0,0,0,0.5), 0px 3px 7px -5px rgba(0,0,0,0.5);
 	}
 }
 

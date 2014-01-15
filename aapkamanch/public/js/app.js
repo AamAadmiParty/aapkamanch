@@ -4,6 +4,10 @@ var app = {};
 
 $(function() {
 	wn.datetime.refresh_when();
+	
+	$(".titlebar .toggle-sidebar").on("click", function() {
+		$(".sidebar").toggleClass("hidden-xs");
+	})
 });
 
 app.setup_user = function(data) {
