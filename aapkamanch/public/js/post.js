@@ -32,6 +32,7 @@ app.add_post = function() {
 		return;
 	}
 	var dataurl = $(".post-picture img").attr("src");
+	var parent_post = $(".post-editor").attr("data-parent-post");
 	
 	// convert links in content
 	content = app.process_external_links(content);
@@ -46,11 +47,13 @@ app.add_post = function() {
 			content: content,
 			picture_name: $(".control-post-add-picture").val(),
 			picture: dataurl ? dataurl.split(",")[1] : "",
-			parent_post: $(".post-editor").attr("data-parent-post") 
+			parent_post: parent_post 
 		},
 		success: function(data) {
 			if(data.exc){
 				console.log(data.exc);
+			} else if(parent_post) {
+				window.location.href = "/post/" + parent_post;
 			} else {
 				window.location.href = "/" + app.get_unit().toLowerCase();
 			}
