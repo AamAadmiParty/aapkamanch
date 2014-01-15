@@ -36,7 +36,7 @@ class DocType(DocTypeNestedSet):
 	
 	def validate_name(self):
 		self.doc.unit_name = self.doc.unit_name.strip().lower().replace(" ", "-")
-		if re.findall("[^a-zA-Z1-9-]", self.doc.unit_name):
+		if re.findall("[^a-zA-Z0-9-]", self.doc.unit_name):
 			raise webnotes.PermissionError
 	
 	def remove_no_rules_with_no_perms(self):

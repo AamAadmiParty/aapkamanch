@@ -81,7 +81,7 @@ def get_unit_html(context, view):
 		
 		return unit_template.render(context)
 	
-	return webnotes.cache().get_value("unit_html:{unit}:{view}".format(unit=context.get("name"), view=view), 
+	return webnotes.cache().get_value("unit_html:{unit}:{view}".format(unit=context.get("name").lower(), view=view), 
 		lambda:_get_unit_html(context, view))
 
 def get_unit_title(unit_name):
