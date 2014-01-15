@@ -7,7 +7,6 @@ from __future__ import unicode_literals
 import webnotes, re
 
 from webnotes.utils.nestedset import DocTypeNestedSet
-from aapkamanch.helpers import clear_unit_cache
 
 class DocType(DocTypeNestedSet):
 	def __init__(self, d, dl):
@@ -22,6 +21,14 @@ class DocType(DocTypeNestedSet):
 		self.doc.unit_title = self.doc.unit_title.title()
 		self.remove_no_rules_with_no_perms()
 		self.make_private_if_parent_is_private()
+	
+	def on_update(self):
+		DocTypeNestedSet.on_update(self)
+		clear_cache(self.doc.name)
+	
+	def after_insert(self):
+		if self.doc.parent_unit:
+			clear_cache(self.doc.parent_unit)
 		
 	def make_private_if_parent_is_private(self):
 		if self.doc.parent_unit and not webnotes.conn.get_value("Unit", self.doc.parent_unit, "public"):
@@ -41,11 +48,17 @@ class DocType(DocTypeNestedSet):
 		for d in to_remove:
 			self.doclist.remove(d)
 			
-	def on_update(self):
-		DocTypeNestedSet.on_update(self)
-		cache = webnotes.cache()
-		for key in ("is_public", "unit_title"):
-			cache.delete_value(key + ":" + self.doc.name)
-			
-		clear_unit_cache("unit_html", self.doc.name)
-		clear_unit_cache("unit_context", self.doc.name)
+def clear_cache(unit):
+	unit = unit.lower()
+	cache = webnotes.cache()
+	for key in ("is_public", "unit_title"):
+		cache.delete_value(key + ":" + unit)
+		
+	clear_unit_views(unit, key="unit_context")
+	clear_unit_views(unit, key="unit_html")
+	
+def clear_unit_views(unit, key):
+	cache = webnotes.cache()
+	for view in ("feed", "tasks", "events", "settings", "add"):
+		cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view))
+	

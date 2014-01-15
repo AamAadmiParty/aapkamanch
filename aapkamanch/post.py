@@ -6,7 +6,8 @@ import webnotes, json
 import markdown2
 
 from webnotes.utils import get_fullname, cint
-from helpers import get_access, clear_unit_cache
+from helpers import get_access
+from .aapkamanch.doctype.unit.unit import clear_unit_views
 from webnotes.utils.file_manager import get_file_url, save_file
 
 @webnotes.whitelist()
@@ -54,8 +55,7 @@ def add_post(unit, content, picture, picture_name, parent_post=None):
 		file_data = save_file(picture_name, picture, "Post", post.doc.name, decode=True)
 		post.doc.picture_url = file_data.file_name or file_data.file_url
 		webnotes.conn.set_value("Post", post.doc.name, "picture_url", post.doc.picture_url)
-	
-	clear_unit_cache("unit_html", unit)
+		clear_unit_views(unit, "unit_html")
 	
 	# send email
 	if parent_post:
@@ -64,9 +64,6 @@ def add_post(unit, content, picture, picture_name, parent_post=None):
 	post.doc.fields.update(webnotes.conn.get_value("Profile", webnotes.session.user, 
 		["first_name", "last_name", "user_image"], as_dict=True))
 	
-	return webnotes.get_template("templates/includes/inline_post.html").render({"post":post.doc.fields,
-		"write": access.get("write")})
-
 @webnotes.whitelist()
 def get_post_settings(unit, post_name):
 	if not get_access(unit).get("write"):

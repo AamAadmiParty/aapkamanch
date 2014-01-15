@@ -2,35 +2,51 @@
 	<div class="row">
 		<div class="col-sm-8 col-sm-push-4">
 			<div class="feed">
-				<!-- <div class="unit-toolbar text-right clearfix hide">
-					<button class="btn btn-default btn-small btn-right btn-settings pull-right hide">
-						<i class="icon-cog"></i> Settings</button>
-					<button class="btn btn-default btn-small btn-right btn-follow pull-right">
-						<i class="icon-plus"></i> Follow</button>
-				</div> -->
-				<div class="unit-toolbar hide pull-right">
-					<ul class="nav nav-pills">
-						<li><a class="btn-follow"><i class="icon-plus"></i> Follow</a></li>
+				<div class="unit-toolbar">
+					<ul class="nav nav-tabs">
+						<!-- <li><a class="btn-follow"><i class="icon-plus"></i> Follow</a></li> -->
+						<li {% if view=="feed" %}class="active"{% endif %}>
+							<a href="/{{ name|lower }}"><i class="icon-rss"></i></a>
+						</li>
 						<li {% if view=="events" %}class="active"{% endif %}>
-							<a href="/{{ name|lower }}/events"><i class="icon-calendar"></i> Events</a></li>
+							<a href="/{{ name|lower }}/events"><i class="icon-calendar"></i>
+								<span class="hidden-xs">Events</span></a></li>
 						<li {% if view=="tasks" %}class="active"{% endif %}>
-							<a href="/{{ name|lower }}/tasks"><i class="icon-pencil"></i> Tasks</a></li>
-						<li><a class="btn-settings hide"><i class="icon-cog"></i> Settings</a></li>
+							<a href="/{{ name|lower }}/tasks"><i class="icon-pencil"></i>
+								<span class="hidden-xs">Tasks</span></a></li>
+						<li class="tab-settings hide {% if view=='settings' %}active{% endif %}">
+							<a href="/{{ name|lower }}/settings"><i class="icon-cog"></i>
+								<span class="hidden-xs">Settings</span></a></li>
+						<li class="tab-add hide {% if view=='add' %}active{% endif %}">
+							<a href="/{{ name|lower }}/add"><i class="icon-plus"></i>
+								<span class="hidden-xs">Add Post</span></a></li>
 					</ul>
 				</div>
-				<div class="clearfix"></div>
-				
-				{% if not public %}<div class="alert alert-warning">
+				{%- if not public -%}
+				<div class="alert alert-warning">
 					<i class="icon-lock"></i> Private
-				</div>{% endif %}
-				<div class="permission-editor-area"></div>
+				</div>
+				{%- endif -%}
+				
+				{%- if view=="add" -%}
 				{% include "templates/includes/post_editor.html" %}
+				{% elif view=="settings" %}
+				<div class="permission-editor-area">
+				{{ unit_settings }}
+				</div>
+				{% else %}
 				<div class="post-list">
+				{%- if view=="tasks" -%}
+				<div class="alert alert-info">To add a task, add a post and convert it to a task</div>
+				{%- elif view=="events" -%}
+				<div class="alert alert-info">To add an event, add a post and convert it to an event</div>
+				{%- endif -%}
 				{{ post_list_html }}
 				</div>
 				<div class="text-center">
 					<button class="btn btn-default btn-more" style="display:none;">More</button>
 				</div>
+				{%- endif -%}
 			</div>
 		</div>
 		<div class="col-sm-4 col-sm-pull-8 sidebar">
@@ -46,4 +62,5 @@
 <script>
 	wn.provide("app");
 	window.app.unit = "{{ name }}";
+	window.app.view = "{{ view }}";
 </script>

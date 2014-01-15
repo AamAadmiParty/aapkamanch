@@ -10,7 +10,8 @@ from webnotes.utils import get_fullname
 from webnotes.utils.email_lib.bulk import send
 from webnotes.utils.email_lib import sendmail
 
-from aapkamanch.helpers import get_access, clear_unit_cache
+from aapkamanch.helpers import get_access
+from aapkamanch.aapkamanch.doctype.unit.unit import clear_unit_views
 
 class DocType:
 	def __init__(self, d, dl):
@@ -25,7 +26,7 @@ class DocType:
 			self.doc.assigned_to = self.doc.status = None
 			
 	def on_update(self):
-		clear_unit_cache("unit_html", self.doc.unit)
+		clear_unit_views(self.doc.unit, "unit_html")
 
 		if self.doc.assigned_to and self.doc.assigned_to != self.assigned_to \
 			and webnotes.session.user != self.doc.assigned_to:
