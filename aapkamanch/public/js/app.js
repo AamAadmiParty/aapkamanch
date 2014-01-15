@@ -124,6 +124,10 @@ app.toggle_date_format = function(datetime) {
 
 app.get_unit = function() {
 	return window.app.unit || "india";
+};
+
+app.get_view = function() {
+	return window.app.view;
 }
 
 app.logout = function() {

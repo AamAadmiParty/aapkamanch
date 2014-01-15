@@ -30,14 +30,14 @@
 						data-timestamp="{{ post.event_datetime or ''}}"></span>
 				</span>
 				
-				<span class="label 
+				<a href="/{{ post.unit }}/tasks#{{post.status}}" class="label 
 					{% if post.status=='Completed' -%}label-success{% else %}label-warning{%- endif %}
 					{% if not post.is_task -%}hide{%- endif %}
-					assigned-label"><i class="icon-pencil"></i>
+					assigned-label" data-status="{{ post.status }}"><i class="icon-pencil"></i>
 					{% if post.assigned_to %}
 					<span class="assigned-label-fullname">{{ post.assigned_to_fullname }}</span>
 					{% endif %}
-				</span>
+				</a>
 			</div>
 			<div style="margin-top: 10px;" class="inline-post-actions">
 				<ul class="list-inline small">

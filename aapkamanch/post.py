@@ -11,7 +11,7 @@ from .aapkamanch.doctype.unit.unit import clear_unit_views
 from webnotes.utils.file_manager import get_file_url, save_file
 
 @webnotes.whitelist()
-def get_post_list_html(unit, view=None, limit_start=0, limit_length=20):
+def get_post_list_html(unit, view=None, limit_start=0, limit_length=20, status=None):
 	access = get_access(unit)
 	if webnotes.local.form_dict.cmd=="get_post_list_html":
 		# for paging
@@ -21,6 +21,10 @@ def get_post_list_html(unit, view=None, limit_start=0, limit_length=20):
 	conditions = ""
 	if view=="tasks":
 		conditions = "and p.is_task=1"
+		if status=="Completed":
+			conditions += " and p.status=\"{}\"".format("Completed")
+		elif status:
+			conditions += " and ifnull(p.status, '')!=\"{}\"".format("Completed")
 	elif view=="events":
 		conditions = "and ifnull(p.event_datetime, '')!=''"
 	
@@ -95,7 +99,10 @@ def convert_to_task(post, is_task):
 	post.ignore_permissions = True
 	post.save()
 	
-	return get_post_settings(post.doc.unit, post.doc.name)
+	return {
+		"post_settings_html": get_post_settings(post.doc.unit, post.doc.name),
+		"status": post.doc.status
+	}
 	
 @webnotes.whitelist()
 def assign_post(post, profile=None):
@@ -152,7 +159,10 @@ def update_task_status(post, status):
 		post.ignore_permissions = True
 		post.save()
 	
-	return get_post_settings(post.doc.unit, post.doc.name)
+	return {
+		"post_settings_html": get_post_settings(post.doc.unit, post.doc.name),
+		"status": post.doc.status
+	}
 
 @webnotes.whitelist()
 def suggest_user(unit, term):

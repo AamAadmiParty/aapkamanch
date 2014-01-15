@@ -10,6 +10,17 @@ $(function() {
 	$(".feed").on("click", ".btn-post-settings", function() {
 		app.toggle_post_settings.apply(this);
 	});
+	
+	$(window).on('hashchange', function() {
+		if(app.get_view()=="tasks") {
+			app.filter_posts_by_status(window.location.hash.substr(1));
+		}
+	});
+	
+	if(window.location.hash) {
+		$(window).trigger("hashchange");
+	}
+		
 	app.format_event_timestamps();
 })
 
@@ -167,8 +178,10 @@ app.convert_to_task = function($post, checked, $control) {
 			},
 			200: function(data) {
 				$(".post-settings").remove();
-				app.setup_post_settings($post, data.message);
-				$post.find(".assigned-label").toggleClass("hide", !checked);
+				app.setup_post_settings($post, data.message.post_settings_html);
+				$post.find(".assigned-label")
+					.toggleClass("hide", !checked)
+					.attr("data-status", data.message.status);
 				$post.find(".assigned-label-fullname").html("");
 			}
 		}
@@ -198,6 +211,8 @@ app.assign_post = function($post, profile, $control) {
 				} else {
 					$(".post-settings").remove();
 					app.setup_post_settings($post, data.message.post_settings_html);
+					$post.find(".assigned-label")
+						.attr("data-status", data.message.status);
 					var fullname = data.message.assigned_to_fullname || "";
 					$post.find(".assigned-label-fullname").html(fullname || "");
 					if(app.get_unit()==="tasks" && !fullname) {
@@ -262,10 +277,11 @@ app.update_task_status = function($post, status, $control) {
 					wn.msgprint(JSON.parse(data._server_messages).join("\n"));
 				} else {
 					$(".post-settings").remove();
-					app.setup_post_settings($post, data.message);
+					app.setup_post_settings($post, data.message.post_settings_html);
 					$post.find(".assigned-label")
 						.toggleClass("label-warning", status!=="Completed")
-						.toggleClass("label-success", status==="Completed");
+						.toggleClass("label-success", status==="Completed")
+						.attr("data-status", data.message.status);
 					if(app.get_unit()==="tasks" && status==="Completed") {
 						$post.remove();
 					}
@@ -285,4 +301,41 @@ app.format_event_timestamps = function() {
 
 app.process_external_links = function(content) {
 	return content.replace(/([^\(\[](ht|f)tp[s]?:\/\/[^\s\[\]\(\)]*)/g, '<a href="$1" target="_blank">$1</a>');
+}
+
+app.filter_posts_by_status = function(status) {
+	$.ajax({
+		url: "/",
+		data: {
+			"cmd": "aapkamanch.post.get_post_list_html",
+			"unit": app.get_unit(),
+			"view": app.get_view(),
+			"status": status
+		},
+		statusCode: {
+			200: function(data) {
+				if(data.exc) {
+					console.log(data.exc);
+				} else {
+					$(".post-list-html").empty()
+						.html(data.message)
+					
+					if(status) {
+						var alert = $('<div class="alert alert-warning">\
+								Showing Tasks with status: ' + status + 
+								' <a class="pull-right close">&times;</a> \
+							</div>')
+							.css("margin-top", "7px")
+							.prependTo($(".post-list-html"))
+							.find("a").on("click", function() {
+								window.location.hash = "";
+							});
+					}
+						
+					app.format_event_timestamps();
+					wn.datetime.refresh_when();
+				}
+			}
+		}
+	})
 }
