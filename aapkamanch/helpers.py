@@ -59,7 +59,7 @@ def get_user_details(unit, fb_access_token=None):
 		webnotes.local.login_manager.post_login()
 	
 	out = {
-		"fb_username": get_fb_username(),
+		"user_image": get_user_image(),
 		"task_count": get_task_count()
 	}
 	
@@ -117,9 +117,9 @@ def get_access(unit, profile=None):
 	}
 
 
-def get_fb_username():
-	return webnotes.cache().get_value(webnotes.session.user + ":fb_username", 
-		lambda: webnotes.conn.get_value("Profile", webnotes.session.user, "fb_username"))
+def get_user_image():
+	return webnotes.cache().get_value(webnotes.session.user + ":user_image", 
+		lambda: webnotes.conn.get_value("Profile", webnotes.session.user, "user_image"))
 
 def get_fb_userid(fb_access_token):
 	import requests
@@ -149,3 +149,14 @@ def scrub_url(url):
 def clear_unit_cache(key, unit):
 	for view in ("feed", "tasks", "events"):
 		webnotes.cache().delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view))
+		
+def update_gravatar(bean, trigger):
+	import md5
+	if not bean.doc.user_image:
+		if bean.doc.fb_username:
+			bean.doc.user_image = "https://graph.facebook.com/" + bean.doc.fb_username + "/picture"
+		else:
+			bean.doc.user_image = "https://secure.gravatar.com/avatar/" + md5.md5(bean.doc.name).hexdigest() \
+				+ "?d=retro"
+				
+		webnotes.cache().delete_value(bean.doc.name + ":user_image")

@@ -25,7 +25,7 @@ def get_post_list_html(unit, view=None, limit_start=0, limit_length=20):
 	
 	posts = webnotes.conn.sql("""select p.name, p.unit, p.status, p.is_task,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
-		p.creation, p.content, pr.fb_username, pr.first_name, pr.last_name,
+		p.creation, p.content, pr.user_image, pr.first_name, pr.last_name,
 		(select count(pc.name) from `tabPost` pc where pc.parent_post=p.name) as post_reply_count
 		from tabPost p, tabProfile pr
 		where p.unit=%s and pr.name = p.owner and ifnull(p.parent_post, '')='' {conditions}
@@ -62,7 +62,7 @@ def add_post(unit, content, picture, picture_name, parent_post=None):
 		post.run_method("send_email_on_reply")
 	
 	post.doc.fields.update(webnotes.conn.get_value("Profile", webnotes.session.user, 
-		["first_name", "last_name", "fb_username"], as_dict=True))
+		["first_name", "last_name", "user_image"], as_dict=True))
 	
 	return webnotes.get_template("templates/includes/inline_post.html").render({"post":post.doc.fields,
 		"write": access.get("write")})
@@ -79,7 +79,7 @@ def get_post_settings(unit, post_name):
 	profile = None
 	if post.assigned_to:
 		profile = webnotes.conn.get_value("Profile", post.assigned_to, 
-			["first_name", "last_name", "fb_username", "fb_location", "fb_hometown"], as_dict=True)
+			["first_name", "last_name", "user_image", "fb_location", "fb_hometown"], as_dict=True)
 		
 	return webnotes.get_template("templates/includes/post_settings.html").render({
 		"post": post,
@@ -162,10 +162,10 @@ def suggest_user(unit, term):
 	"""suggest a user that has read permission in this unit tree"""
 	profiles = webnotes.conn.sql("""select 
 		pr.name, pr.first_name, pr.last_name, 
-		pr.fb_username, pr.fb_location, pr.fb_hometown
+		pr.user_image, pr.fb_location, pr.fb_hometown
 		from `tabProfile` pr
 		where (pr.first_name like %(term)s or pr.last_name like %(term)s)
-		and pr.fb_username is not null and pr.enabled=1""", 
+		and pr.name not in ("Guest", "Administrator") is not null and pr.enabled=1""", 
 		{"term": "%{}%".format(term), "unit": unit}, as_dict=True)
 	
 	template = webnotes.get_template("templates/includes/profile_display.html")

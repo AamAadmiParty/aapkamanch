@@ -31,7 +31,7 @@ app.render_authenticated_user = function(data) {
 	$(".btn-login-area").toggle(false);
 	$(".logged-in").toggle(true);
 	$(".full-name").html(wn.get_cookie("full_name"));
-	$(".user-picture").attr("src", "http://graph.facebook.com/" + data.fb_username + "/picture")
+	$(".user-picture").attr("src", data.user_image)
 
 	// render editor / add button if has access
 	if(data.access && data.access.write) {

@@ -111,7 +111,7 @@ def set_posts_in(unit_post_map, posts, key, profiles):
 	for post in posts:
 		if not profiles.get(post.owner):
 			profiles[post.owner] = webnotes.conn.get_value("Profile", post.owner, 
-				["first_name", "last_name", "fb_username"], as_dict=True)
+				["first_name", "last_name", "user_image"], as_dict=True)
 		
 		post.update(profiles.get(post.owner) or {})
 		

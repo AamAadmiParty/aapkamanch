@@ -16,3 +16,6 @@ base_template = templates/base.html
 jenv_filter = scrub_url:aapkamanch.helpers.scrub_url
 
 scheduler_event = daily:aapkamanch.summary.send_daily_summary
+
+bean_event = Profile:validate:aapkamanch.helpers.update_gravatar
+

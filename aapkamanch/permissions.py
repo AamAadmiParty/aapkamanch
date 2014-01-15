@@ -12,7 +12,7 @@ def get_unit_settings_html(unit):
 		raise webnotes.PermissionError
 	
 	unit_profiles = webnotes.conn.sql("""select pr.first_name, pr.last_name, 
-		pr.fb_username, pr.fb_location, pr.fb_hometown, up.profile,
+		pr.user_image, pr.fb_location, pr.fb_hometown, up.profile,
 		up.`read`, up.`write`, up.`admin`
 		from tabProfile pr, `tabUnit Profile` up 
 		where up.profile = pr.name and up.parent=%s""", (unit,), as_dict=1)
@@ -28,10 +28,10 @@ def get_unit_settings_html(unit):
 @webnotes.whitelist()
 def suggest_user(term, unit):
 	profiles = webnotes.conn.sql("""select pr.name, pr.first_name, pr.last_name, 
-		pr.fb_username, pr.fb_location, pr.fb_hometown
+		pr.user_image, pr.fb_location, pr.fb_hometown
 		from `tabProfile` pr 
 		where (pr.first_name like %(term)s or pr.last_name like %(term)s)
-		and pr.fb_username is not null and pr.enabled=1
+		and pr.user_image is not null and pr.enabled=1
 		and not exists(select up.parent from `tabUnit Profile` up 
 			where up.parent=%(unit)s and up.profile=pr.name)""", 
 		{"term": "%{}%".format(term), "unit": unit}, as_dict=True)
@@ -60,7 +60,7 @@ def add_unit_profile(unit, profile):
 	
 	unit_profile = unit.doclist[-1].fields
 	unit_profile.update(webnotes.conn.get_value("Profile", unit_profile.profile, 
-		["first_name", "last_name", "fb_username", "fb_location", "fb_hometown"], as_dict=True))
+		["first_name", "last_name", "user_image", "fb_location", "fb_hometown"], as_dict=True))
 	
 	return webnotes.get_template("templates/includes/unit_profile.html").render({
 		"unit_profile": unit_profile

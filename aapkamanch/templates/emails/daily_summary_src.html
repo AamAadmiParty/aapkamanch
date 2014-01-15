@@ -242,7 +242,7 @@ small, .small {
 							{% for post in opts.posts %}
 							<tr class="padding post">
 								<td class="padding avatar">
-									<img src="https://graph.facebook.com/{{ post.fb_username }}/picture" />
+									<img src="{{ post.user_image }}" />
 								</td>
 								<td class="padding left-padding">
 									<p>

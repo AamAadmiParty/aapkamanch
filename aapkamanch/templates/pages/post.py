@@ -33,7 +33,7 @@ def get_context():
 	
 def get_parent_post_html(post, access):
 	profile = webnotes.bean("Profile", post.owner).doc
-	for fieldname in ("first_name", "last_name", "fb_username", "fb_hometown", "fb_location"):
+	for fieldname in ("first_name", "last_name", "user_image", "fb_hometown", "fb_location"):
 		post.fields[fieldname] = profile.fields[fieldname]
 	
 	return webnotes.get_template("templates/includes/inline_post.html")\
@@ -52,7 +52,7 @@ def get_child_posts_html(post, limit_start=0, limit_length=20):
 	
 	posts = webnotes.conn.sql("""select p.name, p.unit, p.status, p.is_task,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
-		p.creation, p.content, p.parent_post, pr.fb_username, pr.first_name, pr.last_name
+		p.creation, p.content, p.parent_post, pr.user_image, pr.first_name, pr.last_name
 		from tabPost p, tabProfile pr
 		where p.parent_post=%s and pr.name = p.owner
 		order by p.creation desc limit %s, %s""", 
