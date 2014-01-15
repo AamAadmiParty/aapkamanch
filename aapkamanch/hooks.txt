@@ -21,6 +21,6 @@ scheduler_event = daily:aapkamanch.summary.send_daily_summary
 
 # bean
 
-login_mail_title = "AAP Ka Manch"
+login_mail_title = AAP Ka Manch
 
 bean_event = Profile:validate:aapkamanch.helpers.update_gravatar
