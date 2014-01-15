@@ -59,7 +59,7 @@ def add_post(unit, content, picture, picture_name, parent_post=None):
 		file_data = save_file(picture_name, picture, "Post", post.doc.name, decode=True)
 		post.doc.picture_url = file_data.file_name or file_data.file_url
 		webnotes.conn.set_value("Post", post.doc.name, "picture_url", post.doc.picture_url)
-		clear_unit_views(unit, "unit_html")
+		clear_unit_views(unit)
 	
 	# send email
 	if parent_post:

@@ -26,7 +26,7 @@ class DocType:
 			self.doc.assigned_to = self.doc.status = None
 			
 	def on_update(self):
-		clear_unit_views(self.doc.unit, "unit_html")
+		clear_unit_views(self.doc.unit)
 
 		if self.doc.assigned_to and self.doc.assigned_to != self.assigned_to \
 			and webnotes.session.user != self.doc.assigned_to:

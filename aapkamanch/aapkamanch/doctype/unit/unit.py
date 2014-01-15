@@ -54,11 +54,11 @@ def clear_cache(unit):
 	for key in ("is_public", "unit_title"):
 		cache.delete_value(key + ":" + unit)
 		
-	clear_unit_views(unit, key="unit_context")
-	clear_unit_views(unit, key="unit_html")
+	clear_unit_views(unit)
 	
-def clear_unit_views(unit, key):
+def clear_unit_views(unit):
 	cache = webnotes.cache()
-	for view in ("feed", "tasks", "events", "settings", "add"):
-		cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view))
+	for key in ("unit_context", "unit_html"):
+		for view in ("feed", "tasks", "events", "settings", "add"):
+			cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view))
 	

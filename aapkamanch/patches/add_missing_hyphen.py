@@ -10,4 +10,4 @@ def execute():
 		set parent=replace(parent, " ", "-")""")
 
 	webnotes.conn.sql("""update `tabPost` 
-		set unit=replace(unit, " ", "-")""")		
+		set unit=replace(unit, " ", "-")""")
