@@ -141,6 +141,7 @@ footer {
 .post {
 	border-bottom: 1px solid #eee;
 	padding: 15px 0px;
+	word-wrap: break-word;
 }
 
 .parent-post .post {
