@@ -10,12 +10,15 @@ app_version = 0.0.1
 
 after_install = aapkamanch.utils.after_install
 
-website_catch_all = index
+# website
 
+website_catch_all = index
 base_template = templates/base.html
+update_website_context = aapkamanch.helpers.update_website_context
 jenv_filter = scrub_url:aapkamanch.helpers.scrub_url
 
 scheduler_event = daily:aapkamanch.summary.send_daily_summary
 
-bean_event = Profile:validate:aapkamanch.helpers.update_gravatar
+# bean
 
+bean_event = Profile:validate:aapkamanch.helpers.update_gravatar

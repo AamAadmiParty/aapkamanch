@@ -160,3 +160,11 @@ def update_gravatar(bean, trigger):
 				+ "?d=retro"
 				
 		webnotes.cache().delete_value(bean.doc.name + ":user_image")
+		
+	webnotes.cache().delete_value("total_users")
+		
+def update_website_context(context):
+	context.update({
+		"total_users": webnotes.cache().get_value("total_users", 
+			lambda: str(webnotes.conn.sql("""select count(*) from tabProfile""")[0][0]))
+	})
