@@ -40,6 +40,7 @@ def add_user(data):
 			"user_type": "Website User"
 		})
 		profile.ignore_permissions = True
+		profile.get_controller().no_welcome_mail = True
 		profile.insert()
 	
 	webnotes.local.login_manager.user = user
