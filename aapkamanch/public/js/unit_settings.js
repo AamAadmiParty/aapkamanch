@@ -1,41 +1,12 @@
 // AAP Ka Manch, License GNU General Public License v3
 
 $(function() {
-	$(".btn-settings").on("click", app.toggle_unit_settings);
-})
-
-app.toggle_unit_settings = function() {
-	if(app.settings_shown) {
-		$(".permission-editor-area").toggle(false);
-		$(".btn-settings").parent().removeClass("active");
-		app.settings_shown = false;
-	} else {
-		if(!app.settings_loaded) {
-			$.ajax({
-				url:"/",
-				data: {
-					cmd: "aapkamanch.permissions.get_unit_settings_html",
-					unit: app.get_unit()
-				},
-				success: function(data) {
-					app.show_unit_settings(data);
-				}
-			});
-		} else {
-			$(".permission-editor-area").toggle(true);
-			$(".btn-settings").parent().addClass("active");
-		}
-		app.settings_shown = true;
+	if(window.app.view=="settings") {
+		app.setup_unit_settings();
 	}
-}
+});
 
-app.show_unit_settings = function(data) {
-	if(data.exc) 
-		console.log(data.exc)
-	$(".permission-editor-area").toggle(true)
-		.empty().html(data.message);
-	app.settings_loaded = true;
-	
+app.setup_unit_settings = function() {	
 	// autosuggest
 	app.setup_autosuggest({
 		$control: $(".add-user-control"),
@@ -53,13 +24,13 @@ app.show_unit_settings = function(data) {
 	$(".btn-settings").parent().addClass("active");
 	
 	// disabled forum if not public
-	$(".control-add-group-public").click(function() {
+	var control_public = $(".control-add-group-public").click(function() {
 		if(!$(this).prop("checked")) {
 			$(".control-add-group-forum").prop("checked", false).prop("disabled", true);
 		} else {
 			$(".control-add-group-forum").prop("disabled", false);
 		}
-	});
+	}).trigger("click").trigger("click"); // hack
 }
 
 app.add_group = function() {

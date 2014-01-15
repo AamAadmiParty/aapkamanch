@@ -33,9 +33,13 @@ app.render_authenticated_user = function(data) {
 	$(".full-name").html(wn.get_cookie("full_name"));
 	$(".user-picture").attr("src", data.user_image)
 
-	// render editor / add button if has access
+	// hide editor / add button if no access
 	if(data.access && data.access.write) {
-		$(".post-editor").toggleClass("hide", false);
+		$(".tab-add").removeClass("hide");
+	}
+	
+	if(data.access && data.access.admin) {
+		$(".tab-settings").removeClass("hide");
 	}
 
 	// render private groups
@@ -43,11 +47,6 @@ app.render_authenticated_user = function(data) {
 		$(data.private_units).prependTo(".unit-list-group");
 	}
 	
-	$(".unit-toolbar").removeClass("hide");
-	
-	if(data.access.admin) {
-		$(".btn-settings").removeClass("hide");
-	}
 }
 
 app.setup_autosuggest = function(opts) {

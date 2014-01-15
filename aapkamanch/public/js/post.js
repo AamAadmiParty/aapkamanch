@@ -41,11 +41,7 @@ app.add_post = function() {
 			if(data.exc){
 				console.log(data.exc);
 			} else {
-				$(".post-add-control").val("");
-				$(".post-picture").toggle(false).find("img").attr("src", "");
-				$(data.message).prependTo($(".post-list"));
-				wn.datetime.refresh_when();
-				app.format_event_timestamps();
+				window.location.href = "/" + app.get_unit().toLowerCase();
 			}
 		}
 	}).always(function() {

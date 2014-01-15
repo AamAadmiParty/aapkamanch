@@ -6,7 +6,6 @@ import webnotes, json
 
 from helpers import get_access
 
-@webnotes.whitelist()
 def get_unit_settings_html(unit):
 	if not get_access(unit).get("admin"):
 		raise webnotes.PermissionError
