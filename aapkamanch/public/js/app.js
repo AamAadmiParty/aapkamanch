@@ -24,7 +24,7 @@ app.setup_user = function(data) {
 				app.render_authenticated_user(data.message);
 			}
 		}
-	})
+	});
 }
 
 app.render_authenticated_user = function(data) {
@@ -47,6 +47,13 @@ app.render_authenticated_user = function(data) {
 		$(data.private_units).prependTo(".unit-list-group");
 	}
 	
+	app.show_cannot_post_message(data.access);
+}
+
+app.show_cannot_post_message = function(access, message) {
+	if(!(access && access.write)) {
+		$(".post-list-help").html(message || "You do not have permission to post");
+	}
 }
 
 app.setup_autosuggest = function(opts) {

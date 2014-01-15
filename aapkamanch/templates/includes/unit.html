@@ -6,8 +6,8 @@
 					<ul class="nav nav-tabs">
 						<!-- <li><a class="btn-follow"><i class="icon-plus"></i> Follow</a></li> -->
 						<li {% if view=="feed" %}class="active"{% endif %}>
-							<a href="/{{ name|lower }}"><i class="icon-rss"></i></a>
-						</li>
+							<a href="/{{ name|lower }}"><i class="icon-rss"></i>
+							<span class="hidden-xs">Feed</span></a></li>
 						<li {% if view=="events" %}class="active"{% endif %}>
 							<a href="/{{ name|lower }}/events"><i class="icon-calendar"></i>
 								<span class="hidden-xs">Events</span></a></li>
@@ -36,11 +36,13 @@
 				</div>
 				{% else %}
 				<div class="post-list">
+				<div class="small text-muted post-list-help">
 				{%- if view=="tasks" -%}
-				<div class="alert alert-info">To add a task, add a post and convert it to a task</div>
+				To add a task, add a post and convert it to a task
 				{%- elif view=="events" -%}
-				<div class="alert alert-info">To add an event, add a post and convert it to an event</div>
+				To add an event, add a post and convert it to an event
 				{%- endif -%}
+				</div>
 				{{ post_list_html }}
 				</div>
 				<div class="text-center">
