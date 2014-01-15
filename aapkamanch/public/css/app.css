@@ -160,8 +160,13 @@ footer {
 .hidden-xs {
 	display: inline-block !important;
 }
+
 @media (max-width: 767px) {
 	.hidden-xs {
 		display: none !important;
 	}
+}
+
+.nav-tabs > li > a {
+	padding: 7px 10px;
 }

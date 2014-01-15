@@ -9,6 +9,7 @@ $(document).ready(function() {
   if(!sid || sid==="Guest") {
 	  // fallback on facebook login -- no login again
 	  $(".btn-login").html("Login via Facebook").removeAttr("disabled");
+	  app.show_cannot_post_message(null, "You need to login to be able to post");
   } else {
 	  // get private stuff (if access)
 	  app.setup_user({"user": user_id});
