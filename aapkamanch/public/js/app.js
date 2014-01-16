@@ -173,7 +173,9 @@ app.login_via_facebook = function() {
 				})
 			});
 		} else {
-			console.log('User cancelled login or did not fully authorize.');
+			wn.msgprint("You have denied access to this application via Facebook. \
+				Please change your privacy settings in Facebook and try again. \
+				If you do not want to use Facebook login, <a href='/login'>sign-up</a> here");
 		}
 	},{scope:"email"});	
 }
