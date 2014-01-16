@@ -120,3 +120,19 @@ app.add_unit_profile = function(profile) {
 		}
 	});
 }
+
+app.update_unit_description = function() {
+	$(".btn-update-description").prop("disabled", true);
+	$.ajax({
+		url: "/",
+		type: "POST",
+		data: {
+			cmd: "aapkamanch.unit.update_description",
+			description: $(".control-description").val() || "",
+			unit: app.get_unit()
+		},
+		success: function(data) {
+			window.location.reload();
+		}
+	}).always(function() { 	$(".btn-update-description").prop("disabled", false); });
+}

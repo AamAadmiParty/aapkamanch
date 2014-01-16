@@ -16,11 +16,12 @@ def get_unit_settings_html(unit):
 		from tabProfile pr, `tabUnit Profile` up 
 		where up.profile = pr.name and up.parent=%s""", (unit,), as_dict=1)
 	
-	unit = webnotes.conn.get_value("Unit", unit, ["public", "forum"], as_dict=True)
+	unit = webnotes.conn.get_value("Unit", unit, ["public", "forum", "unit_description"], as_dict=True)
 	
 	return webnotes.get_template("templates/includes/unit_settings.html").render({
 		"public": unit.public,
 		"forum": unit.forum,
+		"unit_description": unit.unit_description,
 		"unit_profiles": unit_profiles
 	})
 

@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-04 22:25:02", 
   "docstatus": 0, 
-  "modified": "2014-01-13 12:32:58", 
+  "modified": "2014-01-16 14:49:47", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -50,6 +50,12 @@
   "fieldname": "unit_title", 
   "fieldtype": "Data", 
   "label": "Unit Title"
+ }, 
+ {
+  "doctype": "DocField", 
+  "fieldname": "unit_description", 
+  "fieldtype": "Text", 
+  "label": "Unit Description"
  }, 
  {
   "doctype": "DocField", 

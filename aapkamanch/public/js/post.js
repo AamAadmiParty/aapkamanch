@@ -93,6 +93,7 @@ app.toggle_post_settings = function() {
 	} else {
 		$post_settings.remove();
 		$btn.prop("disabled", true);
+		NProgress.start();
 		$.ajax({
 			url: "/",
 			data: {
@@ -108,7 +109,7 @@ app.toggle_post_settings = function() {
 					app.setup_post_settings($post, data.message);
 				}
 			}
-		});
+		}).always(function() { NProgress.done(); });
 	}
 }
 

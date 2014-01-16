@@ -53,9 +53,10 @@ def get_unit_context(unit, view):
 		if view!="feed":
 			title += ": {}".format(view.title())
 			parents += [{"name": unit.name, "unit_title": unit.unit_title}]
-		
+				
 		return {
 			"name": unit.name,
+			"unit_description": unit.unit_description,
 			"public": unit.public,
 			"unit_title": title,
 			"forum": unit.forum,
