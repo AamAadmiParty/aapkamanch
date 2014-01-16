@@ -30,6 +30,10 @@ footer {
 		overflow: hidden;
 	}
 
+	.titlebar .title {
+		text-align: center;
+	}
+	
 	.footer-baseline {
 		border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
 	}
