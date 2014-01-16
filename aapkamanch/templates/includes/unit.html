@@ -63,6 +63,9 @@
 		</div>
 	</div>
 </div>
+{% if view=="add" %}
+<script type="text/javascript" src="/assets/js/canvasResize.min.js"></script>
+{% endif %}
 <script>
 	wn.provide("app");
 	window.app.unit = "{{ name }}";
