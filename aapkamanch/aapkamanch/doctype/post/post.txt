@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-13 17:12:17", 
+  "modified": "2014-01-16 16:15:32", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -63,6 +63,12 @@
   "options": "Unit", 
   "reqd": 1, 
   "search_index": 1
+ }, 
+ {
+  "doctype": "DocField", 
+  "fieldname": "is_event", 
+  "fieldtype": "Check", 
+  "label": "Is Event"
  }, 
  {
   "doctype": "DocField", 

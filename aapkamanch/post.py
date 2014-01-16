@@ -26,9 +26,9 @@ def get_post_list_html(unit, view=None, limit_start=0, limit_length=20, status=N
 		elif status:
 			conditions += " and ifnull(p.status, '')!=\"{}\"".format("Completed")
 	elif view=="events":
-		conditions = "and ifnull(p.event_datetime, '')!=''"
+		conditions = "and p.is_event=1"
 	
-	posts = webnotes.conn.sql("""select p.name, p.unit, p.status, p.is_task,
+	posts = webnotes.conn.sql("""select p.name, p.unit, p.status, p.is_task, p.is_event,
 		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
 		p.creation, p.content, pr.user_image, pr.first_name, pr.last_name,
 		(select count(pc.name) from `tabPost` pc where pc.parent_post=p.name) as post_reply_count
@@ -70,10 +70,8 @@ def add_post(unit, content, picture, picture_name, parent_post=None):
 	
 @webnotes.whitelist()
 def get_post_settings(unit, post_name):
-	if not get_access(unit).get("write"):
-		raise webnotes.PermissionError
+	post = get_post_for_write(post_name).doc
 	
-	post = webnotes.bean("Post", post_name).doc
 	if post.unit != unit:
 		raise webnotes.ValidationError("Post does not belong to unit.")
 	
@@ -90,10 +88,7 @@ def get_post_settings(unit, post_name):
 	
 @webnotes.whitelist()
 def convert_to_task(post, is_task):
-	post = webnotes.bean("Post", post)
-
-	if not get_access(post.doc.unit).get("write"):
-		raise webnotes.PermissionError("You are not allowed edit this post")
+	post = get_post_for_write(post)
 	
 	post.doc.is_task = cint(is_task)
 	post.ignore_permissions = True
@@ -103,13 +98,21 @@ def convert_to_task(post, is_task):
 		"post_settings_html": get_post_settings(post.doc.unit, post.doc.name),
 		"status": post.doc.status
 	}
+
+@webnotes.whitelist()
+def convert_to_event(post, is_event):
+	post = get_post_for_write(post)
+	post.doc.is_event = cint(is_event)
+	post.ignore_permissions = True
+	post.save()
+	
+	return {
+		"post_settings_html": get_post_settings(post.doc.unit, post.doc.name)
+	}
 	
 @webnotes.whitelist()
 def assign_post(post, profile=None):
-	post = webnotes.bean("Post", post)
-
-	if not get_access(post.doc.unit).get("write"):
-		raise webnotes.PermissionError("You are not allowed edit this post")
+	post = get_post_for_write(post)
 	
 	if profile and not get_access(post.doc.unit, profile).get("write"):
 		raise webnotes.PermissionError("Selected user does not have 'write' access to this post")
@@ -136,10 +139,7 @@ def assign_post(post, profile=None):
 
 @webnotes.whitelist()
 def set_event(post, event_datetime):
-	post = webnotes.bean("Post", post)
-
-	if not get_access(post.doc.unit).get("write"):
-		raise webnotes.PermissionError("You are not allowed edit this post")
+	post = get_post_for_write(post)
 		
 	post.doc.event_datetime = event_datetime
 	post.ignore_permissions = True
@@ -149,10 +149,7 @@ def set_event(post, event_datetime):
 	
 @webnotes.whitelist()
 def update_task_status(post, status):
-	post = webnotes.bean("Post", post)
-
-	if not get_access(post.doc.unit).get("write"):
-		raise webnotes.PermissionError("You are not allowed edit this post")
+	post = get_post_for_write(post)
 
 	if post.doc.assigned_to and status:
 		post.doc.status = status
@@ -164,6 +161,14 @@ def update_task_status(post, status):
 		"status": post.doc.status
 	}
 
+def get_post_for_write(post):
+	post = webnotes.bean("Post", post)
+
+	if not get_access(post.doc.unit).get("write"):
+		raise webnotes.PermissionError("You are not allowed edit this post")
+		
+	return post
+	
 @webnotes.whitelist()
 def suggest_user(unit, term):
 	"""suggest a user that has read permission in this unit tree"""

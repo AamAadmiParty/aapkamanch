@@ -115,17 +115,30 @@ app.toggle_post_settings = function() {
 
 app.setup_post_settings = function($post, post_settings_html) {
 	var $post_settings = $(post_settings_html).appendTo($post.find(".post-settings-area"));
-
-	var $control_event = $post_settings.find(".control-event").empty();
-	app.setup_datepicker({
-		$control: $control_event
-	});
-	$control_event.val(app.toggle_date_format($control_event.val()));
 	
-	// set event
-	$post_settings.find(".btn-set-event").on("click", function() {
-		app.set_event($post, app.toggle_date_format($control_event.val()), $(this));
+	var $control_event_check = $post_settings.find(".control-event-check").on("change", function() {
+		app.convert_to_event($post, $(this).prop("checked"), $(this));
 	});
+	
+	if($control_event_check.prop("checked")) {
+		var $control_event = $post_settings.find(".control-event").empty();
+	
+		var set_event = function($control) {
+			var datetime = app.datetimepicker.obj_to_str($control_event.datepicker("getDate"));
+			if($control_event.attr("data-event_datetime") !== datetime) {
+				app.set_event($post, datetime, $control);
+			}
+		};
+	
+		app.setup_datepicker({
+			$control: $control_event,
+			onClose: function() { set_event($control_event) }
+		});
+	
+		if($control_event.attr("data-event_datetime")) {
+			$control_event.val(app.datetimepicker.format_datetime($control_event.attr("data-event_datetime")));
+		}
+	}
 	
 	// tasks
 	var $control_task = $post_settings.find(".control-task")
@@ -177,6 +190,34 @@ app.convert_to_task = function($post, checked, $control) {
 					.toggleClass("hide", !checked)
 					.attr("data-status", data.message.status);
 				$post.find(".assigned-label-fullname").html("");
+			}
+		}
+	}).always(function() {
+		$control.prop("disabled", false);
+	})
+	
+}
+
+app.convert_to_event = function($post, checked, $control) {
+	$control.prop("disabled", true);
+	$.ajax({
+		url: "/",
+		type: "POST",
+		data: {
+			cmd: "aapkamanch.post.convert_to_event",
+			post: $post.attr("data-name"),
+			is_event: checked ? "1": "0"
+		},
+		statusCode: {
+			403: function(xhr) {
+				wn.msgprint("Not Permitted");
+			},
+			200: function(data) {
+				$(".post-settings").remove();
+				app.setup_post_settings($post, data.message.post_settings_html);
+				$post.find(".event-label")
+					.toggleClass("hide", !checked)
+				$post.find(".event-timestamp").html("").attr("data-timestamp", "");
 			}
 		}
 	}).always(function() {
@@ -241,7 +282,6 @@ app.set_event = function($post, event_datetime, $btn) {
 					$(".post-settings").remove();
 					app.setup_post_settings($post, data.message);
 					$post.find(".event-label")
-						.toggleClass("hide", !event_datetime)
 						.find(".event-timestamp").attr("data-timestamp", event_datetime);
 						app.format_event_timestamps();
 				}
@@ -288,8 +328,23 @@ app.update_task_status = function($post, status, $control) {
 };
 
 app.format_event_timestamps = function() {
+	var format = function(datetime) {
+		if(!datetime) return "";
+		var date = datetime.split(" ")[0].split("-");
+		var time = datetime.split(" ")[1].split(":");
+		var tt = "am";
+		if(time[0] >= 12) {
+			time[0] -= 12;
+			tt = "pm";
+		} else if(time[0] == "00") {
+			time[0] = 12;
+		}
+		var hhmm = [time[0], time[1]].join(":")
+		
+		return [date[2], date[1], date[0]].join("-") + " " + hhmm + " " + tt;
+	}
 	$(".event-timestamp").each(function() {
-		$(this).html(app.toggle_date_format($(this).attr("data-timestamp")));
+		$(this).html(format($(this).attr("data-timestamp")));
 	})
 }
 

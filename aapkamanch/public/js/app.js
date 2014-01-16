@@ -111,19 +111,18 @@ app.setup_datepicker = function(opts) {
 	wn.require("/assets/webnotes/js/lib/jquery/jquery.ui.timepicker-addon.js");	
 
 	opts.$control.datetimepicker({
-		timeFormat: "hh:mm:ss",
+		timeFormat: "hh:mm tt",
 		dateFormat: 'dd-mm-yy',
 		changeYear: true,
-		yearRange: "-70Y:+10Y"
-	})
+		yearRange: "-70Y:+10Y",
+		stepMinute: 5,
+		hour: 10,
+		onClose: opts.onClose
+	});
+	
+	app.setup_datetime_functions();
+	
 	return opts.$control;
-}
-
-app.toggle_date_format = function(datetime) {
-	if(!datetime) return "";
-	var date = datetime.split(" ")[0].split("-");
-	var time = datetime.split(" ")[1];
-	return [date[2], date[1], date[0]].join("-") + " " + time;
 }
 
 app.get_unit = function() {
@@ -178,4 +177,39 @@ app.login_via_facebook = function() {
 				If you do not want to use Facebook login, <a href='/login'>sign-up</a> here");
 		}
 	},{scope:"email"});	
+}
+
+app.setup_datetime_functions = function() {
+	// requires datetime picker
+	wn.provide("app.datetimepicker");
+	app.datetimepicker.str_to_obj = function(datetime_str) {
+		return $.datepicker.parseDateTime("yy-mm-dd", "HH:mm:ss", datetime_str);
+	};
+
+	app.datetimepicker.obj_to_str = function(datetime) {
+		if(!datetime) {
+			return "";
+		}
+		// requires datepicker
+		var date_str = $.datepicker.formatDate("yy-mm-dd", datetime)
+		var time_str = $.datepicker.formatTime("HH:mm:ss", {
+			hour: datetime.getHours(),
+			minute: datetime.getMinutes(),
+			second: datetime.getSeconds()
+		})
+		return date_str + " " + time_str;
+	};
+
+	app.datetimepicker.format_datetime = function(datetime) {
+		if (typeof(datetime)==="string") {
+			datetime = app.datetimepicker.str_to_obj(datetime);
+		}
+		var date_str = $.datepicker.formatDate("dd-mm-yy", datetime)
+		var time_str = $.datepicker.formatTime("hh:mm tt", {
+			hour: datetime.getHours(),
+			minute: datetime.getMinutes(),
+			second: datetime.getSeconds()
+		})
+		return date_str + " " + time_str;
+	}
 }

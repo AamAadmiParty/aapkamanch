@@ -25,7 +25,7 @@
 				{% endif %}
 				
 				<span class="label label-info event-label
-					{% if not post.event_datetime -%}hide{%- endif %}"><i class="icon-calendar"></i>
+					{% if not post.is_event -%}hide{%- endif %}"><i class="icon-calendar"></i>
 					<span class="event-timestamp" 
 						data-timestamp="{{ post.event_datetime or ''}}"></span>
 				</span>

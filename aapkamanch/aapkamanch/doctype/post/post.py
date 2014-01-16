@@ -25,6 +25,9 @@ class DocType:
 		else:
 			self.doc.assigned_to = self.doc.status = None
 			
+		if not self.doc.is_event:
+			self.doc.event_datetime = None
+			
 	def on_update(self):
 		clear_unit_views(self.doc.unit)
 
