@@ -1,5 +1,5 @@
 <div class="post {% if post.parent_post %}child-post{% endif %}" 
-		data-name="{{ post.name }}" data-unit="{{ post.unit }}">
+		data-name="{{ post.name }}" data-unit="{{ post.unit }}" itemscope itemtype="http://schema.org/Article">
 	<div class="row">
 		<div class="col-xs-2" style="min-height: 50px;">
 			<img src="{{ post.user_image|scrub_url }}" 
@@ -7,11 +7,11 @@
 		</div>
 		<div class="col-xs-10" style="margin-left: -15px; padding-right: 0px;">
 			<div>
-				<b>{{ post.first_name or "" }} {{ post.last_name or "" }}</b>
+				<b itemprop="author">{{ post.first_name or "" }} {{ post.last_name or "" }}</b>
 				<small class="text-muted wn-timestamp" style="margin-left: 10px;" 
 					data-timestamp="{{ post.creation }}"></small>
 			</div>
-			<div>{{ post.content }}</div>
+			<div itemprop="articleBody">{{ post.content }}</div>
 			{% if post.picture_url %}
 			<div style="margin: 10px 0px">
 				<img src="{{ post.picture_url|scrub_url }}" class="img-responsive" />
@@ -46,7 +46,7 @@
 						<i class="icon-reply-all"></i> Reply on Main Post</a></li>
 					{% elif "post_reply_count" in post %}
 					<li>
-						<a href="/post/{{ post.name }}">
+						<a itemprop="url" href="/post/{{ post.name }}">
 							{% if not post.post_reply_count -%}
 								{% if write -%}<i class="icon-reply"></i> Reply
 								{% else %}No Replies Yet{%- endif %}

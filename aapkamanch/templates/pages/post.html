@@ -9,7 +9,7 @@
 		<div class="feed">
 			<div class="parent-post">{{ parent_post_html }}</div>
 			<div class="permission-editor-area"></div>
-			{% include "templates/includes/post_editor.html" %}
+			{% if not not_permitted %}{% include "templates/includes/post_editor.html" %}{% endif %}
 			<div class="post-list">
 			{{ post_list_html }}
 			</div>

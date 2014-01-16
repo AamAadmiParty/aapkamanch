@@ -14,7 +14,12 @@ def get_context():
 	
 	access = get_access(post.unit)
 	if not access.get("read"):
-		raise webnotes.PermissionError
+		return {
+			"name": "Not Permitted",
+			"title": "Not Permitted",
+			"post_list_html": "<div class='text-muted'>You are not permitted to view this page</div>",
+			"not_permitted": True
+		}
 	
 	fullname = get_fullname(post.owner)
 	title = "{post} by {fullname}".format(unit=post.unit, post="Post", fullname=fullname)
