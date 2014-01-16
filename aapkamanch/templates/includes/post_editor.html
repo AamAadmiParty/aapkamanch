@@ -1,10 +1,11 @@
 <div class="post-editor well" 
 		{% if parent_post %}data-parent-post="{{ parent_post }}"{% endif %}>
-	<textarea class="form-control post-add-control" style="height: 100px;" placeholder="Enter text"></textarea>
+	<textarea class="form-control post-add-control" style="height: 200px;" placeholder="Enter text"></textarea>
 	<div class="post-picture" style="margin-top: 10px; display: none;">
 		<img src="" class="img-responsive" />
 	</div>
-	<div class="text-muted"><small>tab + enter to post</small></div>
+	<div class="text-muted"><small>tab + enter to post / <a target="_blank" class="text-muted"
+		href="/markdown-cheatsheet">markdown formatting</a></small></div>
 	<div class="clearfix">
 		<button class="btn btn-default btn-post-add pull-right"><i class="icon-plus"></i> Add Post</button>
 		<button class="btn btn-default btn-post-add-picture pull-right">
