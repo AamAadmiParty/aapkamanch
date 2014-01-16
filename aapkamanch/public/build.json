@@ -5,5 +5,9 @@
 		"public/js/app.js",
 		"public/js/unit_settings.js",
 		"public/js/post.js"
+	],
+	"js/canvasResize.min.js": [
+		"public/js/jquery.exif.js",
+		"public/js/jquery.canvasResize.js"
 	]
 }

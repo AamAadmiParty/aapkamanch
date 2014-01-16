@@ -67,25 +67,15 @@ app.add_picture = function() {
 	if (this.type === 'file' && this.files && this.files.length > 0) {
 		$.each(this.files, function (idx, fileobj) {
 			if (/^image\//.test(fileobj.type)) {
-				var reader = new FileReader();
-				reader.onload = function() {
-					// resize
-					var tmp = new Image();
-					tmp.src = reader.result;
-					tmp.onload = function() {
-						var w = tmp.width, h = tmp.height;
-						if(tmp.width > 500) {
-							w = 500; h = h * (500.0 / tmp.width);
-						}
-						var canvas = document.createElement('canvas');
-						canvas.width = w; canvas.height = h;
-						var ctx = canvas.getContext("2d");
-						ctx.drawImage(this, 0, 0, w, h);
-						var dataurl = canvas.toDataURL("image/jpeg");
-						$(".post-picture").toggle(true).find("img").attr("src", dataurl);
+				$.canvasResize(fileobj, {
+					width: 500,
+					height: 0,
+					crop: false,
+					quality: 80,
+					callback: function(data, width, height) {
+						$(".post-picture").toggle(true).find("img").attr("src", data);
 					}
-				};
-				reader.readAsDataURL(fileobj);
+				});
 			}
 		});
 	}
