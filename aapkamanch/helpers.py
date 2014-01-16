@@ -94,22 +94,23 @@ def get_access(unit, profile=None):
 		read = write = 1
 	
 	# give read access for public pages
-	if public:
+	elif public:
 		read = 1
 	
-	for perm in webnotes.conn.sql("""select 
-		up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
-		from `tabUnit Profile` up, tabUnit u
-		where up.profile = %s
-			and up.parent = u.name order by lft asc""", (profile,), as_dict=True):
-		if perm.lft <= lft and perm.rgt >= rgt:
-			if not read: read = perm.read
-			if not write: write = perm.write
-			if not admin: admin = perm.admin
-			if write: read = write
+	if profile != "Guest":
+		for perm in webnotes.conn.sql("""select 
+			up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
+			from `tabUnit Profile` up, tabUnit u
+			where up.profile = %s
+				and up.parent = u.name order by lft asc""", (profile,), as_dict=True):
+			if perm.lft <= lft and perm.rgt >= rgt:
+				if not read: read = perm.read
+				if not write: write = perm.write
+				if not admin: admin = perm.admin
+				if write: read = write
 			
-			if read and write and admin:
-				break
+				if read and write and admin:
+					break
 
 	return {
 		"read": read,

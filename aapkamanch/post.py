@@ -10,7 +10,7 @@ from helpers import get_access
 from .aapkamanch.doctype.unit.unit import clear_unit_views
 from webnotes.utils.file_manager import get_file_url, save_file
 
-@webnotes.whitelist()
+@webnotes.whitelist(allow_guest=True)
 def get_post_list_html(unit, view=None, limit_start=0, limit_length=20, status=None):
 	access = get_access(unit)
 	if webnotes.local.form_dict.cmd=="get_post_list_html":
@@ -35,7 +35,7 @@ def get_post_list_html(unit, view=None, limit_start=0, limit_length=20, status=N
 		from tabPost p, tabProfile pr
 		where p.unit=%s and pr.name = p.owner and ifnull(p.parent_post, '')='' {conditions}
 		order by p.creation desc limit %s, %s""".format(conditions=conditions), 
-			(unit, limit_start, limit_length), as_dict=True)
+			(unit, int(limit_start), int(limit_length)), as_dict=True)
 			
 	return webnotes.get_template("templates/includes/post_list.html")\
 		.render({"posts": posts, "limit_start":limit_start, "write": access.get("write")})

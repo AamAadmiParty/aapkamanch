@@ -25,7 +25,7 @@ def get_task_list(limit_start=0, limit_length=20):
 		from tabPost p, tabProfile pr
 		where p.assigned_to=%s and pr.name = p.owner and ifnull(p.status, '')!='Completed'
 		order by p.creation desc limit %s, %s""", 
-		(webnotes.session.user, limit_start, limit_length), as_dict=True)
+		(webnotes.session.user, int(limit_start), int(limit_length)), as_dict=True)
 			
 def get_unit_map(tasks):
 	units = [t.unit for t in tasks]

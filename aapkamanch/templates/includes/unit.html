@@ -57,7 +57,7 @@
 				</div>
 				</div>
 				<div class="text-center">
-					<button class="btn btn-default btn-more" style="display:none;">More</button>
+					<button class="btn btn-default btn-more hide">More</button>
 				</div>
 				{%- endif -%}
 			</div>
@@ -71,4 +71,26 @@
 	wn.provide("app");
 	window.app.unit = "{{ name }}";
 	window.app.view = "{{ view }}";
+	
+	$(function() {
+		$(window).on('hashchange', function() {
+			if(app.get_view()=="tasks") {
+				app.filter_posts_by_status(window.location.hash.substr(1));
+			}
+		});
+	
+		if(window.location.hash) {
+			$(window).trigger("hashchange");
+		}
+		
+		if(app.get_view() == "add") {
+			app.bind_add_post();
+		}
+		
+		app.setup_more_btn({
+			cmd: "aapkamanch.post.get_post_list_html",
+			status: window.location.hash.substr(1) || undefined
+		});
+	
+	});
 </script>

@@ -44,8 +44,7 @@ def get_parent_post_html(post, access):
 	return webnotes.get_template("templates/includes/inline_post.html")\
 		.render({"post": post.fields, "write": access.get("write")})
 
-@webnotes.whitelist()
-def get_child_posts_html(post, limit_start=0, limit_length=20):
+def get_child_posts_html(post):
 	if isinstance(post, basestring):
 		post = webnotes.bean("Post", post).doc
 	
@@ -60,13 +59,11 @@ def get_child_posts_html(post, limit_start=0, limit_length=20):
 		p.creation, p.content, p.parent_post, pr.user_image, pr.first_name, pr.last_name
 		from tabPost p, tabProfile pr
 		where p.parent_post=%s and pr.name = p.owner
-		order by p.creation desc limit %s, %s""", 
-			(post.name, limit_start, limit_length), as_dict=True)
+		order by p.creation asc""", (post.name,), as_dict=True)
 			
 	return webnotes.get_template("templates/includes/post_list.html")\
 		.render({
-			"posts": posts, 
-			"limit_start":limit_start, 
+			"posts": posts,
 			"write": access.get("write"),
 			"parent_post": post.name
 		})

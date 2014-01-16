@@ -7,11 +7,11 @@
 	</div>
 	<div class="col-sm-8">
 		<div class="feed">
-			<div class="post-list">
+			<div class="post-list-html">
 			{{ post_list_html }}
 			</div>
 			<div class="text-center">
-				<button class="btn btn-default btn-more" style="display:none;">More</button>
+				<button class="btn btn-default btn-more">More</button>
 			</div>
 		</div>
 	</div>
@@ -19,5 +19,11 @@
 <script>
 	wn.provide("app");
 	window.app.unit = "tasks";
+	
+	$(function() {
+		app.setup_more_btn({
+			cmd: "aapkamanch.templates.pages.tasks.get_task_list_html"
+		});
+	});
 </script>
 {% endblock %}

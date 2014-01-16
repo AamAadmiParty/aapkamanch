@@ -1,28 +1,12 @@
 // AAP Ka Manch, License GNU General Public License v3
 
 $(function() {
-	$pic_input = $(".control-post-add-picture");
-	$(".btn-post-add").on("click", app.add_post);
-	$(".btn-post-add-picture").on("click", function() { 
-		$pic_input.click();
-	});
-	$pic_input.on("change", app.add_picture)
 	$(".feed").on("click", ".btn-post-settings", function() {
 		app.toggle_post_settings.apply(this);
 	});
-	
-	$(window).on('hashchange', function() {
-		if(app.get_view()=="tasks") {
-			app.filter_posts_by_status(window.location.hash.substr(1));
-		}
-	});
-	
-	if(window.location.hash) {
-		$(window).trigger("hashchange");
-	}
-		
+
 	app.format_event_timestamps();
-})
+});
 
 app.add_post = function() {
 	var btn = this;
