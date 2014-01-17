@@ -7,7 +7,7 @@ import webnotes, json
 from permissions import get_access
 
 @webnotes.whitelist()
-def add_unit(unit, new_unit, public, forum):
+def add_unit(unit, new_unit, public_read, public_write, unit_type="Forum"):
 	if not get_access(unit).get("admin"):
 		raise webnotes.PermissionError
 			
@@ -16,9 +16,9 @@ def add_unit(unit, new_unit, public, forum):
 		"unit_name": unit + "-" + new_unit,
 		"unit_title": new_unit,
 		"parent_unit": unit,
-		"unit_type": "Group",
-		"public": int(public),
-		"forum": int(forum)
+		"unit_type": unit_type,
+		"public_read": int(public_read),
+		"public_write": int(public_write)
 	})
 	unit.ignore_permissions = True
 	unit.insert()

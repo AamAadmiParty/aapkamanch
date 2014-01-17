@@ -229,7 +229,7 @@ small, .small {
 				{% if opts.posts %}
 				<tr class="unit-row">
 					<td>
-						<h2>{{ opts.unit_title }} {% if not opts.public %}[Private]{% endif %}</h2>
+						<h2>{{ opts.unit_title }} {% if not opts.public_read %}[Private]{% endif %}</h2>
 						{%- if opts.parents -%}
 						<ul class="breadcrumb small text-muted">
 							{% for parent in opts.parents %}

@@ -16,6 +16,7 @@ website_catch_all = index
 base_template = templates/base.html
 update_website_context = aapkamanch.helpers.update_website_context
 jenv_filter = scrub_url:aapkamanch.helpers.scrub_url
+jenv_filter = get_icon:aapkamanch.helpers.get_icon
 
 scheduler_event = daily:aapkamanch.summary.send_daily_summary
 

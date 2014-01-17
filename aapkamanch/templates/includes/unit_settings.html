@@ -20,15 +20,15 @@
 			<div class="text-muted"><small>Only letters, numbers and spaces</small></div>
 	        <div class="checkbox" style="position: static;">
 	            <label>
-	                <input type="checkbox" class="control-add-group-public" 
-						{{ "checked" if public else "disabled" }}> <span>Allow all users to read</span>
+	                <input type="checkbox" class="control-add-group-public_read" 
+						{{ "checked" if public_read else "disabled" }}> <span>Allow all users to read</span>
 	            </label>
 				<div class="text-muted"><small>Private if unchecked, only users with explicit read access will be allowed to read</small></div>
 	        </div>
 	        <div class="checkbox" style="position: static;">
 	            <label>
-	                <input type="checkbox" class="control-add-group-forum" 
-						{{ "checked" if forum else "disabled" }}> <span>Allow all users to write</span>
+	                <input type="checkbox" class="control-add-group-public_write" 
+						{{ "checked" if public_write else "disabled" }}> <span>Allow all users to write</span>
 					<div class="text-muted"><small>Public Forum</small></div>
 	            </label>
 	        </div>

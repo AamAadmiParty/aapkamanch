@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import webnotes, json
 
-from aapkamanch.helpers import get_child_unit_items, get_access, is_public
+from aapkamanch.helpers import get_child_unit_items, get_access, is_public_read
 from aapkamanch.permissions import get_unit_settings_html
 from aapkamanch.post import get_post_list_html
 
@@ -21,7 +21,7 @@ def get_context():
 		if "/" in unit:
 			unit, view = unit.split("/", 1)
 			
-		if not is_public(unit):
+		if not is_public_read(unit):
 			if not get_access(unit).get("read"):
 				raise webnotes.PermissionError
 				
@@ -57,11 +57,11 @@ def get_unit_context(unit, view):
 		return {
 			"name": unit.name,
 			"unit_description": unit.unit_description,
-			"public": unit.public,
+			"public_read": unit.public_read,
 			"unit_title": title,
-			"forum": unit.forum,
+			"public_write": unit.public_write,
 			"parents": parents,
-			"children": get_child_unit_items(unit.name, public=1),
+			"children": get_child_unit_items(unit.name, public_read=1),
 			"view": view
 		}
 		
@@ -89,8 +89,8 @@ def get_unit_title(unit_name):
 	def _get_unit_title(unit_name):
 		unit = webnotes.conn.get_value("Unit", unit_name, ["unit_title", "parent_unit", "unit_type"], as_dict=1)
 		title = unit.unit_title
-		if unit.parent_unit and unit.unit_type in ("Group", "Forum"):
-			title = webnotes.conn.get_value("Unit", unit.parent_unit, "unit_title") + " " + title
+		# if unit.parent_unit and unit.unit_type == "Forum":
+		# 	title = webnotes.conn.get_value("Unit", unit.parent_unit, "unit_title") + " " + title
 			
 		return title
 	

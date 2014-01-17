@@ -23,12 +23,12 @@ app.setup_unit_settings = function() {
 	$(".permission-editor-area").find(".btn-add-group").on("click", app.add_group);
 	$(".btn-settings").parent().addClass("active");
 	
-	// disabled forum if not public
-	var control_public = $(".control-add-group-public").click(function() {
+	// disabled public_write if not public_read
+	var control_public_read = $(".control-add-group-public_read").click(function() {
 		if(!$(this).prop("checked")) {
-			$(".control-add-group-forum").prop("checked", false).prop("disabled", true);
+			$(".control-add-group-public_write").prop("checked", false).prop("disabled", true);
 		} else {
-			$(".control-add-group-forum").prop("disabled", false);
+			$(".control-add-group-public_write").prop("disabled", false);
 		}
 	}).trigger("click").trigger("click"); // hack
 }
@@ -45,8 +45,8 @@ app.add_group = function() {
 				cmd:"aapkamanch.unit.add_unit",
 				unit: app.get_unit(),
 				new_unit: $control.val(),
-				public: $(".control-add-group-public").is(":checked") ? 1 : 0,
-				forum: $(".control-add-group-forum").is(":checked") ? 1 : 0
+				public_read: $(".control-add-group-public_read").is(":checked") ? 1 : 0,
+				public_write: $(".control-add-group-public_write").is(":checked") ? 1 : 0
 			},
 			statusCode: {
 				403: function() {

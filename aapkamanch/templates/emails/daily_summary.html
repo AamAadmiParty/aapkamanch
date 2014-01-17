@@ -20,7 +20,7 @@
 				{% set opts = event_post_map if unit=="Events" else unit_post_map.get(unit) %}
 				{% if opts.posts %}
 				<tr style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6; margin: 0; padding: 0;"><td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6; margin: 0; padding: 0;">
-						<h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 28px; line-height: 1.2; color: #000; font-weight: 200; margin: 40px 0 10px; padding: 0;">{{ opts.unit_title }} {% if not opts.public %}[Private]{% endif %}</h2>
+						<h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 28px; line-height: 1.2; color: #000; font-weight: 200; margin: 40px 0 10px; padding: 0;">{{ opts.unit_title }} {% if not opts.public_read %}[Private]{% endif %}</h2>
 						{%- if opts.parents -%}
 						<ul style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 85%; line-height: 1.6; font-weight: normal; color: #999999; list-style-type: none; margin: 0 0 5px; padding: 0;">
 							{% for parent in opts.parents %}

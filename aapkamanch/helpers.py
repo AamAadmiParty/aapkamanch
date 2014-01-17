@@ -72,7 +72,7 @@ def get_user_details(unit, fb_access_token=None):
 	
 	if access and access.get("read"):
 		out["private_units"] = webnotes.get_template("templates/includes/unit_list.html")\
-			.render({"children": get_child_unit_items(unit, public=0)})
+			.render({"children": get_child_unit_items(unit, public_read=0)})
 	
 	return out
 
@@ -83,18 +83,18 @@ def get_access(unit, profile=None):
 	if not profile:
 		profile = webnotes.session.user
 	
-	lft, rgt, public, forum = webnotes.conn.get_value("Unit", unit, ["lft", "rgt", "public", "forum"])
+	lft, rgt, public_read, public_write = webnotes.conn.get_value("Unit", unit, ["lft", "rgt", "public_read", "public_write"])
 	
 	if not (lft and rgt):
 		raise webnotes.ValidationError("Please rebuild Unit Tree")
 			
 	read = write = admin = 0
 
-	if forum:
+	if public_write:
 		read = write = 1
 	
-	# give read access for public pages
-	elif public:
+	# give read access for public_read pages
+	elif public_read:
 		read = 1
 	
 	if profile != "Guest":
@@ -131,14 +131,14 @@ def get_fb_userid(fb_access_token):
 	else:
 		return webnotes.AuthenticationError
 		
-def is_public(unit):
-	return webnotes.cache().get_value("is_public:" + unit, lambda: webnotes.conn.get_value("Unit", unit, "public"))
+def is_public_read(unit):
+	return webnotes.cache().get_value("is_public_read:" + unit, lambda: webnotes.conn.get_value("Unit", unit, "public_read"))
 	
-def get_child_unit_items(unit, public):
-	return webnotes.conn.sql("""select name, name as url, unit_title, public, unit_type
+def get_child_unit_items(unit, public_read):
+	return webnotes.conn.sql("""select name, name as url, unit_title, public_read, unit_type
 		from tabUnit where 
-		ifnull(`public`,0) = %s 
-		and parent_unit=%s""", (public, unit), as_dict=1)
+		ifnull(`public_read`,0) = %s 
+		and parent_unit=%s""", (public_read, unit), as_dict=1)
 		
 def get_task_count():
 	return webnotes.conn.count("Post", {"assigned_to": webnotes.session.user})
@@ -147,6 +147,19 @@ def scrub_url(url):
 	if not url or url.startswith("http"):
 		return url
 	return "/" + url
+	
+def get_icon(key):
+	return
+	# icon_map = {
+	# 	"forum": "icon-comments",
+	# 	"private": "icon-lock",
+	# 	"public_write": "icon-group",
+	# 	"events": "icon-calendar",
+	# 	"tasks": "icon-pencil",
+	# 	"questions": "icon-question",
+	# }
+	# key = key.lower()
+	# return '<i class="{}"></i>'.format(icon_map.get(key)) if icon_map.get(key) else ""
 
 def update_gravatar(bean, trigger):
 	import md5

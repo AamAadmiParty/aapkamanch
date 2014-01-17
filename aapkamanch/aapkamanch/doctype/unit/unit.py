@@ -31,8 +31,8 @@ class DocType(DocTypeNestedSet):
 			clear_cache(self.doc.parent_unit)
 		
 	def make_private_if_parent_is_private(self):
-		if self.doc.parent_unit and not webnotes.conn.get_value("Unit", self.doc.parent_unit, "public"):
-			self.doc.public = 0
+		if self.doc.parent_unit and not webnotes.conn.get_value("Unit", self.doc.parent_unit, "public_read"):
+			self.doc.public_read = 0
 	
 	def validate_name(self):
 		self.doc.unit_name = self.doc.unit_name.strip().lower().replace(" ", "-")
@@ -51,7 +51,7 @@ class DocType(DocTypeNestedSet):
 def clear_cache(unit):
 	unit = unit.lower()
 	cache = webnotes.cache()
-	for key in ("is_public", "unit_title"):
+	for key in ("is_public_read", "unit_title"):
 		cache.delete_value(key + ":" + unit)
 		
 	clear_unit_views(unit)

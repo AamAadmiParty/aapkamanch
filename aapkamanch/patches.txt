@@ -5,3 +5,4 @@ aapkamanch.patches.convert_to_website_user
 aapkamanch.patches.add_user_profile_for_fb_users
 aapkamanch.patches.scrub_unit_names
 aapkamanch.patches.convert_to_event
+aapkamanch.patches.update_unit_structure

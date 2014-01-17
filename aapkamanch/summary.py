@@ -51,7 +51,7 @@ def prepare_daily_summary(user, unit_post_map, render_opts=None):
 		"posts": [],
 		"lft": 0,
 		"unit_title": "Events on {}".format(render_opts.get("formatted_event_date")),
-		"public": 1
+		"public_read": 1
 	}
 	
 	for unit in sorted(unit_post_map, key=lambda u: unit_post_map.get(u, {}).get("lft")):
@@ -101,7 +101,7 @@ def get_unit_post_map(for_date, event_date):
 	# update unit info
 	for unit, opts in unit_post_map.items():
 		opts.update(webnotes.conn.get_value("Unit", opts.unit or unit, 
-			["lft", "rgt", "public", "unit_title"], as_dict=True) or {})
+			["lft", "rgt", "public_read", "unit_title"], as_dict=True) or {})
 		opts.parents = webnotes.conn.sql("""select name, unit_title from tabUnit 
 			where lft < %s and rgt > %s order by lft asc""", (opts.lft, opts.rgt), as_dict=1)
 		
