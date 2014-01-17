@@ -28,7 +28,7 @@ AAP Ka Manch is built on MySQL and webnotes framework (Python). To install it lo
 1. Setup Python Virtualenv (optional - only if you are running multiple python projects requiring different versions of libraries)
 1. Install pip: `sudo easy_install pip`
 1. Create a `bench` directory
-1. Clone `wnframework` in the `bench` as `webnotes`: `git clone https://github.com/webnotes/wnframework.git webnotes`
+1. Clone `wnframework` in the `bench` as `webnotes`: `git clone https://github.com/webnotes/wnframework.git webnotes` and checkout `4.0.0-wip` branch
 1. Install python libraries `sudo pip install webnotes/requirements.txt`
 1. Clone `aapkamanch` in `bench`: `git clone https://github.com/AamAadmiParty/aapkamanch.git`
 1. Install the packages: `pip install -e webnotes/` and `pip install -e aapkamanch/`
@@ -47,6 +47,9 @@ sudo easy_install pip
 mkdir bench
 cd bench
 git clone https://github.com/webnotes/wnframework.git webnotes
+cd webnotes
+git checkout 4.0.0-wip
+cd ..
 sudo pip install webnotes/requirements.txt
 git clone https://github.com/AamAadmiParty/aapkamanch.git
 pip install -e webnotes/

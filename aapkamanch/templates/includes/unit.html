@@ -1,6 +1,6 @@
 <div class="container" style="padding:0px; margin: 0px">
 	<div class="row">
-		<div class="col-sm-4 sidebar hidden-xs">
+		<div class="col-sm-3 sidebar hidden-xs">
 			{% include "templates/includes/user_nav.html" %}
 			<div class="list-group unit-list-group">
 			{% if children %}
@@ -8,7 +8,7 @@
 			{% endif %}
 			</div>
 		</div>
-		<div class="col-sm-8">
+		<div class="col-sm-9">
 			<div class="feed">
 				{% if unit_description %}<p class="lead">{{ unit_description }}</p>{% endif %}
 				<div class="unit-toolbar">

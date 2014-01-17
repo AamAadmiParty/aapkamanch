@@ -37,14 +37,14 @@ class DocType:
 			# send assignment email
 			sendmail(recipients=[self.doc.assigned_to], 
 				subject="You have been assigned this Task by {}".format(get_fullname(self.doc.modified_by)),
-				msg=self.get_reply_email_message(get_fullname(self.doc.owner)))
+				msg=self.get_reply_email_message(self.doc.name, get_fullname(self.doc.owner)))
 		
 	def send_email_on_reply(self):
 		owner_fullname = get_fullname(self.doc.owner)
 		
 		parent_post = webnotes.bean("Post", self.doc.parent_post).doc
 		
-		message = self.get_reply_email_message(owner_fullname)
+		message = self.get_reply_email_message(self.doc.name, owner_fullname)
 		
 		# send email to the owner of the post, if he/she is different
 		if parent_post.owner != self.doc.owner:
@@ -53,33 +53,35 @@ class DocType:
 				message=message,
 			
 				# to allow unsubscribe
-				doctype='Profile', 
-				email_field='name', 
+				doctype='Post', 
+				email_field='owner', 
 				
 				# for tracking sent status
 				ref_doctype=self.doc.doctype, ref_docname=self.doc.name)
 		
 		# send email to members who part of the conversation
-		recipients = webnotes.conn.sql_list("""select owner from `tabPost`
-			where parent_post=%s and owner not in (%s, %s)""", 
-			(self.doc.parent_post, parent_post.owner, self.doc.owner))
+		participants = webnotes.conn.sql_list("""select owner, name from `tabPost`
+			where parent_post=%s and owner not in (%s, %s) order by creation asc""", 
+			(self.doc.parent_post, parent_post.owner, self.doc.owner), as_dict=True)
 		
-		send(recipients=recipients, 
+		send(recipients=[p.owner for p in participants], 
 			subject="{someone} replied to a post by {other}".format(someone=owner_fullname, 
 				other=get_fullname(parent_post.owner)), 
 			message=message,
 		
 			# to allow unsubscribe
-			doctype='Profile', 
-			email_field='name', 
+			doctype='Post',
+			email_field='owner', 
 			
 			# for tracking sent status
 			ref_doctype=self.doc.doctype, ref_docname=self.doc.name)
 		
-	def get_reply_email_message(self, owner_fullname=None):
+	def get_reply_email_message(self, post_name, owner_fullname=None):
 		message = self.doc.content
 		if self.doc.picture_url:
 			message += """<div><img src="{url}" style="max-width: 100%"></div>"""\
 				.format(url=self.doc.picture_url)
 		message += "<p>By {fullname}</p>".format(fullname=owner_fullname)
+		message += "<p><a href='/post/{post_name}'>Click here to view the post</a></p>".format(fullname=owner_fullname,
+			post_name=post_name)
 		return message

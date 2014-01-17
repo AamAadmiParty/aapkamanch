@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 import webnotes, json
 
 from helpers import get_access
+from webnotes.utils.email_lib.bulk import send
+
 
 def get_unit_settings_html(unit):
 	if not get_access(unit).get("admin"):
@@ -76,3 +78,11 @@ def update_permission(unit, profile, perm, value):
 	unit.ignore_permissions = True
 	unit.save()
 	
+	if perm=="admin" and int(value):
+		subject = "You have been made Administrator of Group " + unit.doc.name.replace("-", " ").title()
+		
+		send(recipients=[profile], 
+			subject= subject, add_unsubscribe_link=False,
+			message="""<h3>Group Notification<h3>\
+			<p>%s</p>\
+			<p style="color: #888">This is just for your information.</p>""" )
