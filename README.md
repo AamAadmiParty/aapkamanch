@@ -10,12 +10,67 @@ Prototype of a platform to facilitate communication and information sharing amon
 
 Currently all information is shared via Facebook, Whatsapp, SMS, emails. There is no unified communication platform. If this platform is built, it will lead to information sharing and also enhance engagement of members.
 
-### To Do
 
-1. Login (via Facebook / Twitter Oauth)
-1. Edit Profile
-1. Groups - Group User
-1. Feed
+### Install
+
+AAP Ka Manch is built on MySQL and webnotes framework (Python). To install it locally, you will need to install
+
+#### Pre-requisites
+
+1. MySQL
+1. Python-2.7
+1. Python Setuptools (Python Package Manager)
+1. Memcache
+
+#### Steps
+
+1. Start MySQL and memcache
+1. Setup Python Virtualenv (optional - only if you are running multiple python projects requiring different versions of libraries)
+1. Install pip: `sudo easy_install pip`
+1. Create a `bench` directory
+1. Clone `wnframework` in the `bench` as `webnotes`: `git clone https://github.com/webnotes/wnframework.git webnotes`
+1. Install python libraries `sudo pip install webnotes/requirements.txt`
+1. Clone `aapkamanch` in `bench`: `git clone https://github.com/AamAadmiParty/aapkamanch.git`
+1. Install the packages: `pip install -e webnotes/` and `pip install -e aapkamanch/`
+1. Create `sites` directory
+1. Create `apps.txt`: `echo aapkamanch >> sites/apps.txt`
+1. Change to `sites` directory
+1. Setup a site: `webnotes test.appkamanch.org --install aapkamanch`
+1. To test facebook login, add `127.0.0.1  test.aapkamanch.org` to `/etc/hosts`
+1. Start serving: `webnotes test.aapkamanch.org --serve`
+1. Start a browser and go to `http://test.aapkamanch.org:8000`
+
+Putting it all together:
+
+```
+sudo easy_install pip
+mkdir bench
+cd bench
+git clone https://github.com/webnotes/wnframework.git webnotes
+sudo pip install webnotes/requirements.txt
+git clone https://github.com/AamAadmiParty/aapkamanch.git
+pip install -e webnotes/
+pip install -e aapkamanch/
+mkdir sites
+echo aapkamanch >> sites/apps.txt
+cd sites
+webnotes test.appkamanch.org --install aapkamanch
+webnotes test.aapkamanch.org --serve
+```
+
+#### Pulling Latest Updates
+
+1. Update your git repositories
+1. Go to `bench/sites` directory
+1. Run `webnotes test.aapkamanch.org --latest`
+1. Run `webnotes test.aapkamanch.org --build`
+1. Run `webnotes test.aapkamanch.org --flush`
+
+#### Admin Login
+
+1. go to "/login"
+1. Administrator user name: "Administrator"
+1. Administrator passowrd "admin"
 
 ### Components
 
