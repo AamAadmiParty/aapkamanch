@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-17 15:55:51", 
+  "modified": "2014-01-20 10:54:10", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -124,6 +124,20 @@
   "fieldname": "unsubscribe", 
   "fieldtype": "Check", 
   "label": "Unsubscribe"
+ }, 
+ {
+  "default": "0", 
+  "doctype": "DocField", 
+  "fieldname": "upvotes", 
+  "fieldtype": "Int", 
+  "label": "Upvotes"
+ }, 
+ {
+  "default": "0", 
+  "doctype": "DocField", 
+  "fieldname": "replies", 
+  "fieldtype": "Int", 
+  "label": "Replies"
  }, 
  {
   "doctype": "DocPerm"
