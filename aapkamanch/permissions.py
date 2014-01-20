@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 
 import webnotes, json
 
-from helpers import get_access
+from helpers import get_access, clear_unit_access
 from webnotes.utils.email_lib.bulk import send
-
 
 def get_unit_settings_html(unit):
 	if not get_access(unit).get("admin"):
@@ -60,6 +59,8 @@ def add_unit_profile(unit, profile):
 	unit.ignore_permissions = True
 	unit.save()
 	
+	clear_unit_access(profile)
+	
 	unit_profile = unit.doclist[-1].fields
 	unit_profile.update(webnotes.conn.get_value("Profile", unit_profile.profile, 
 		["first_name", "last_name", "user_image", "fb_location", "fb_hometown"], as_dict=True))
@@ -86,3 +87,5 @@ def update_permission(unit, profile, perm, value):
 			message="""<h3>Group Notification<h3>\
 			<p>%s</p>\
 			<p style="color: #888">This is just for your information.</p>""" )
+
+	clear_unit_access(profile)

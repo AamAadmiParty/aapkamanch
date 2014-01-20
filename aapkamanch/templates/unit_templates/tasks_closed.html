@@ -1,0 +1,13 @@
+{% extends "templates/unit_templates/tasks_open.html" %}
+
+{% block unit_script %}
+<script>
+$(function() {
+	app.setup_more_btn({
+		cmd: "aapkamanch.templates.unit_templates.tasks_open.get_task_list_html",
+		status: "Open"
+	});
+	app.toggle_edit();
+})
+</script>
+{% endblock %}

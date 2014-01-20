@@ -5,9 +5,7 @@ from __future__ import unicode_literals
 
 import webnotes, json
 
-from aapkamanch.helpers import get_child_unit_items, get_access, is_public_read
-from aapkamanch.permissions import get_unit_settings_html
-from aapkamanch.post import get_post_list_html
+from aapkamanch.helpers import get_child_unit_items, get_access, get_views, get_view_options
 
 no_cache = True
 
@@ -21,27 +19,26 @@ def get_context():
 		if "/" in unit:
 			unit, view = unit.split("/", 1)
 			
-		if not is_public_read(unit):
-			if not get_access(unit).get("read"):
-				raise webnotes.PermissionError
-				
 		if not view:
-			view = "feed"
+			for v in get_views(unit):
+				if v.get("default"):
+					view = v["view"]
+					break
 		
-		unit_context = get_unit_context(unit, view)
+		if not has_access(unit, view):
+			raise webnotes.PermissionError
 		
-		unit_context.update({
-			"title": "Aam Aadmi Party: " + get_unit_title(unit),
-			"content": get_unit_html(unit_context, view)
-		})
-		
-		return unit_context
+		context = get_unit_context(unit, view)
+		context["content"] = get_unit_html(context)
+		context["access"] = get_access(unit)
+				
+		return context
 		
 	except webnotes.DoesNotExistError:
 		return {"content": '<div class="alert alert-danger full-page">The page you are looking for does not exist.</div>'}
 	except webnotes.PermissionError:
 		return {"content": '<div class="alert alert-danger full-page">You are not permitted to view this page.</div>'}
-
+		
 def get_unit_context(unit, view):
 	def _get_unit_context(unit, view):
 		unit = webnotes.doc("Unit", unit)
@@ -49,12 +46,15 @@ def get_unit_context(unit, view):
 		parents = webnotes.conn.sql("""select name, unit_title from tabUnit 
 			where lft < %s and rgt > %s order by lft asc""", (unit.lft, unit.rgt), as_dict=1)
 		
+		# update title
 		title = unit.unit_title
-		if view!="feed":
-			title += ": {}".format(view.title())
+		unit_views = get_views(unit)
+		unit_views_map = dict((d["view"], d) for d in unit_views)
+		if view in unit_views_map:
+			title = unit_views_map[view]["label"]
 			parents += [{"name": unit.name, "unit_title": unit.unit_title}]
 				
-		return {
+		context = {
 			"name": unit.name,
 			"unit_description": unit.unit_description,
 			"public_read": unit.public_read,
@@ -62,36 +62,46 @@ def get_unit_context(unit, view):
 			"public_write": unit.public_write,
 			"parents": parents,
 			"children": get_child_unit_items(unit.name, public_read=1),
-			"view": view
+			"unit": unit.fields,
+			"view": view,
+			"views": get_views(unit)
 		}
+		context["no_cache"] = get_view_options(context).get("no_cache")
+		return context
 		
 	return webnotes.cache().get_value("unit_context:{unit}:{view}".format(unit=unit.lower(), view=view), 
 		lambda:_get_unit_context(unit, view))
-
-# unit_template = None
-def get_unit_html(context, view):
-	# global unit_template
-	# if not unit_template:
-	unit_template = webnotes.get_template("templates/includes/unit.html")
-	
-	def _get_unit_html(context, view):
-		if view=="settings":
-			context["unit_settings"] = get_unit_settings_html(context.get("name"))
-		else:
-			context["post_list_html"] = get_post_list_html(context.get("name"), view=view)
 		
+def get_unit_html(context):
+	def _get_unit_html(context):
+		method = "aapkamanch.templates.unit_templates.{unit_type}_{view}.get_unit_html"\
+			.format(unit_type=context.get("unit").unit_type.lower(), view=context.get("view").lower())
+		
+		try:
+			# method updates context
+			webnotes.get_attr(method)(context)
+		except ImportError:
+			# method not found
+			pass
+			
+		unit_template = get_template(context.get("unit").get("unit_type"), context.get("view"))
 		return unit_template.render(context)
 	
-	return webnotes.cache().get_value("unit_html:{unit}:{view}".format(unit=context.get("name").lower(), view=view), 
-		lambda:_get_unit_html(context, view))
-
-def get_unit_title(unit_name):
-	def _get_unit_title(unit_name):
-		unit = webnotes.conn.get_value("Unit", unit_name, ["unit_title", "parent_unit", "unit_type"], as_dict=1)
-		title = unit.unit_title
-		# if unit.parent_unit and unit.unit_type == "Forum":
-		# 	title = webnotes.conn.get_value("Unit", unit.parent_unit, "unit_title") + " " + title
-			
-		return title
+	if context.get("no_cache"):
+		return _get_unit_html(context)
 	
-	return webnotes.cache().get_value("unit_title:" + unit_name, lambda: _get_unit_title(unit_name))
+	return webnotes.cache().get_value("unit_html:{unit}:{view}".format(unit=context.get("name").lower(),
+		view=context.get("view")), lambda:_get_unit_html(context))
+		
+def get_template(unit_type, view):
+	return webnotes.get_template("templates/unit_templates/{}_{}.html".format(unit_type.lower(), view.lower()))
+
+def has_access(unit, view):
+	access = get_access(unit)
+	
+	if view=="settings":
+		return access.get("admin")
+	elif view in ("add", "edit"):
+		return access.get("write")
+	else:
+		return access.get("read")

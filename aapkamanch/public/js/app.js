@@ -1,6 +1,6 @@
 // AAP Ka Manch, License GNU General Public License v3
 
-var app = {};
+wn.provide("app");
 
 $(function() {
 	wn.datetime.refresh_when();
@@ -39,11 +39,11 @@ app.render_authenticated_user = function(data) {
 
 	// hide editor / add button if no access
 	if(data.access && data.access.write) {
-		$(".tab-add").removeClass("hide");
+		$('li[data-view="add"]').removeClass("hide");
 	}
 	
 	if(data.access && data.access.admin) {
-		$(".tab-settings").removeClass("hide");
+		$('li[data-view="settings"]').removeClass("hide");
 	}
 
 	// render private groups
@@ -86,7 +86,7 @@ app.setup_autosuggest = function(opts) {
         },
 		select: function(event, ui) {
 			opts.$control.val("");
-			opts.select(ui.item.profile);
+			opts.select(ui.item.profile, ui.item);
 		}
 	});
 	
@@ -235,12 +235,14 @@ app.setup_more_btn = function(opts, prepend) {
 						console.log(JSON.parse(data.exc).join("\n"));
 					} else {
 						if(prepend) {
-							$(".post-list-html").prepend(data.message);
+							$(".post-list").prepend(data.message);
 						} else {
-							$(".post-list-html").append(data.message);
+							$(".post-list").append(data.message);
 						}
+						wn.datetime.refresh_when();
 						app.format_event_timestamps();
 						app.show_more_btn(limit_start);
+						app.toggle_edit();
 					}
 				}
 			}
@@ -249,18 +251,21 @@ app.setup_more_btn = function(opts, prepend) {
 		})
 	});
 	app.show_more_btn(0);
+};
+
+app.toggle_edit = function(only_owner) {
+	if(only_owner) {
+		var user = wn.get_cookie("user_id");
+		$(".edit-post").each(function() {
+			console.log([user, $(this).attr("data-owner")]);
+			$(this).toggleClass("hide", !(window.app.access.write && $(this).attr("data-owner")===user));
+		});
+	} else {
+		$(".edit-post").toggleClass("hide", !window.app.access.write);
+	}
 }
 
 app.show_more_btn = function(limit_start, limit_length) {
 	var show_more_btn = ($(".post").length - (limit_start || 0)) === (limit_length || 20);
 	$(".btn-more").toggleClass("hide", !show_more_btn);
-}
-
-app.bind_add_post = function() {
-	$pic_input = $(".control-post-add-picture");
-	$(".btn-post-add").on("click", app.add_post);
-	$(".btn-post-add-picture").on("click", function() { 
-		$pic_input.click();
-	});
-	$pic_input.on("change", app.add_picture)
 }

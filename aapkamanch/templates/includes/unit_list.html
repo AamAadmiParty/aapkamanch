@@ -1,3 +1,4 @@
+{%- if children -%}
 {%- for child in children -%}
 <a href="/{{ child.url|lower }}" class="list-group-item{% if not child.public_read %} list-group-item-private{% endif %}">
 	<div class="row">
@@ -11,4 +12,6 @@
 			<i class="icon-angle-right pull-right"></i>
 		</div>
 	</div>
-</a>{%- endfor -%}
+</a>
+{%- endfor -%}
+{%- endif -%}

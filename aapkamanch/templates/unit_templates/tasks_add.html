@@ -1,0 +1,11 @@
+{% extends "templates/unit_templates/forum_add.html" %}
+
+{%- block view -%}
+{{ super() }}
+
+<script>
+$(function() {
+	app.setup_tasks_editor();
+});
+</script>
+{%- endblock -%}

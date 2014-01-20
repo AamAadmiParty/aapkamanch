@@ -178,3 +178,19 @@ footer {
 .btn-more {
 	margin-top: 15px;
 }
+
+.unit-container {
+	padding: 0px;
+}
+
+textarea {
+	resize: vertical;
+}
+
+.post-add-textarea {
+	height: 200px !important;
+}
+
+.post-content img {
+	margin: 10px 0px;
+}

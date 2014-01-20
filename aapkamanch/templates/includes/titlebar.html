@@ -3,7 +3,10 @@
 		<div class="container">
 			<div class="row" style="padding: 5px">
 				<div class="col-xs-12 title">
-					<b class="app-title">{% if public_read==False %}<i class="icon-lock"></i> {% endif %}{{ unit_title or "AAP Ka Manch" }}</b>
+					<b class="app-title">
+						{%- if public_read==False -%}<i class="icon-lock"></i> {%- endif -%}
+						{{ "Aam Aadmi Party: " + unit_title if unit_title else "AAP Ka Manch" }}
+					</b>
 					<button type="button" class="btn btn-default toggle-sidebar pull-right visible-xs">Menu</button>
 				</div>
 			</div>

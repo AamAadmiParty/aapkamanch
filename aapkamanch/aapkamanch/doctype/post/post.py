@@ -22,8 +22,13 @@ class DocType:
 		if self.doc.is_task:
 			if not self.doc.status:
 				self.doc.status = "Open"
+			if self.doc.assigned_to:
+				if not self.doc.assigned_to_fullname:
+					self.doc.assigned_to_fullname = get_fullname(self.doc.assigned_to)
+			else:
+				self.doc.assigned_to_fullname = None
 		else:
-			self.doc.assigned_to = self.doc.status = None
+			self.doc.assigned_to = self.doc.assigned_to_fullname = self.doc.status = None
 			
 		if not self.doc.is_event:
 			self.doc.event_datetime = None

@@ -28,9 +28,7 @@ def get_post_list_html(unit, view=None, limit_start=0, limit_length=20, status=N
 	elif view=="events":
 		conditions = "and p.is_event=1"
 	
-	posts = webnotes.conn.sql("""select p.name, p.unit, p.status, p.is_task, p.is_event,
-		p.assigned_to, p.event_datetime, p.assigned_to_fullname, p.picture_url,
-		p.creation, p.content, pr.user_image, pr.first_name, pr.last_name,
+	posts = webnotes.conn.sql("""select p.*, pr.user_image, pr.first_name, pr.last_name,
 		(select count(pc.name) from `tabPost` pc where pc.parent_post=p.name) as post_reply_count
 		from tabPost p, tabProfile pr
 		where p.unit=%s and pr.name = p.owner and ifnull(p.parent_post, '')='' {conditions}
@@ -39,76 +37,74 @@ def get_post_list_html(unit, view=None, limit_start=0, limit_length=20, status=N
 			
 	return webnotes.get_template("templates/includes/post_list.html")\
 		.render({"posts": posts, "limit_start":limit_start, "write": access.get("write")})
-
-@webnotes.whitelist()
-def add_post(unit, content, picture, picture_name, parent_post=None):
+		
+@webnotes.whitelist(allow_guest=True)
+def add_post(unit, title, content, picture, picture_name, parent_post=None, 
+	assigned_to=None, status=None):
+	
 	access = get_access(unit)
 	if not access.get("write"):
 		raise webnotes.PermissionError
-	
+
+	unit = webnotes.doc("Unit", unit)	
 	post = webnotes.bean({
 		"doctype":"Post",
-		"content": markdown2.markdown(content),
-		"unit": unit,
+		"title": title.title(),
+		"content": content,
+		"unit": unit.name,
 		"parent_post": parent_post or None
 	})
+	
+	if unit.unit_type == "Tasks":
+		post.doc.is_task = 1
+		post.doc.assigned_to = assigned_to
+	
 	post.ignore_permissions = True
 	post.insert()
 
 	if picture_name and picture:
-		file_data = save_file(picture_name, picture, "Post", post.doc.name, decode=True)
-		post.doc.picture_url = file_data.file_name or file_data.file_url
-		webnotes.conn.set_value("Post", post.doc.name, "picture_url", post.doc.picture_url)
-		clear_unit_views(unit)
+		process_picture(post, picture_name, picture)
 	
 	# send email
 	if parent_post:
 		post.run_method("send_email_on_reply")
-	
-	post.doc.fields.update(webnotes.conn.get_value("Profile", webnotes.session.user, 
-		["first_name", "last_name", "user_image"], as_dict=True))
-	
-@webnotes.whitelist()
-def get_post_settings(unit, post_name):
-	post = get_post_for_write(post_name).doc
-	
-	if post.unit != unit:
-		raise webnotes.ValidationError("Post does not belong to unit.")
-	
-	profile = None
-	if post.assigned_to:
-		profile = webnotes.conn.get_value("Profile", post.assigned_to, 
-			["first_name", "last_name", "user_image", "fb_location", "fb_hometown"], as_dict=True)
 		
-	return webnotes.get_template("templates/includes/post_settings.html").render({
-		"post": post,
-		"unit_profile": profile,
-		"status_options": (webnotes.get_doctype("Post").get_options("status") or "").split("\n")
-	})
+@webnotes.whitelist(allow_guest=True)
+def save_post(post, title, content, picture, picture_name,
+	assigned_to=None, status=None):
 	
-@webnotes.whitelist()
-def convert_to_task(post, is_task):
-	post = get_post_for_write(post)
-	
-	post.doc.is_task = cint(is_task)
-	post.ignore_permissions = True
-	post.save()
-	
-	return {
-		"post_settings_html": get_post_settings(post.doc.unit, post.doc.name),
-		"status": post.doc.status
-	}
+	post = webnotes.bean("Post", post)
 
-@webnotes.whitelist()
-def convert_to_event(post, is_event):
-	post = get_post_for_write(post)
-	post.doc.is_event = cint(is_event)
+	access = get_access(post.doc.unit)
+	if not access.get("write"):
+		raise webnotes.PermissionError
+	
+	# TODO improve error message
+	if webnotes.session.user != post.doc.owner:
+		for fieldname in ("title", "content"):
+			if post.doc.fields.get(fieldname) != locals().get(fieldname):
+				webnotes.throw("You cannot change: {}".format(fieldname.title()))
+				
+		if picture and picture_name:
+			webnotes.throw("You cannot change: Picture")
+			
+	post.doc.fields.update({
+		"title": title.title(),
+		"content": content,
+		"assigned_to": assigned_to,
+		"status": status
+	})
 	post.ignore_permissions = True
 	post.save()
 	
-	return {
-		"post_settings_html": get_post_settings(post.doc.unit, post.doc.name)
-	}
+	if picture_name and picture:
+		process_picture(post, picture_name, picture)
+		
+def process_picture(post, picture_name, picture):
+	file_data = save_file(picture_name, picture, "Post", post.doc.name, decode=True)
+	post.doc.picture_url = file_data.file_name or file_data.file_url
+	webnotes.conn.set_value("Post", post.doc.name, "picture_url", post.doc.picture_url)
+	clear_unit_views(unit.name)
 	
 @webnotes.whitelist()
 def assign_post(post, profile=None):
@@ -182,7 +178,7 @@ def suggest_user(unit, term):
 	
 	template = webnotes.get_template("templates/includes/profile_display.html")
 	return [{
-		"value": "{} {}".format(pr.first_name, pr.last_name), 
+		"value": "{} {}".format(pr.first_name or "", pr.last_name or "").strip(), 
 		"profile_html": template.render({"unit_profile": pr}),
 		"profile": pr.name
 	} for pr in profiles]

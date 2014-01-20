@@ -78,25 +78,43 @@ def get_user_details(unit, fb_access_token=None):
 
 @webnotes.whitelist()
 def get_access(unit, profile=None):
-	# TODO: memcache this
-	
 	if not profile:
 		profile = webnotes.session.user
 	
-	lft, rgt, public_read, public_write = webnotes.conn.get_value("Unit", unit, ["lft", "rgt", "public_read", "public_write"])
+	unit = unit.lower()
+	cache = webnotes.cache()
+	key = "unit_access:{}".format(profile)
+	unit_access = cache.get_value(key) or {}
+	if not unit_access.get(unit):
+		unit_access[unit] = _get_access(unit, profile)
+		cache.set_value(key, unit_access)
+		
+	return unit_access.get(unit)
 	
+def clear_unit_access(profiles):
+	if isinstance(profiles, basestring):
+		profiles = [profiles]
+	
+	cache = webnotes.cache()
+	for profile in profiles:
+		cache.delete_value("unit_access:{}".format(profile))
+	
+def _get_access(unit, profile):
+	lft, rgt, public_read, public_write = webnotes.conn.get_value("Unit", unit, 
+		["lft", "rgt", "public_read", "public_write"])
+
 	if not (lft and rgt):
 		raise webnotes.ValidationError("Please rebuild Unit Tree")
-			
+		
 	read = write = admin = 0
 
 	if public_write:
 		read = write = 1
-	
+
 	# give read access for public_read pages
 	elif public_read:
 		read = 1
-	
+
 	if profile != "Guest":
 		for perm in webnotes.conn.sql("""select 
 			up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
@@ -108,7 +126,7 @@ def get_access(unit, profile=None):
 				if not write: write = perm.write
 				if not admin: admin = perm.admin
 				if write: read = write
-			
+		
 				if read and write and admin:
 					break
 
@@ -117,7 +135,6 @@ def get_access(unit, profile=None):
 		"write": write,
 		"admin": admin
 	}
-
 
 def get_user_image():
 	return webnotes.cache().get_value(webnotes.session.user + ":user_image", 
@@ -131,9 +148,6 @@ def get_fb_userid(fb_access_token):
 	else:
 		return webnotes.AuthenticationError
 		
-def is_public_read(unit):
-	return webnotes.cache().get_value("is_public_read:" + unit, lambda: webnotes.conn.get_value("Unit", unit, "public_read"))
-	
 def get_child_unit_items(unit, public_read):
 	return webnotes.conn.sql("""select name, name as url, unit_title, public_read, unit_type
 		from tabUnit where 
@@ -179,3 +193,43 @@ def update_website_context(context):
 		"total_users": webnotes.cache().get_value("total_users", 
 			lambda: str(webnotes.conn.sql("""select count(*) from tabProfile""")[0][0]))
 	})
+	
+def get_views(unit):
+	if isinstance(unit, basestring):
+		unit = webnotes.doc("Unit", unit)
+	
+	unit_views = {
+		"Forum": [
+			{"view": "popular", "url": "/{}".format(unit.name), "label": "Popular", "icon": "icon-heart", 
+				"default": True},
+			{"view": "feed", "url": "/{}/{}".format(unit.name, "feed"), "label": "Feed", "icon": "icon-rss"},
+			{"view": "add", "url": "/{}/{}".format(unit.name, "add"), "label": "Add Post", "icon": "icon-plus",
+				"class": "hide"},
+			{"view": "edit", "url": "/{}/{}".format(unit.name, "edit"), "label": "Edit Post", "icon": "icon-pencil",
+				"class": "hide", "no_cache": True},
+			{"view": "settings", "url": "/{}/{}".format(unit.name, "settings"), "label": "Settings", "icon": "icon-cog",
+				"class": "hide"},
+			{"view": "post", "url": "/{}/{}".format(unit.name, "post"), "label": "Post", "icon": "icon-comments",
+				"class": "hide"},
+		],
+		"Tasks": [
+			{"view": "open", "url": "/{}".format(unit.name), "label": "Open", "icon": "icon-inbox", 
+				"default": True},
+			{"view": "closed", "url": "/{}/{}".format(unit.name, "closed"), "label": "Closed", "icon": "icon-smile"},
+			{"view": "add", "url": "/{}/{}".format(unit.name, "add"), "label": "Add Task", "icon": "icon-plus",
+				"class": "hide"},
+			{"view": "edit", "url": "/{}/{}".format(unit.name, "edit"), "label": "Edit Task", "icon": "icon-pencil",
+				"class": "hide", "no_cache": True},
+			{"view": "settings", "url": "/{}/{}".format(unit.name, "settings"), "label": "Settings", "icon": "icon-cog",
+				"class": "hide"},
+			{"view": "post", "url": "/{}/{}".format(unit.name, "post"), "label": "Post", "icon": "icon-comments",
+				"class": "hide"},
+		]
+	}
+	
+	return unit_views.get(unit.unit_type)
+	
+def get_view_options(context):
+	for opts in context.get("views"):
+		if opts["view"] == context.get("view"):
+			return opts

@@ -1,0 +1,22 @@
+{% extends "templates/unit_templates/base_unit.html" %}
+
+{%- block view -%}
+<div class="small text-muted post-list-help"></div>
+<div class="post-list">
+{{ task_list_html }}	
+</div>
+<div class="text-center">
+	<button class="btn btn-default btn-more hide">More</button>
+</div>
+{%- endblock -%}
+
+{%- block unit_script -%}
+<script>
+$(function() {
+	app.setup_more_btn({
+		cmd: "aapkamanch.templates.unit_templates.tasks_open.get_task_list_html"
+	});
+	app.toggle_edit();
+})
+</script>
+{%- endblock -%}

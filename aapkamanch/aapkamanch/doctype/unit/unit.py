@@ -6,6 +6,7 @@
 from __future__ import unicode_literals
 import webnotes, re
 
+from aapkamanch.helpers import get_views
 from webnotes.utils.nestedset import DocTypeNestedSet
 
 class DocType(DocTypeNestedSet):
@@ -37,7 +38,7 @@ class DocType(DocTypeNestedSet):
 	def validate_name(self):
 		self.doc.unit_name = self.doc.unit_name.strip().lower().replace(" ", "-")
 		if re.findall("[^a-zA-Z0-9-]", self.doc.unit_name):
-			raise webnotes.PermissionError
+			raise webnotes.ValidationError
 	
 	def remove_no_rules_with_no_perms(self):
 		to_remove = []
@@ -51,14 +52,11 @@ class DocType(DocTypeNestedSet):
 def clear_cache(unit):
 	unit = unit.lower()
 	cache = webnotes.cache()
-	for key in ("is_public_read", "unit_title"):
-		cache.delete_value(key + ":" + unit)
-		
+	cache.delete_value("unit_title:" + unit)
 	clear_unit_views(unit)
 	
 def clear_unit_views(unit):
 	cache = webnotes.cache()
 	for key in ("unit_context", "unit_html"):
-		for view in ("feed", "tasks", "events", "settings", "add"):
-			cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view))
-	
+		for view in get_views(unit):
+			cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view.get("view")))
