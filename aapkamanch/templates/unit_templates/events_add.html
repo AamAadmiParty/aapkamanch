@@ -5,12 +5,7 @@
 
 <script>
 $(function() {
-	app.setup_tasks_editor();
-	app.bind_save_post();
-	
-	{% if post %}
-	window.app.post = "{{ post.name }}"
-	{% endif %}
+	app.setup_event_editor();
 });
 </script>
 {%- endblock -%}

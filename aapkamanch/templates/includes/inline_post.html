@@ -5,33 +5,29 @@
 			<img src="{{ post.user_image|scrub_url }}" class="img-responsive post-avatar">
 		</div>
 		<div class="col-xs-10">
-			<div class="row">
-				<div class="col-xs-12">
-					<h4 itemprop="headline" style="margin-top: 0px;">{{ post.title }}</h4>
-					<ul class="list-inline small text-muted">
-						<li><a itemprop="url" href="/post/{{ post.name }}">
-							{% if not post.post_reply_count -%}
-								{% if write -%}<i class="icon-reply"></i> Reply
-								{% else %}No Replies Yet{%- endif %}
-							{% elif post.post_reply_count == 1 %}
-							{{ post.post_reply_count }} Reply
-							{% else %}
-							{{ post.post_reply_count }} Replies
-							{%- endif %}
-						</a></li>
-						<li><span class="wn-timestamp" data-timestamp="{{ post.creation }}"></span></li>
-						<li>by <span itemprop="author">{{ post.first_name or "" }} {{ post.last_name or "" }}</span></li>
-						<li class="edit-post pull-right hide" data-owner="{{ post.owner }}">
-							<a class="text-muted" href="/{{ post.unit }}/edit?name={{ post.name }}">[edit]</a>
-						</li>
-					</ul>
-					<div itemprop="articleBody" class="post-content">
-						{{ post.content|markdown }}
-						{%- if post.picture_url -%}
-						<img src="{{ post.picture_url|scrub_url }}" class="img-responsive post-picture" />
-						{%- endif -%}
-					</div>
-				</div>
+			<h4 itemprop="headline" style="margin-top: 0px;">{{ post.title }}</h4>
+			<ul class="list-inline small text-muted">
+				{% if view_options and view_options.upvote %}<li><a class="upvote"><i class="icon-thumbs-up"></i></a></li>{% endif %}
+				<li><a itemprop="url" href="/post/{{ post.name }}">
+					{% if not post.post_reply_count -%}
+					<i class="icon-reply"></i> Reply
+					{% elif post.post_reply_count == 1 %}
+					{{ post.post_reply_count }} Reply
+					{% else %}
+					{{ post.post_reply_count }} Replies
+					{%- endif %}
+				</a></li>
+				<li><span class="wn-timestamp" data-timestamp="{{ post.creation }}"></span></li>
+				<li>by <span itemprop="author">{{ post.first_name or "" }} {{ post.last_name or "" }}</span></li>
+				<li class="edit-post pull-right hide" data-owner="{{ post.owner }}">
+					<a class="text-muted" href="/{{ post.unit }}/edit?name={{ post.name }}">[edit]</a>
+				</li>
+			</ul>
+			<div itemprop="articleBody" class="post-content">
+				{{ post.content|markdown }}
+				{%- if post.picture_url -%}
+				<img src="{{ post.picture_url|scrub_url }}" class="img-responsive post-picture" />
+				{%- endif -%}
 			</div>
 		</div>
 	</div>

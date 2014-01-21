@@ -1,14 +1,10 @@
-{% extends "templates/unit_templates/base_unit.html" %}
-
-{%- block view -%}
-{% include "templates/includes/post_editor.html" %}
-{%- endblock -%}
+{% extends "templates/unit_templates/base_add.html" %}
 
 {%- block unit_script -%}
-<script type="text/javascript" src="/assets/js/canvasResize.min.js"></script>
+{{ super() }}
+
 <script>
 $(function() {
-	app.bind_add_post();
 	app.bind_save_post();
 	
 	{% if post %}

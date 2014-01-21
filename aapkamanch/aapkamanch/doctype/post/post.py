@@ -30,7 +30,10 @@ class DocType:
 		else:
 			self.doc.assigned_to = self.doc.assigned_to_fullname = self.doc.status = None
 			
-		if not self.doc.is_event:
+		if self.doc.is_event:
+			if not self.doc.event_datetime:
+				webnotes.throw("Please specify Event's Date and Time")
+		else:
 			self.doc.event_datetime = None
 			
 	def on_update(self):

@@ -2,7 +2,7 @@
 	placeholder="Assign this task to someone" 
 	{%- if post and post.assigned_to_fullname -%}value="{{ post.assigned_to_fullname }}"{%- endif -%} />
 <input type="hidden" class="form-group form-control hide" data-fieldname="assigned_to" 
-	{%- if post and post.assigned_to -%}value="{{ post.assigned_to }}"{%- endif -%}/>
+	{% if post and post.assigned_to %}value="{{ post.assigned_to }}"{% endif %}/>
 <div class="assigned-to alert alert-success {% if not (post and post.assigned_to) %}hide{% endif %}" 
 	style="margin: 10px 0px;">
 	<div class="row">

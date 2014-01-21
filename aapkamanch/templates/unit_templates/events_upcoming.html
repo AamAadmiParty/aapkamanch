@@ -3,7 +3,7 @@
 {%- block view -%}
 <div class="small text-muted post-list-help"></div>
 <div class="post-list">
-{{ post_list_html }}	
+{{ event_list_html }}	
 </div>
 <div class="text-center">
 	<button class="btn btn-default btn-more hide">More</button>
@@ -14,9 +14,9 @@
 <script>
 $(function() {
 	app.setup_more_btn({
-		cmd: "aapkamanch.templates.unit_templates.forum_feed.get_post_list_html"
+		cmd: "aapkamanch.templates.unit_templates.events_upcoming.get_event_list_html"
 	});
-	app.toggle_edit(true);
-});
+	app.toggle_edit();
+})
 </script>
 {%- endblock -%}

@@ -51,8 +51,8 @@ def get_unit_context(unit, view):
 		unit_views = get_views(unit)
 		unit_views_map = dict((d["view"], d) for d in unit_views)
 		if view in unit_views_map:
-			title = unit_views_map[view]["label"]
-			parents += [{"name": unit.name, "unit_title": unit.unit_title}]
+			title += " - " + unit_views_map[view]["label"]
+			# parents += [{"name": unit.name, "unit_title": unit.unit_title}]
 				
 		context = {
 			"name": unit.name,
@@ -64,9 +64,9 @@ def get_unit_context(unit, view):
 			"children": get_child_unit_items(unit.name, public_read=1),
 			"unit": unit.fields,
 			"view": view,
-			"views": get_views(unit)
+			"views": get_views(unit),
+			"view_options": get_view_options(unit, view)
 		}
-		context["no_cache"] = get_view_options(context).get("no_cache")
 		return context
 		
 	return webnotes.cache().get_value("unit_context:{unit}:{view}".format(unit=unit.lower(), view=view), 
@@ -74,12 +74,22 @@ def get_unit_context(unit, view):
 		
 def get_unit_html(context):
 	def _get_unit_html(context):
-		method = "aapkamanch.templates.unit_templates.{unit_type}_{view}.get_unit_html"\
-			.format(unit_type=context.get("unit").unit_type.lower(), view=context.get("view").lower())
-		
 		try:
-			# method updates context
-			webnotes.get_attr(method)(context)
+			try:
+				method = "aapkamanch.templates.unit_templates.{unit_type}_{view}.get_unit_html"\
+					.format(unit_type=context.get("unit").unit_type.lower(), view=context.get("view").lower())
+			
+				# method updates context
+				webnotes.get_attr(method)(context)
+				
+			except ImportError:
+				# method not found, try base template
+				method = "aapkamanch.templates.unit_templates.base_{view}.get_unit_html"\
+					.format(view=context.get("view").lower())
+				
+				# method updates context
+				webnotes.get_attr(method)(context)
+				
 		except ImportError:
 			# method not found
 			pass
@@ -87,7 +97,7 @@ def get_unit_html(context):
 		unit_template = get_template(context.get("unit").get("unit_type"), context.get("view"))
 		return unit_template.render(context)
 	
-	if context.get("no_cache"):
+	if context.get("view_options", {}).get("no_cache"):
 		return _get_unit_html(context)
 	
 	return webnotes.cache().get_value("unit_html:{unit}:{view}".format(unit=context.get("name").lower(),

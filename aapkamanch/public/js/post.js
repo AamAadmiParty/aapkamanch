@@ -20,6 +20,9 @@ app.get_editor_values = function() {
 	} else if(!values.content) {
 		wn.msgprint("Please enter some text!");
 		return;
+	} else if($('.post-editor [data-fieldname="event_datetime"]').length && !values.event_datetime) {
+		wn.msgprint("Please enter Event's Date and Time!");
+		return;
 	}
 	
 	// post process
@@ -62,8 +65,12 @@ app.save_post = function() {
 }
 
 app._update_post = function(btn, cmd) {
-	$(btn).prop("disabled", true);
 	var values = app.get_editor_values();
+	if(!values) {
+		return;
+	}
+
+	$(btn).prop("disabled", true);
 	$.ajax({
 		type: "POST",
 		url: "/",
@@ -136,63 +143,29 @@ app.setup_tasks_editor = function() {
 		});
 		bind_close();
 	}
-}
+};
 
-app.setup_post_settings = function($post, post_settings_html) {
-	var $post_settings = $(post_settings_html).appendTo($post.find(".post-settings-area"));
-	
-	var $control_event_check = $post_settings.find(".control-event-check").on("change", function() {
-		app.convert_to_event($post, $(this).prop("checked"), $(this));
+app.setup_event_editor = function() {
+	var $post_editor = $(".post-editor");
+	var $control_event = $post_editor.find('.control-event').empty();
+	var $event_field = $post_editor.find('[data-fieldname="event_datetime"]');
+
+	var set_event = function($control) {
+		var datetime = app.datetimepicker.obj_to_str($control_event.datepicker("getDate"));
+		if($event_field.val() !== datetime) {
+			$event_field.val(datetime);
+		}
+	};
+
+	app.setup_datepicker({
+		$control: $control_event,
+		onClose: function() { set_event($control_event) }
 	});
-	
-	if($control_event_check.prop("checked")) {
-		var $control_event = $post_settings.find(".control-event").empty();
-	
-		var set_event = function($control) {
-			var datetime = app.datetimepicker.obj_to_str($control_event.datepicker("getDate"));
-			if($control_event.attr("data-event_datetime") !== datetime) {
-				app.set_event($post, datetime, $control);
-			}
-		};
-	
-		app.setup_datepicker({
-			$control: $control_event,
-			onClose: function() { set_event($control_event) }
-		});
-	
-		if($control_event.attr("data-event_datetime")) {
-			$control_event.val(app.datetimepicker.format_datetime($control_event.attr("data-event_datetime")));
-		}
+
+	if($event_field.val()) {
+		$control_event.val(app.datetimepicker.format_datetime($event_field.val()));
 	}
-	
-	// tasks
-	var $control_task = $post_settings.find(".control-task")
-		.on("change", function() {
-			app.convert_to_task($post, $(this).prop("checked"), $(this));
-		});
-	
-	if($control_task.prop("checked")) {
-		// assign events
-		var $control_assign = $post_settings.find(".control-assign").empty();
-		if($control_assign.length) {
-			app.setup_autosuggest({
-				$control: $control_assign,
-				select: function(value) {
-					app.assign_post($post, value, $control_assign);
-				},
-				method: "aapkamanch.post.suggest_user"
-			});
-		} else {
-			$post_settings.find("a.close").on("click", function() {
-				app.assign_post($post, null, $(this));
-			});
-		}
-	
-		var $control_status = $post_settings.find(".control-status").on("change", function() {
-			app.update_task_status($post, $(this).val(), $(this));
-		});
-	}
-}
+};
 
 app.set_event = function($post, event_datetime, $btn) {
 	$btn.prop("disabled", true);
@@ -257,41 +230,4 @@ app.process_external_links = function(content) {
 		}
 		return processed;
 	});
-}
-
-app.filter_posts_by_status = function(status) {
-	$.ajax({
-		url: "/",
-		data: {
-			"cmd": "aapkamanch.post.get_post_list_html",
-			"unit": app.get_unit(),
-			"view": app.get_view(),
-			"status": status
-		},
-		statusCode: {
-			200: function(data) {
-				if(data.exc) {
-					console.log(data.exc);
-				} else {
-					$(".post-list").empty()
-						.html(data.message)
-					
-					if(status) {
-						var alert = $('<div class="alert alert-warning">\
-								Showing Tasks with status: ' + status + 
-								' <a class="pull-right close">&times;</a> \
-							</div>')
-							.css("margin-top", "7px")
-							.prependTo($(".post-list"))
-							.find("a").on("click", function() {
-								window.location.hash = "";
-							});
-					}
-						
-					app.format_event_timestamps();
-					wn.datetime.refresh_when();
-				}
-			}
-		}
-	})
 }

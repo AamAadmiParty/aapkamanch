@@ -201,8 +201,9 @@ def get_views(unit):
 	unit_views = {
 		"Forum": [
 			{"view": "popular", "url": "/{}".format(unit.name), "label": "Popular", "icon": "icon-heart", 
-				"default": True},
-			{"view": "feed", "url": "/{}/{}".format(unit.name, "feed"), "label": "Feed", "icon": "icon-rss"},
+				"default": True, "upvote": True},
+			{"view": "feed", "url": "/{}/{}".format(unit.name, "feed"), "label": "Feed", "icon": "icon-rss", 
+				"upvote": True},
 			{"view": "add", "url": "/{}/{}".format(unit.name, "add"), "label": "Add Post", "icon": "icon-plus",
 				"class": "hide"},
 			{"view": "edit", "url": "/{}/{}".format(unit.name, "edit"), "label": "Edit Post", "icon": "icon-pencil",
@@ -214,7 +215,7 @@ def get_views(unit):
 		],
 		"Tasks": [
 			{"view": "open", "url": "/{}".format(unit.name), "label": "Open", "icon": "icon-inbox", 
-				"default": True},
+				"default": True, "upvote": True},
 			{"view": "closed", "url": "/{}/{}".format(unit.name, "closed"), "label": "Closed", "icon": "icon-smile"},
 			{"view": "add", "url": "/{}/{}".format(unit.name, "add"), "label": "Add Task", "icon": "icon-plus",
 				"class": "hide"},
@@ -224,12 +225,26 @@ def get_views(unit):
 				"class": "hide"},
 			{"view": "post", "url": "/{}/{}".format(unit.name, "post"), "label": "Post", "icon": "icon-comments",
 				"class": "hide"},
+		],
+		"Events": [
+			{"view": "upcoming", "url": "/{}".format(unit.name), "label": "Upcoming", "icon": "icon-calendar", 
+				"default": True},
+			{"view": "past", "url": "/{}/{}".format(unit.name, "past"), "label": "Past", "icon": "icon-time"},
+			{"view": "add", "url": "/{}/{}".format(unit.name, "add"), "label": "Add Event", "icon": "icon-plus",
+				"class": "hide"},
+			{"view": "edit", "url": "/{}/{}".format(unit.name, "edit"), "label": "Edit Event", "icon": "icon-pencil",
+				"class": "hide", "no_cache": True},
+			{"view": "settings", "url": "/{}/{}".format(unit.name, "settings"), "label": "Settings", "icon": "icon-cog",
+				"class": "hide"},
+			{"view": "post", "url": "/{}/{}".format(unit.name, "post"), "label": "Post", "icon": "icon-comments",
+				"class": "hide"},
 		]
 	}
 	
-	return unit_views.get(unit.unit_type)
+	return unit_views.get(unit.unit_type) or []
 	
-def get_view_options(context):
-	for opts in context.get("views"):
-		if opts["view"] == context.get("view"):
+def get_view_options(unit, view):
+	for opts in get_views(unit):
+		if opts["view"] == view:
 			return opts
+	return {}

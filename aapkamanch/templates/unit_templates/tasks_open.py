@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 
 import webnotes
-from aapkamanch.helpers import get_access
+from aapkamanch.helpers import get_access, get_view_options
 
 def get_unit_html(context):
 	context["task_list_html"] = get_task_list_html(context.get("name"), view=context.get("view"))
@@ -25,5 +25,8 @@ def get_task_list_html(unit, view=None, limit_start=0, limit_length=20, status="
 		order by p.creation desc limit %s, %s""", 
 		(unit, status, int(limit_start), int(limit_length)), as_dict=True)
 			
-	return webnotes.get_template("templates/includes/post_list.html")\
-		.render({"posts": posts, "limit_start":limit_start, "write": access.get("write")})
+	return webnotes.get_template("templates/includes/post_list.html").render({
+		"posts": posts, 
+		"limit_start": limit_start, 
+		"view_options": get_view_options(unit, view)
+	})

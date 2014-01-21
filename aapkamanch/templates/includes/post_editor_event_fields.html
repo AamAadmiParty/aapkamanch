@@ -1,0 +1,4 @@
+<input type="text" class="form-group form-control control-event" 
+	placeholder="Enter Event Date and Time" />
+<input type="hidden" class="form-group form-control hide" data-fieldname="event_datetime" 
+	{% if post and post.event_datetime %}value="{{ post.event_datetime }}"{% endif %}/>

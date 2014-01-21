@@ -51,8 +51,6 @@ class DocType(DocTypeNestedSet):
 			
 def clear_cache(unit):
 	unit = unit.lower()
-	cache = webnotes.cache()
-	cache.delete_value("unit_title:" + unit)
 	clear_unit_views(unit)
 	
 def clear_unit_views(unit):
@@ -60,3 +58,7 @@ def clear_unit_views(unit):
 	for key in ("unit_context", "unit_html"):
 		for view in get_views(unit):
 			cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view.get("view")))
+
+def clear_event_cache():
+	for unit in webnotes.conn.sql_list("""select name from `tabUnit` where unit_type='Event'"""):
+		clear_cache(unit)
