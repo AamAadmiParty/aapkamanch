@@ -9,11 +9,13 @@ from permissions import get_access
 @webnotes.whitelist()
 def set_vote(ref_doctype, ref_name):
 	try:
-		webnotes.bean({
+		user_vote = webnotes.bean({
 			"doctype": "User Vote",
 			"ref_doctype": ref_doctype,
 			"ref_name": ref_name
-		}).insert()
+		})
+		user_vote.ignore_permissions = True
+		user_vote.insert()
 		return "ok"
 	except webnotes.DuplicateEntryError:
 		return "duplicate"

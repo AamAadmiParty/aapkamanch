@@ -7,7 +7,8 @@
 		<div class="col-xs-10">
 			<h4 itemprop="headline" style="margin-top: 0px;">{{ post.title }}</h4>
 			<ul class="list-inline small text-muted">
-				{% if view_options and view_options.upvote %}<li><a class="upvote"><i class="icon-thumbs-up"></i></a></li>{% endif %}
+				{% if view_options and view_options.upvote %}<li>
+					<a class="upvote"><i class="icon-thumbs-up"></i></a></li>{% endif %}
 				<li><a itemprop="url" href="/post/{{ post.name }}">
 					{% if not post.post_reply_count -%}
 					<i class="icon-reply"></i> Reply

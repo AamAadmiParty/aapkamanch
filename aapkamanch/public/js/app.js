@@ -52,7 +52,39 @@ app.render_authenticated_user = function(data) {
 	}
 	
 	app.show_cannot_post_message(data.access);
-}
+	
+	// setup upvote
+	app.setup_upvote();
+};
+
+app.setup_upvote = function() {
+	$(".post-list").on("click", ".upvote", function() {
+		var $btn = $(this).prop("disabled", true);
+		var post = $(this).parents(".post").attr("data-name");
+		$.ajax({
+			url: "/",
+			type: "POST",
+			data: {
+				cmd: "aapkamanch.vote.set_vote",
+				ref_doctype: "Post",
+				ref_name: post
+			},
+			statusCode: {
+				200: function(data) {
+					if(data.exc) {
+						console.log(data.exc);
+					} else {
+						var text_class = data.message === "ok" ? "text-success" : "text-danger";
+						$btn.addClass(text_class);
+						setTimeout(function() { $btn.removeClass(text_class); }, 2000);
+					}
+				}
+			}
+		}).always(function() {
+			$btn.prop("disabled", false);
+		})
+	});
+};
 
 app.show_cannot_post_message = function(access, message) {
 	if(!(access && access.write)) {
@@ -257,7 +289,6 @@ app.toggle_edit = function(only_owner) {
 	if(only_owner) {
 		var user = wn.get_cookie("user_id");
 		$(".edit-post").each(function() {
-			console.log([user, $(this).attr("data-owner")]);
 			$(this).toggleClass("hide", !(window.app.access.write && $(this).attr("data-owner")===user));
 		});
 	} else {

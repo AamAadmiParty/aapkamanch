@@ -93,3 +93,4 @@ class DocType:
 		message += "<p><a href='/post/{post_name}'>Click here to view the post</a></p>".format(fullname=owner_fullname,
 			post_name=post_name)
 		return message
+	

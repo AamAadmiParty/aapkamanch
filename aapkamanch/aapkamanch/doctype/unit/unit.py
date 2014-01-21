@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 import webnotes, re
 
 from aapkamanch.helpers import get_views
+from aapkamanch.unit import clear_cache
 from webnotes.utils.nestedset import DocTypeNestedSet
 
 class DocType(DocTypeNestedSet):
@@ -49,16 +50,3 @@ class DocType(DocTypeNestedSet):
 		for d in to_remove:
 			self.doclist.remove(d)
 			
-def clear_cache(unit):
-	unit = unit.lower()
-	clear_unit_views(unit)
-	
-def clear_unit_views(unit):
-	cache = webnotes.cache()
-	for key in ("unit_context", "unit_html"):
-		for view in get_views(unit):
-			cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view.get("view")))
-
-def clear_event_cache():
-	for unit in webnotes.conn.sql_list("""select name from `tabUnit` where unit_type='Event'"""):
-		clear_cache(unit)

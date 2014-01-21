@@ -11,13 +11,13 @@ class DocType:
 		self.doc, self.doclist = d, dl
 	
 	def validate(self):
-		existing = webnotes.conn.get_value("User Vote", 
-			{"ref_doctype": self.doc.ref_doctype, "ref_name": self.doc.ref_name}, "name")
-		
-		if existing and existing!=self.doc.name:
-			raise webnotes.DuplicateEntryError
-		
-	
+		# if new
+		if self.doc.fields.get("__islocal"):
+			if webnotes.conn.get_value("User Vote", {"ref_doctype": self.doc.ref_doctype, 
+				"ref_name": self.doc.ref_name, "owner": webnotes.session.user}):
+				
+				raise webnotes.DuplicateEntryError
+			
 	def on_update(self):
 		self.update_ref_count()
 
