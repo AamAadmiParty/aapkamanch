@@ -14,9 +14,10 @@
 <script>
 $(function() {
 	app.setup_more_btn({
-		cmd: "aapkamanch.templates.unit_templates.events_upcoming.get_event_list_html"
+		cmd: "aapkamanch.templates.unit_templates.events_list.get_event_list_html"
 	});
 	app.toggle_edit();
-})
+	app.format_event_timestamps();
+});
 </script>
 {%- endblock -%}

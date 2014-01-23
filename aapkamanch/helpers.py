@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 import webnotes, json
+import os
 
 @webnotes.whitelist(allow_guest=True)
 def add_user(data):
@@ -149,7 +150,7 @@ def get_fb_userid(fb_access_token):
 		return webnotes.AuthenticationError
 		
 def get_child_unit_items(unit, public_read):
-	return webnotes.conn.sql("""select name, name as url, unit_title, public_read, unit_type
+	return webnotes.conn.sql("""select name, name as url, unit_title, public_read, public_write, unit_type
 		from tabUnit where 
 		ifnull(`public_read`,0) = %s 
 		and parent_unit=%s""", (public_read, unit), as_dict=1)
@@ -162,18 +163,19 @@ def scrub_url(url):
 		return url
 	return "/" + url
 	
-def get_icon(key):
-	return
-	# icon_map = {
-	# 	"forum": "icon-comments",
-	# 	"private": "icon-lock",
-	# 	"public_write": "icon-group",
-	# 	"events": "icon-calendar",
-	# 	"tasks": "icon-pencil",
-	# 	"questions": "icon-question",
-	# }
-	# key = key.lower()
-	# return '<i class="{}"></i>'.format(icon_map.get(key)) if icon_map.get(key) else ""
+def get_icon(unit):
+	icon_map = {
+		"forum": "icon-comments",
+		"events": "icon-calendar",
+		"tasks": "icon-pencil"
+	}
+	unit_type = unit["unit_type"].lower()
+	icon = icon_map.get(unit_type) or ""
+	color_class = ""
+	if not unit.get("public_read"):
+		color_class = "text-warning"
+	
+	return '<i class="icon-fixed-width {} {}"></i>'.format(icon, color_class)
 
 def update_gravatar(bean, trigger):
 	import md5
@@ -195,56 +197,17 @@ def update_website_context(context):
 	})
 	
 def get_views(unit):
+	if not hasattr(webnotes.local, "unit_views"):
+		with open(os.path.join(os.path.dirname(__file__), "unit_views.json"), "r") as unit_views:
+			webnotes.local.unit_views = json.loads(unit_views.read())
+	
 	if isinstance(unit, basestring):
 		unit = webnotes.doc("Unit", unit)
+		
+	views = webnotes.local.unit_views.get(unit.unit_type, {}).copy()
+
+	for view, opts in views.items():
+		if opts.get("url"):
+			opts["url"] = opts["url"].format(unit=unit.name, post=None)
 	
-	unit_views = {
-		"Forum": [
-			{"view": "popular", "url": "/{}".format(unit.name), "label": "Popular", "icon": "icon-heart", 
-				"default": True, "upvote": True},
-			{"view": "feed", "url": "/{}/{}".format(unit.name, "feed"), "label": "Feed", "icon": "icon-rss", 
-				"upvote": True},
-			{"view": "add", "url": "/{}/{}".format(unit.name, "add"), "label": "Add Post", "icon": "icon-plus",
-				"class": "hide"},
-			{"view": "edit", "url": "/{}/{}".format(unit.name, "edit"), "label": "Edit Post", "icon": "icon-pencil",
-				"class": "hide", "no_cache": True},
-			{"view": "settings", "url": "/{}/{}".format(unit.name, "settings"), "label": "Settings", "icon": "icon-cog",
-				"class": "hide"},
-			{"view": "post", "url": "/{}/{}".format(unit.name, "post"), "label": "Post", "icon": "icon-comments",
-				"class": "hide"},
-		],
-		"Tasks": [
-			{"view": "open", "url": "/{}".format(unit.name), "label": "Open", "icon": "icon-inbox", 
-				"default": True, "upvote": True},
-			{"view": "closed", "url": "/{}/{}".format(unit.name, "closed"), "label": "Closed", "icon": "icon-smile"},
-			{"view": "add", "url": "/{}/{}".format(unit.name, "add"), "label": "Add Task", "icon": "icon-plus",
-				"class": "hide"},
-			{"view": "edit", "url": "/{}/{}".format(unit.name, "edit"), "label": "Edit Task", "icon": "icon-pencil",
-				"class": "hide", "no_cache": True},
-			{"view": "settings", "url": "/{}/{}".format(unit.name, "settings"), "label": "Settings", "icon": "icon-cog",
-				"class": "hide"},
-			{"view": "post", "url": "/{}/{}".format(unit.name, "post"), "label": "Post", "icon": "icon-comments",
-				"class": "hide"},
-		],
-		"Events": [
-			{"view": "upcoming", "url": "/{}".format(unit.name), "label": "Upcoming", "icon": "icon-calendar", 
-				"default": True},
-			{"view": "past", "url": "/{}/{}".format(unit.name, "past"), "label": "Past", "icon": "icon-time"},
-			{"view": "add", "url": "/{}/{}".format(unit.name, "add"), "label": "Add Event", "icon": "icon-plus",
-				"class": "hide"},
-			{"view": "edit", "url": "/{}/{}".format(unit.name, "edit"), "label": "Edit Event", "icon": "icon-pencil",
-				"class": "hide", "no_cache": True},
-			{"view": "settings", "url": "/{}/{}".format(unit.name, "settings"), "label": "Settings", "icon": "icon-cog",
-				"class": "hide"},
-			{"view": "post", "url": "/{}/{}".format(unit.name, "post"), "label": "Post", "icon": "icon-comments",
-				"class": "hide"},
-		]
-	}
-	
-	return unit_views.get(unit.unit_type) or []
-	
-def get_view_options(unit, view):
-	for opts in get_views(unit):
-		if opts["view"] == view:
-			return opts
-	return {}
+	return views

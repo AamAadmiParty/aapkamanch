@@ -58,7 +58,7 @@ app.render_authenticated_user = function(data) {
 };
 
 app.setup_upvote = function() {
-	$(".post-list").on("click", ".upvote", function() {
+	$(".post-list, .parent-post").on("click", ".upvote a", function() {
 		var $btn = $(this).prop("disabled", true);
 		var post = $(this).parents(".post").attr("data-name");
 		$.ajax({
@@ -275,6 +275,7 @@ app.setup_more_btn = function(opts, prepend) {
 						app.format_event_timestamps();
 						app.show_more_btn(limit_start);
 						app.toggle_edit();
+						app.toggle_upvote();
 					}
 				}
 			}
@@ -284,17 +285,6 @@ app.setup_more_btn = function(opts, prepend) {
 	});
 	app.show_more_btn(0);
 };
-
-app.toggle_edit = function(only_owner) {
-	if(only_owner) {
-		var user = wn.get_cookie("user_id");
-		$(".edit-post").each(function() {
-			$(this).toggleClass("hide", !(window.app.access.write && $(this).attr("data-owner")===user));
-		});
-	} else {
-		$(".edit-post").toggleClass("hide", !window.app.access.write);
-	}
-}
 
 app.show_more_btn = function(limit_start, limit_length) {
 	var show_more_btn = ($(".post").length - (limit_start || 0)) === (limit_length || 20);

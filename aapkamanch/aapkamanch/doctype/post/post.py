@@ -11,7 +11,7 @@ from webnotes.utils.email_lib.bulk import send
 from webnotes.utils.email_lib import sendmail
 
 from aapkamanch.helpers import get_access
-from aapkamanch.aapkamanch.doctype.unit.unit import clear_unit_views
+from aapkamanch.unit import clear_unit_views
 
 class DocType:
 	def __init__(self, d, dl):
@@ -68,7 +68,7 @@ class DocType:
 				ref_doctype=self.doc.doctype, ref_docname=self.doc.name)
 		
 		# send email to members who part of the conversation
-		participants = webnotes.conn.sql_list("""select owner, name from `tabPost`
+		participants = webnotes.conn.sql("""select owner, name from `tabPost`
 			where parent_post=%s and owner not in (%s, %s) order by creation asc""", 
 			(self.doc.parent_post, parent_post.owner, self.doc.owner), as_dict=True)
 		

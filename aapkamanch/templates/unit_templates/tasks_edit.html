@@ -1,4 +1,4 @@
-{% extends "templates/unit_templates/base_add.html" %}
+{% extends "templates/unit_templates/base_edit.html" %}
 
 {%- block unit_script -%}
 {{ super() }}
@@ -6,11 +6,6 @@
 <script>
 $(function() {
 	app.setup_tasks_editor();
-	app.bind_save_post();
-	
-	{% if post %}
-	window.app.post = "{{ post.name }}"
-	{% endif %}
 });
 </script>
 {%- endblock -%}

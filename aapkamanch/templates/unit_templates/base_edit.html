@@ -9,6 +9,11 @@
 <script>
 $(function() {
 	app.bind_add_post();
+	
+	{%- if view == "edit" -%}
+	app.bind_save_post();
+	{% if post %}window.app.post = "{{ post.name }}"{% endif %}
+	{%- endif -%}
 })
 </script>
 {%- endblock -%}

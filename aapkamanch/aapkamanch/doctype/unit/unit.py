@@ -6,7 +6,6 @@
 from __future__ import unicode_literals
 import webnotes, re
 
-from aapkamanch.helpers import get_views
 from aapkamanch.unit import clear_cache
 from webnotes.utils.nestedset import DocTypeNestedSet
 

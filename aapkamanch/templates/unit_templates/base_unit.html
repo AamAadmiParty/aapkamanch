@@ -1,6 +1,6 @@
-<div class="container unit-container">
+<div class="unit-container">
 	<div class="row">
-		<div class="col-sm-4 sidebar hidden-xs">
+		<div class="col-sm-3 sidebar hidden-xs">
 			{% include "templates/includes/user_nav.html" %}
 
 			{% block unit_list %}
@@ -9,17 +9,17 @@
 			</div>
 			{% endblock %}
 		</div>
-		<div class="col-sm-8">
+		<div class="col-sm-9">
 			{%- block feed -%}
 			<div class="feed">
 				{%- block unit_description -%}
-				{% if unit.description %}<p class="lead">{{ unit.description }}</p>{% endif %}
+				{% if unit.unit_description %}<p class="lead">{{ unit.unit_description }}</p>{% endif %}
 				{%- endblock -%}
 			
 				{%- block unit_toolbar -%}
 				<ul class="nav nav-tabs unit-toolbar">
 					{%- for t in views -%}
-					<li class="{% if view==t.view %}active{% endif %} {% if t.class %}{{ t.class }}{% endif %}" 
+					<li class="{% if view==t.view %}active{% endif %} {% if t.hidden %}hide{% endif %}" 
 						data-view="{{ t.view }}">
 						<a href="{{ t.url or '' }}"><i class="{{ t.icon }}"></i>
 							<span class="nav-label">{{ t.label }}</span></a>

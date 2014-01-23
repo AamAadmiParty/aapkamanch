@@ -42,7 +42,7 @@ def clear_unit_views(unit):
 	cache = webnotes.cache()
 	for key in ("unit_context", "unit_html"):
 		for view in get_views(unit):
-			cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view.get("view")))
+			cache.delete_value("{key}:{unit}:{view}".format(key=key, unit=unit, view=view))
 
 def clear_event_cache():
 	for unit in webnotes.conn.sql_list("""select name from `tabUnit` where unit_type='Event'"""):
@@ -53,7 +53,7 @@ def clear_cache_after_upvote(bean, trigger):
 	
 	unit = webnotes.conn.get_value(bean.doc.ref_doctype, bean.doc.ref_name, "unit")
 	
-	for view in get_views(unit):
-		if view.get("upvote"):
+	for view, opts in get_views(unit).items():
+		if opts.get("upvote"):
 			clear_cache(unit)
 			break

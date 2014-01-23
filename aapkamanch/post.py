@@ -7,7 +7,7 @@ import markdown2
 
 from webnotes.utils import get_fullname, cint
 from helpers import get_access
-from .aapkamanch.doctype.unit.unit import clear_unit_views
+from unit import clear_unit_views
 from webnotes.utils.file_manager import get_file_url, save_file
 
 @webnotes.whitelist(allow_guest=True)
@@ -18,6 +18,10 @@ def add_post(unit, title, content, picture, picture_name, parent_post=None,
 	if not access.get("write"):
 		raise webnotes.PermissionError
 
+	if parent_post:
+		if webnotes.conn.get_value("Post", parent_post, "parent_post"):
+			webnotes.throw("Cannot reply to a reply")
+		
 	unit = webnotes.doc("Unit", unit)	
 	post = webnotes.bean({
 		"doctype":"Post",
@@ -43,6 +47,8 @@ def add_post(unit, title, content, picture, picture_name, parent_post=None,
 	# send email
 	if parent_post:
 		post.run_method("send_email_on_reply")
+	
+	return post.doc.parent_post or post.doc.name
 		
 @webnotes.whitelist(allow_guest=True)
 def save_post(post, title, content, picture, picture_name,
@@ -75,6 +81,8 @@ def save_post(post, title, content, picture, picture_name,
 	
 	if picture_name and picture:
 		process_picture(post, picture_name, picture)
+		
+	return post.doc.parent_post or post.doc.name
 		
 def process_picture(post, picture_name, picture):
 	file_data = save_file(picture_name, picture, "Post", post.doc.name, decode=True)

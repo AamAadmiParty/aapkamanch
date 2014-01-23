@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import webnotes
 from webnotes.utils import now_datetime, get_datetime_str
-from aapkamanch.helpers import get_access, get_view_options
+from aapkamanch.helpers import get_access, get_views
 
 def get_unit_html(context):
 	context["post_list_html"] = get_post_list_html(context.get("name"), context.get("view"))
@@ -33,6 +33,7 @@ def get_post_list_html(unit, view, limit_start=0, limit_length=20):
 			
 	return webnotes.get_template("templates/includes/post_list.html").render({
 		"posts": posts, 
-		"limit_start": limit_start, 
-		"view_options": get_view_options(unit, view)
+		"limit_start": limit_start,
+		"view": view,
+		"view_options": get_views(unit).get(view)
 	})

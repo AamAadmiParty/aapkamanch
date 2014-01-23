@@ -3,7 +3,7 @@
 {%- block view -%}
 <div class="small text-muted post-list-help"></div>
 <div class="post-list">
-{{ post_list_html }}	
+{{ task_list_html }}	
 </div>
 <div class="text-center">
 	<button class="btn btn-default btn-more hide">More</button>
@@ -13,10 +13,18 @@
 {%- block unit_script -%}
 <script>
 $(function() {
+	{%- if view == "open" -%}
 	app.setup_more_btn({
-		cmd: "aapkamanch.templates.unit_templates.forum_feed.get_post_list_html"
+		cmd: "aapkamanch.templates.unit_templates.tasks_list.get_task_list_html"
 	});
-	app.toggle_edit(true);
-});
+	app.toggle_upvote();
+	{%- else -%}
+	app.setup_more_btn({
+		cmd: "aapkamanch.templates.unit_templates.tasks_list.get_task_list_html",
+		status: "Closed"
+	});
+	{%- endif -%}
+	app.toggle_edit();
+})
 </script>
 {%- endblock -%}

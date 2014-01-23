@@ -79,17 +79,24 @@ app._update_post = function(btn, cmd) {
 			unit: app.get_unit(),
 			post: window.app.post || undefined
 		}, values),
-		success: function(data) {
-			if(data.exc){
-				console.log(data.exc);
-			} else if(values.parent_post) {
-				window.location.href = "/post/" + values.parent_post;
-			} else {
-				window.location.href = "/" + app.get_unit().toLowerCase();
+		statusCode: {
+			200: function(data) {
+				window.location.href = "/" + app.get_unit().toLowerCase() + "/post?name=" + data.message;
+			},
+			403: function(xhr) {
+				wn.msgprint("Not Permitted");
+			},
+			500: function(xhr) {
+				var data = JSON.parse(xhr.responseText);
+				wn.msgprint(JSON.parse(data._server_messages).join("\n"));
 			}
-		}
+		},
 	}).always(function() {
 		$(btn).prop("disabled", false);
+	}).then(function(data) {
+		if(data.exc) {
+			console.log(JSON.parse(data.exc).join("\n"));
+		}
 	});
 }
 
@@ -167,37 +174,6 @@ app.setup_event_editor = function() {
 	}
 };
 
-app.set_event = function($post, event_datetime, $btn) {
-	$btn.prop("disabled", true);
-	$.ajax({
-		url: "/",
-		type: "POST",
-		data: {
-			cmd: "aapkamanch.post.set_event",
-			post: $post.attr("data-name"),
-			event_datetime: event_datetime
-		},
-		statusCode: {
-			403: function(xhr) {
-				wn.msgprint("Not Permitted");
-			},
-			200: function(data) {
-				if(data.exc) {
-					console.log(data.exc);
-				} else {
-					$(".post-settings").remove();
-					app.setup_post_settings($post, data.message);
-					$post.find(".event-label")
-						.find(".event-timestamp").attr("data-timestamp", event_datetime);
-						app.format_event_timestamps();
-				}
-			}
-		}
-	}).always(function() {
-		$btn.prop("disabled", false);
-	});
-};
-
 app.format_event_timestamps = function() {
 	var format = function(datetime) {
 		if(!datetime) return "";
@@ -205,11 +181,13 @@ app.format_event_timestamps = function() {
 		var time = datetime.split(" ")[1].split(":");
 		var tt = "am";
 		if(time[0] >= 12) {
-			time[0] -= 12;
+			time[0] = parseInt(time[0]) - 12;
 			tt = "pm";
-		} else if(time[0] == "00") {
+		}
+		if(!parseInt(time[0])) {
 			time[0] = 12;
 		}
+		
 		var hhmm = [time[0], time[1]].join(":")
 		
 		return [date[2], date[1], date[0]].join("-") + " " + hhmm + " " + tt;
@@ -230,4 +208,39 @@ app.process_external_links = function(content) {
 		}
 		return processed;
 	});
+}
+
+app.toggle_earlier_replies = function() {
+	var $earlier_replies = $(".child-post").slice(0, $(".child-post").length - 2);
+	var $btn = $(".btn-earlier-replies").on("click", function() {
+		if($earlier_replies.hasClass("hide")) {
+			$earlier_replies.removeClass("hide");
+			$(".btn-earlier-label").html("Hide");
+		} else {
+			$earlier_replies.addClass("hide");
+			$(".btn-earlier-label").html("Show");
+		}
+	});
+	
+	if($earlier_replies.length) {
+		$btn.toggleClass("hide", false).click();
+	}
+};
+
+app.toggle_edit = function(only_owner) {
+	if(only_owner) {
+		var user = wn.get_cookie("user_id");
+		$(".edit-post").each(function() {
+			$(this).toggleClass("hide", !(window.app.access.write && $(this).attr("data-owner")===user));
+		});
+	} else {
+		$(".edit-post").toggleClass("hide", !window.app.access.write);
+	}
+}
+
+app.toggle_upvote = function() {
+	var sid = wn.get_cookie("sid");
+	if(!(sid && sid!=="Guest" && window.app.access.read)) {
+		$(".upvote").remove();
+	}
 }

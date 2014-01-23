@@ -10,6 +10,21 @@ footer {
 	width: 100%;
 }
 
+.unit-container > .row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.unit-container > .row > .col-sm-3,
+.unit-container > .row > .col-sm-9 {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.unit-list-group {
+	font-size: 90%;
+}
+
 @media (min-width: 801px) {
 	html {
 		background: url("../img/splash.jpg") no-repeat center center fixed;
@@ -39,7 +54,6 @@ footer {
 	}
 	
 	.sidebar {
-		padding-right: 0px;
 		box-shadow: 3px 0px 7px -5px rgba(0,0,0,0.5);
 	}
 	
@@ -51,14 +65,17 @@ footer {
 
 @media (max-width: 800px) {
 	.sidebar {
+		padding-right: 0px;
 		box-shadow: 0px -3px 7px -5px rgba(0,0,0,0.5), 0px 3px 7px -5px rgba(0,0,0,0.5);
 	}
 }
 
-.titlebar {
+.toggle-sidebar {
+	margin: 3px auto;
 }
 
-.titlebar-head {
+.label {
+	font-weight: normal;
 }
 
 .titlebar .table {
@@ -78,7 +95,7 @@ footer {
 .app-title {
 	font-size: 18px;
 	font-weight: bold;
-	padding: 5px;
+	padding: 7px 0px;
 	display: inline-block;
 }
 
@@ -122,16 +139,8 @@ footer {
 	min-width: 70px;
 }
 
-.event-label, .assigned-label {
-	margin-right: 4px;
-}
-
 .titlebar .breadcrumb {
 	margin-bottom: 0px;
-}
-
-.label {
-	font-weight: normal;
 }
 
 .footer-baseline {
@@ -165,9 +174,16 @@ footer {
 	display: inline-block !important;
 }
 
-@media (max-width: 767px) {
+.visible-xs {
+	display: none !important;
+}
+
+@media (max-width: 800px) {
 	.hidden-xs {
 		display: none !important;
+	}
+	.visible-xs {
+		display: inline-block !important;
 	}
 }
 
@@ -179,10 +195,6 @@ footer {
 	margin-top: 15px;
 }
 
-.unit-container {
-	padding: 0px;
-}
-
 textarea {
 	resize: vertical;
 }
@@ -191,6 +203,18 @@ textarea {
 	height: 200px !important;
 }
 
+/*.post-header {
+	padding-top: 7px;
+	padding-bottom: 7px;
+	border: 1px dashed #ddd;
+}
+*/
 .post-content img {
 	margin: 10px 0px;
+}
+
+.assigned-label, .event-label {
+	display: inline-block;
+	padding: .4em .6em .4em;
+	margin-bottom: 7px;
 }

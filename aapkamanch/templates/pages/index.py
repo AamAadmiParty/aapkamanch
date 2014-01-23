@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import webnotes, json
 
-from aapkamanch.helpers import get_child_unit_items, get_access, get_views, get_view_options
+from aapkamanch.helpers import get_child_unit_items, get_access, get_views
 
 no_cache = True
 
@@ -20,9 +20,9 @@ def get_context():
 			unit, view = unit.split("/", 1)
 			
 		if not view:
-			for v in get_views(unit):
-				if v.get("default"):
-					view = v["view"]
+			for v, opts in get_views(unit).items():
+				if opts.get("default"):
+					view = v
 					break
 		
 		if not has_access(unit, view):
@@ -31,7 +31,7 @@ def get_context():
 		context = get_unit_context(unit, view)
 		context["content"] = get_unit_html(context)
 		context["access"] = get_access(unit)
-				
+		
 		return context
 		
 	except webnotes.DoesNotExistError:
@@ -48,15 +48,14 @@ def get_unit_context(unit, view):
 		
 		# update title
 		title = unit.unit_title
-		unit_views = get_views(unit)
-		unit_views_map = dict((d["view"], d) for d in unit_views)
-		if view in unit_views_map:
-			title += " - " + unit_views_map[view]["label"]
-			# parents += [{"name": unit.name, "unit_title": unit.unit_title}]
-				
+		views = get_views(unit)
+		view_options = views.get(view, {})
+		if view_options:
+			title += " - " + view_options["label"]
+		
+		views = sorted([opts for v, opts in views.items()], key=lambda d: d.get("idx"))
 		context = {
 			"name": unit.name,
-			"unit_description": unit.unit_description,
 			"public_read": unit.public_read,
 			"unit_title": title,
 			"public_write": unit.public_write,
@@ -64,8 +63,8 @@ def get_unit_context(unit, view):
 			"children": get_child_unit_items(unit.name, public_read=1),
 			"unit": unit.fields,
 			"view": view,
-			"views": get_views(unit),
-			"view_options": get_view_options(unit, view)
+			"views": views,
+			"view_options": view_options
 		}
 		return context
 		
@@ -74,37 +73,18 @@ def get_unit_context(unit, view):
 		
 def get_unit_html(context):
 	def _get_unit_html(context):
-		try:
-			try:
-				method = "aapkamanch.templates.unit_templates.{unit_type}_{view}.get_unit_html"\
-					.format(unit_type=context.get("unit").unit_type.lower(), view=context.get("view").lower())
-			
-				# method updates context
-				webnotes.get_attr(method)(context)
-				
-			except ImportError:
-				# method not found, try base template
-				method = "aapkamanch.templates.unit_templates.base_{view}.get_unit_html"\
-					.format(view=context.get("view").lower())
-				
-				# method updates context
-				webnotes.get_attr(method)(context)
-				
-		except ImportError:
-			# method not found
-			pass
-			
-		unit_template = get_template(context.get("unit").get("unit_type"), context.get("view"))
-		return unit_template.render(context)
+		update_context = context.get("view_options").get("update_context")
+		if update_context:
+			webnotes.get_attr(update_context)(context)
+		
+		template = context.get("view_options").get("template")
+		return webnotes.get_template(template).render(context)
 	
 	if context.get("view_options", {}).get("no_cache"):
 		return _get_unit_html(context)
 	
 	return webnotes.cache().get_value("unit_html:{unit}:{view}".format(unit=context.get("name").lower(),
 		view=context.get("view")), lambda:_get_unit_html(context))
-		
-def get_template(unit_type, view):
-	return webnotes.get_template("templates/unit_templates/{}_{}.html".format(unit_type.lower(), view.lower()))
 
 def has_access(unit, view):
 	access = get_access(unit)

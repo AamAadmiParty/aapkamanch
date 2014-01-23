@@ -5,10 +5,12 @@
 		data-fieldname="title" {%- if post and post.title -%}value="{{ post.title }}"{%- endif -%}>
 	<textarea class="form-group form-control post-add-textarea" placeholder="Enter text" 
 		data-fieldname="content">{%- if post and post.content -%}{{ post.content }}{%- endif -%}</textarea>
+	{%- if view != "post" and not (post and post.parent_post) -%}
 	{%- if unit.unit_type == "Tasks" -%}
 	{% include "templates/includes/post_editor_task_fields.html" %}
 	{%- elif unit.unit_type == "Events" -%}
 	{% include "templates/includes/post_editor_event_fields.html" %}
+	{%- endif -%}
 	{%- endif -%}
 	<div class="text-muted small">tab + enter to post / <a target="_blank" class="text-muted"
 		href="/markdown-cheatsheet" tabindex="-1">markdown formatting</a></div>
