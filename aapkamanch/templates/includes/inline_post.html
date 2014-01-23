@@ -1,71 +1,48 @@
 <div class="post {% if post.parent_post %}child-post{% endif %}" 
 		data-name="{{ post.name }}" data-unit="{{ post.unit }}" itemscope itemtype="http://schema.org/Article">
-	<div class="row">
+	<div class="row post-header">
 		<div class="col-xs-2" style="min-height: 50px;">
-			<img src="{{ post.user_image|scrub_url }}" 
-				class="img-responsive post-avatar">
+			<img src="{{ post.user_image|scrub_url }}" class="img-responsive post-avatar">
 		</div>
-		<div class="col-xs-10" style="margin-left: -15px; padding-right: 0px;">
-			<div>
-				<b itemprop="author">{{ post.first_name or "" }} {{ post.last_name or "" }}</b>
-				<small class="text-muted wn-timestamp" style="margin-left: 10px;" 
-					data-timestamp="{{ post.creation }}"></small>
-			</div>
-			<div itemprop="articleBody">{{ post.content }}</div>
-			{% if post.picture_url %}
-			<div style="margin: 10px 0px">
-				<img src="{{ post.picture_url|scrub_url }}" class="img-responsive" />
-			</div>
-			{% endif %}
-			<div style="margin-top: 10px;">
-				{% if with_unit %}
-					{% if not post.public_read %}<i class="icon-lock"></i>{% endif %}
-					<a href="/{{ post.unit|lower }}" class="label label-default">
-						{{ post.unit }}</a>
-				{% endif %}
-				
-				<span class="label label-info event-label
-					{% if not post.is_event -%}hide{%- endif %}"><i class="icon-calendar"></i>
-					<span class="event-timestamp" 
-						data-timestamp="{{ post.event_datetime or ''}}"></span>
-				</span>
-				
-				<a href="/{{ post.unit }}/tasks#{{post.status}}" class="label 
-					{% if post.status=='Completed' -%}label-success{% else %}label-warning{%- endif %}
-					{% if not post.is_task -%}hide{%- endif %}
-					assigned-label" data-status="{{ post.status }}"><i class="icon-pencil"></i>
-					{% if post.assigned_to %}
-					<span class="assigned-label-fullname">{{ post.assigned_to_fullname }}</span>
-					{% endif %}
-				</a>
-			</div>
-			<div style="margin-top: 10px;" class="inline-post-actions">
-				<ul class="list-inline small">
-					{% if not parent_post and post.parent_post %}
-					<li><a href="/post/{{ post.parent_post }}" class="text-muted">
-						<i class="icon-reply-all"></i> Reply on Main Post</a></li>
-					{% elif "post_reply_count" in post %}
-					<li>
-						<a itemprop="url" href="/post/{{ post.name }}">
-							{% if not post.post_reply_count -%}
-								{% if write -%}<i class="icon-reply"></i> Reply
-								{% else %}No Replies Yet{%- endif %}
-							{% elif post.post_reply_count == 1 %}
-							{{ post.post_reply_count }} Reply
-							{% else %}
-							{{ post.post_reply_count }} Replies
-							{%- endif %}
-						</a>
-					</li>
-					{% endif %}
-					{% if write %}
-					<li>
-						<a class="btn-post-settings text-muted"><i class="icon-cog"></i> Set Event / Task</a>
-					</li>
-					{% endif %}
-				</ul>
+		<div class="col-xs-10">
+			<h4 itemprop="headline" style="margin-top: 0px;">{{ post.title }}</h4>
+			<ul class="list-inline small text-muted post-options">
+				{% if view_options and view_options.upvote %}<li class="upvote">
+					<a>{% if post.upvotes %}{{ post.upvotes }}{% endif %} <i class="icon-thumbs-up"></i></a></li>{% endif %}
+				{%- if not post.parent_post and view != "post" -%}
+				<li><a itemprop="url" href="/{{ post.unit }}/post?name={{ post.name }}">
+					{% if not post.post_reply_count -%}
+					<i class="icon-reply"></i> Reply
+					{% elif post.post_reply_count == 1 %}
+					{{ post.post_reply_count }} Reply
+					{% else %}
+					{{ post.post_reply_count }} Replies
+					{%- endif %}
+				</a></li>
+				{%- endif -%}
+				<li><span class="wn-timestamp" data-timestamp="{{ post.creation }}"></span></li>
+				<li>by <span itemprop="author">{{ post.first_name or "" }} {{ post.last_name or "" }}</span></li>
+				<li class="edit-post pull-right hide" data-owner="{{ post.owner }}">
+					<a class="text-muted" href="/{{ post.unit }}/edit?name={{ post.name }}">[edit]</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-2">
+			<div itemprop="articleBody" class="post-content">
+				{%- if post.is_task==1 and post.assigned_to -%}
+				<span class="label label-info assigned-label">
+					<i class="icon-pencil"></i> {{ post.assigned_to_fullname }}</span>
+				{%- elif post.is_event==1 and post.event_datetime -%}
+				<span class="label label-info event-label"><i class="icon-calendar"></i>
+					<span class="event-timestamp" data-timestamp="{{ post.event_datetime }}"></span></span>
+				{%- endif -%}
+				{{ post.content|markdown }}
+				{%- if post.picture_url -%}
+				<img src="{{ post.picture_url|scrub_url }}" class="img-responsive post-picture" />
+				{%- endif -%}
 			</div>
 		</div>
 	</div>
-	<div class="post-settings-area"></div>
 </div>

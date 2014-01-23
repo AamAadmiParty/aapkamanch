@@ -1,0 +1,11 @@
+{% extends "templates/unit_templates/base_edit.html" %}
+
+{%- block unit_script -%}
+{{ super() }}
+
+<script>
+$(function() {
+	app.setup_event_editor();
+});
+</script>
+{%- endblock -%}

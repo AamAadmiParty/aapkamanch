@@ -1,13 +1,25 @@
 <div class="post-editor well" 
-		{% if parent_post %}data-parent-post="{{ parent_post }}"{% endif %}>
-	<textarea class="form-control post-add-control" style="height: 200px;" placeholder="Enter text"></textarea>
+		{% if parent_post %}data-parent-post="{{ parent_post }}"{% endif %} 
+		{% if post %}data-post="{{ post.name }}"{% endif %}>
+	<input type="text" class="form-group form-control h3" placeholder="Title" 
+		data-fieldname="title" {%- if post and post.title -%}value="{{ post.title }}"{%- endif -%}>
+	<textarea class="form-group form-control post-add-textarea" placeholder="Enter text" 
+		data-fieldname="content">{%- if post and post.content -%}{{ post.content }}{%- endif -%}</textarea>
+	{%- if view != "post" and not (post and post.parent_post) -%}
+	{%- if unit.unit_type == "Tasks" -%}
+	{% include "templates/includes/post_editor_task_fields.html" %}
+	{%- elif unit.unit_type == "Events" -%}
+	{% include "templates/includes/post_editor_event_fields.html" %}
+	{%- endif -%}
+	{%- endif -%}
+	<div class="text-muted small">tab + enter to post / <a target="_blank" class="text-muted"
+		href="/markdown-cheatsheet" tabindex="-1">markdown formatting</a></div>
 	<div class="post-picture" style="margin-top: 10px; display: none;">
 		<img src="" class="img-responsive" />
 	</div>
-	<div class="text-muted"><small>tab + enter to post / <a target="_blank" class="text-muted"
-		href="/markdown-cheatsheet" tabindex="-1">markdown formatting</a></small></div>
 	<div class="clearfix">
 		<button class="btn btn-default btn-post-add pull-right"><i class="icon-plus"></i> Add Post</button>
+		<button class="btn btn-default btn-post-save pull-right hide"><i class="icon-ok"></i> Save Post</button>
 		<button class="btn btn-default btn-post-add-picture pull-right">
 			<i class="icon-camera"></i> Add Picture
 		</button>

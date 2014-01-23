@@ -2,4 +2,15 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block content %}{{ content }}{% endblock %}
+{%- block content -%}
+{%- if access -%}
+<script>
+$(function() {
+	wn.provide("app");
+	window.app.access = {{ access|json }};
+})
+</script>
+{%- endif -%}
+
+{{ content }}
+{%- endblock -%}

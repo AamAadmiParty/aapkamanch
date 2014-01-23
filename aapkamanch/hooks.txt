@@ -19,9 +19,11 @@ jenv_filter = scrub_url:aapkamanch.helpers.scrub_url
 jenv_filter = get_icon:aapkamanch.helpers.get_icon
 
 scheduler_event = daily:aapkamanch.summary.send_daily_summary
+# scheduler_event = hourly:aapkamanch.unit.clear_event_cache
 
 # bean
 
 login_mail_title = AAP Ka Manch
 
 bean_event = Profile:validate:aapkamanch.helpers.update_gravatar
+bean_event = User Vote:after_insert:aapkamanch.unit.clear_cache_after_upvote

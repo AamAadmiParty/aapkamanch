@@ -1,6 +1,6 @@
 // AAP Ka Manch, License GNU General Public License v3
 
-var app = {};
+wn.provide("app");
 
 $(function() {
 	wn.datetime.refresh_when();
@@ -39,11 +39,11 @@ app.render_authenticated_user = function(data) {
 
 	// hide editor / add button if no access
 	if(data.access && data.access.write) {
-		$(".tab-add").removeClass("hide");
+		$('li[data-view="add"]').removeClass("hide");
 	}
 	
 	if(data.access && data.access.admin) {
-		$(".tab-settings").removeClass("hide");
+		$('li[data-view="settings"]').removeClass("hide");
 	}
 
 	// render private groups
@@ -52,7 +52,39 @@ app.render_authenticated_user = function(data) {
 	}
 	
 	app.show_cannot_post_message(data.access);
-}
+	
+	// setup upvote
+	app.setup_upvote();
+};
+
+app.setup_upvote = function() {
+	$(".post-list, .parent-post").on("click", ".upvote a", function() {
+		var $btn = $(this).prop("disabled", true);
+		var post = $(this).parents(".post").attr("data-name");
+		$.ajax({
+			url: "/",
+			type: "POST",
+			data: {
+				cmd: "aapkamanch.vote.set_vote",
+				ref_doctype: "Post",
+				ref_name: post
+			},
+			statusCode: {
+				200: function(data) {
+					if(data.exc) {
+						console.log(data.exc);
+					} else {
+						var text_class = data.message === "ok" ? "text-success" : "text-danger";
+						$btn.addClass(text_class);
+						setTimeout(function() { $btn.removeClass(text_class); }, 2000);
+					}
+				}
+			}
+		}).always(function() {
+			$btn.prop("disabled", false);
+		})
+	});
+};
 
 app.show_cannot_post_message = function(access, message) {
 	if(!(access && access.write)) {
@@ -86,7 +118,7 @@ app.setup_autosuggest = function(opts) {
         },
 		select: function(event, ui) {
 			opts.$control.val("");
-			opts.select(ui.item.profile);
+			opts.select(ui.item.profile, ui.item);
 		}
 	});
 	
@@ -235,12 +267,15 @@ app.setup_more_btn = function(opts, prepend) {
 						console.log(JSON.parse(data.exc).join("\n"));
 					} else {
 						if(prepend) {
-							$(".post-list-html").prepend(data.message);
+							$(".post-list").prepend(data.message);
 						} else {
-							$(".post-list-html").append(data.message);
+							$(".post-list").append(data.message);
 						}
+						wn.datetime.refresh_when();
 						app.format_event_timestamps();
 						app.show_more_btn(limit_start);
+						app.toggle_edit();
+						app.toggle_upvote();
 					}
 				}
 			}
@@ -249,18 +284,9 @@ app.setup_more_btn = function(opts, prepend) {
 		})
 	});
 	app.show_more_btn(0);
-}
+};
 
 app.show_more_btn = function(limit_start, limit_length) {
 	var show_more_btn = ($(".post").length - (limit_start || 0)) === (limit_length || 20);
 	$(".btn-more").toggleClass("hide", !show_more_btn);
-}
-
-app.bind_add_post = function() {
-	$pic_input = $(".control-post-add-picture");
-	$(".btn-post-add").on("click", app.add_post);
-	$(".btn-post-add-picture").on("click", function() { 
-		$pic_input.click();
-	});
-	$pic_input.on("change", app.add_picture)
 }

@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 import webnotes, json
+import os
 
 @webnotes.whitelist(allow_guest=True)
 def add_user(data):
@@ -78,25 +79,43 @@ def get_user_details(unit, fb_access_token=None):
 
 @webnotes.whitelist()
 def get_access(unit, profile=None):
-	# TODO: memcache this
-	
 	if not profile:
 		profile = webnotes.session.user
 	
-	lft, rgt, public_read, public_write = webnotes.conn.get_value("Unit", unit, ["lft", "rgt", "public_read", "public_write"])
+	unit = unit.lower()
+	cache = webnotes.cache()
+	key = "unit_access:{}".format(profile)
+	unit_access = cache.get_value(key) or {}
+	if not unit_access.get(unit):
+		unit_access[unit] = _get_access(unit, profile)
+		cache.set_value(key, unit_access)
+		
+	return unit_access.get(unit)
 	
+def clear_unit_access(profiles):
+	if isinstance(profiles, basestring):
+		profiles = [profiles]
+	
+	cache = webnotes.cache()
+	for profile in profiles:
+		cache.delete_value("unit_access:{}".format(profile))
+	
+def _get_access(unit, profile):
+	lft, rgt, public_read, public_write = webnotes.conn.get_value("Unit", unit, 
+		["lft", "rgt", "public_read", "public_write"])
+
 	if not (lft and rgt):
 		raise webnotes.ValidationError("Please rebuild Unit Tree")
-			
+		
 	read = write = admin = 0
 
 	if public_write:
 		read = write = 1
-	
+
 	# give read access for public_read pages
 	elif public_read:
 		read = 1
-	
+
 	if profile != "Guest":
 		for perm in webnotes.conn.sql("""select 
 			up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
@@ -108,7 +127,7 @@ def get_access(unit, profile=None):
 				if not write: write = perm.write
 				if not admin: admin = perm.admin
 				if write: read = write
-			
+		
 				if read and write and admin:
 					break
 
@@ -117,7 +136,6 @@ def get_access(unit, profile=None):
 		"write": write,
 		"admin": admin
 	}
-
 
 def get_user_image():
 	return webnotes.cache().get_value(webnotes.session.user + ":user_image", 
@@ -131,11 +149,8 @@ def get_fb_userid(fb_access_token):
 	else:
 		return webnotes.AuthenticationError
 		
-def is_public_read(unit):
-	return webnotes.cache().get_value("is_public_read:" + unit, lambda: webnotes.conn.get_value("Unit", unit, "public_read"))
-	
 def get_child_unit_items(unit, public_read):
-	return webnotes.conn.sql("""select name, name as url, unit_title, public_read, unit_type
+	return webnotes.conn.sql("""select name, name as url, unit_title, public_read, public_write, unit_type
 		from tabUnit where 
 		ifnull(`public_read`,0) = %s 
 		and parent_unit=%s""", (public_read, unit), as_dict=1)
@@ -148,18 +163,19 @@ def scrub_url(url):
 		return url
 	return "/" + url
 	
-def get_icon(key):
-	return
-	# icon_map = {
-	# 	"forum": "icon-comments",
-	# 	"private": "icon-lock",
-	# 	"public_write": "icon-group",
-	# 	"events": "icon-calendar",
-	# 	"tasks": "icon-pencil",
-	# 	"questions": "icon-question",
-	# }
-	# key = key.lower()
-	# return '<i class="{}"></i>'.format(icon_map.get(key)) if icon_map.get(key) else ""
+def get_icon(unit):
+	icon_map = {
+		"forum": "icon-comments",
+		"events": "icon-calendar",
+		"tasks": "icon-pencil"
+	}
+	unit_type = unit["unit_type"].lower()
+	icon = icon_map.get(unit_type) or ""
+	color_class = ""
+	if not unit.get("public_read"):
+		color_class = "text-warning"
+	
+	return '<i class="icon-fixed-width {} {}"></i>'.format(icon, color_class)
 
 def update_gravatar(bean, trigger):
 	import md5
@@ -179,3 +195,19 @@ def update_website_context(context):
 		"total_users": webnotes.cache().get_value("total_users", 
 			lambda: str(webnotes.conn.sql("""select count(*) from tabProfile""")[0][0]))
 	})
+	
+def get_views(unit):
+	if not hasattr(webnotes.local, "unit_views"):
+		with open(os.path.join(os.path.dirname(__file__), "unit_views.json"), "r") as unit_views:
+			webnotes.local.unit_views = json.loads(unit_views.read())
+	
+	if isinstance(unit, basestring):
+		unit = webnotes.doc("Unit", unit)
+		
+	views = webnotes.local.unit_views.get(unit.unit_type, {}).copy()
+
+	for view, opts in views.items():
+		if opts.get("url"):
+			opts["url"] = opts["url"].format(unit=unit.name, post=None)
+	
+	return views

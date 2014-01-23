@@ -1,0 +1,28 @@
+<input type="text" class="form-group form-control control-assign"
+	placeholder="Assign this task to someone" 
+	{%- if post and post.assigned_to_fullname -%}value="{{ post.assigned_to_fullname }}"{%- endif -%} />
+<input type="hidden" class="form-group form-control hide" data-fieldname="assigned_to" 
+	{% if post and post.assigned_to %}value="{{ post.assigned_to }}"{% endif %}/>
+<div class="assigned-to alert alert-success {% if not (post and post.assigned_to) %}hide{% endif %}" 
+	style="margin: 10px 0px;">
+	<div class="row">
+		<div class="col-xs-10">
+			<div class="assigned-profile user-profile">
+				{%- if post and unit_profile -%}
+				{% include "templates/includes/profile_display.html" %}
+				{%- endif -%}
+			</div>
+		</div>
+		<div class="col-xs-2">
+			<a class="close">&times;</a>
+		</div>
+	</div>
+</div>
+<div class="form-group task-status {% if not (post and post.assigned_to) %}hide{% endif %}">
+	<label>Status</label>
+	<select class="form-control" data-fieldname="status">
+	    {% for opt in ("Open", "Closed") %}
+		<option value="{{ opt }}" {% if post and opt==post.status %}selected{% endif %}>{{ opt }}</option>
+		{% endfor %}
+	</select>
+</div>

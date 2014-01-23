@@ -1,11 +1,5 @@
 // AAP Ka Manch, License GNU General Public License v3
 
-$(function() {
-	if(window.app.view=="settings") {
-		app.setup_unit_settings();
-	}
-});
-
 app.setup_unit_settings = function() {	
 	// autosuggest
 	app.setup_autosuggest({
@@ -36,6 +30,7 @@ app.setup_unit_settings = function() {
 app.add_group = function() {
 	var $control = $(".control-add-group"),
 		$btn = $(".btn-add-group");
+	console.log($control.val());
 	if($control.val()) {
 		$btn.prop("disabled", true);
 		$.ajax({
@@ -45,6 +40,7 @@ app.add_group = function() {
 				cmd:"aapkamanch.unit.add_unit",
 				unit: app.get_unit(),
 				new_unit: $control.val(),
+				unit_type: $(".control-add-group-type").val(),
 				public_read: $(".control-add-group-public_read").is(":checked") ? 1 : 0,
 				public_write: $(".control-add-group-public_write").is(":checked") ? 1 : 0
 			},

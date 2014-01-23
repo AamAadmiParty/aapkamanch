@@ -17,7 +17,6 @@
 	{% block css %}{% endblock %}
 </head>
 <body>
-	{% include "templates/includes/facebook.html" %}
 	<div id="content" style="padding: 0px;">
 		{% include "templates/includes/titlebar.html" %}
 		{% block content %}{% endblock %}
@@ -50,5 +49,6 @@
 	  ga('send', 'pageview');
 
 	</script>
+	{% include "templates/includes/facebook.html" %}
 </body>
 </html>
