@@ -8,7 +8,8 @@
 			<h4 itemprop="headline" style="margin-top: 0px;">{{ post.title }}</h4>
 			<ul class="list-inline small text-muted post-options">
 				{% if view_options and view_options.upvote %}<li class="upvote">
-					<a>{% if post.upvotes %}{{ post.upvotes }}{% endif %} <i class="icon-thumbs-up"></i></a></li>{% endif %}
+					<a><span class="upvote-count {% if not post.upvotes %}hide{% endif %}">{{ post.upvotes }}</span>
+						<i class="icon-thumbs-up"></i></a></li>{% endif %}
 				{%- if not post.parent_post and view != "post" -%}
 				<li><a itemprop="url" href="/{{ post.unit }}/post?name={{ post.name }}">
 					{% if not post.post_reply_count -%}

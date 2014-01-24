@@ -17,6 +17,7 @@ $(function() {
 	app.setup_more_btn({
 		cmd: "aapkamanch.templates.unit_templates.tasks_list.get_task_list_html"
 	});
+	app.setup_upvote();
 	app.toggle_upvote();
 	{%- else -%}
 	app.setup_more_btn({

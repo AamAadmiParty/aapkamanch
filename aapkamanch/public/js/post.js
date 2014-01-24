@@ -239,8 +239,7 @@ app.toggle_edit = function(only_owner) {
 }
 
 app.toggle_upvote = function() {
-	var sid = wn.get_cookie("sid");
-	if(!(sid && sid!=="Guest" && window.app.access.read)) {
+	if(!window.app.access.read) {
 		$(".upvote").remove();
 	}
 }

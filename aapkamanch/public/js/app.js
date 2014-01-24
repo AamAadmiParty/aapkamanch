@@ -52,15 +52,19 @@ app.render_authenticated_user = function(data) {
 	}
 	
 	app.show_cannot_post_message(data.access);
-	
-	// setup upvote
-	app.setup_upvote();
 };
 
 app.setup_upvote = function() {
 	$(".post-list, .parent-post").on("click", ".upvote a", function() {
+		var sid = wn.get_cookie("sid");
+		if(!sid || sid==="Guest") {
+			wn.msgprint("Please login to Upvote!");
+			return;
+		}
+		
 		var $btn = $(this).prop("disabled", true);
-		var post = $(this).parents(".post").attr("data-name");
+		var $post = $(this).parents(".post");
+		var post = $post.attr("data-name");
 		$.ajax({
 			url: "/",
 			type: "POST",
@@ -75,6 +79,10 @@ app.setup_upvote = function() {
 						console.log(data.exc);
 					} else {
 						var text_class = data.message === "ok" ? "text-success" : "text-danger";
+						if(data.message==="ok") {
+							var count = parseInt($post.find(".upvote-count").text());
+							$post.find(".upvote-count").text(count + 1).removeClass("hide");
+						}
 						$btn.addClass(text_class);
 						setTimeout(function() { $btn.removeClass(text_class); }, 2000);
 					}
