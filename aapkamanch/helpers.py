@@ -211,3 +211,20 @@ def get_views(unit):
 			opts["url"] = opts["url"].format(unit=unit.name, post=None)
 	
 	return views
+
+def clear_cache():
+	"""clear all caches related to aapkamanch"""
+	# unit caches
+	import unit
+	from .post import clear_post_cache
+	
+	for name in webnotes.conn.sql_list("""select name from `tabUnit`"""):
+		unit.clear_unit_views(name)
+		
+	# unit access for profiles
+	clear_unit_access(webnotes.conn.sql_list("""select name from `tabProfile`"""))
+	
+	# post pages
+	for name in webnotes.conn.sql_list("""select name from `tabPost` where ifnull(parent_post, '')=''"""):
+		clear_post_cache(name)
+	

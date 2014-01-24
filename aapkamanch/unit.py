@@ -11,7 +11,10 @@ from permissions import get_access
 def add_unit(unit, new_unit, public_read, public_write, unit_type="Forum"):
 	if not get_access(unit).get("admin"):
 		raise webnotes.PermissionError
+		
+	_add_unit(unit, new_unit, public_read, public_write, unit_type)
 			
+def _add_unit(unit, new_unit, public_read, public_write, unit_type):
 	unit = webnotes.bean({
 		"doctype": "Unit",
 		"unit_name": unit + "-" + new_unit,
@@ -23,6 +26,7 @@ def add_unit(unit, new_unit, public_read, public_write, unit_type="Forum"):
 	})
 	unit.ignore_permissions = True
 	unit.insert()
+	return unit
 
 @webnotes.whitelist()
 def update_description(unit, description):
@@ -34,11 +38,8 @@ def update_description(unit, description):
 	unit.ignore_permissions = True
 	unit.save()
 
-def clear_cache(unit):
-	unit = unit.lower()
-	clear_unit_views(unit)
-	
 def clear_unit_views(unit):
+	unit = unit.lower()
 	cache = webnotes.cache()
 	for key in ("unit_context", "unit_html"):
 		for view in get_views(unit):
@@ -46,7 +47,7 @@ def clear_unit_views(unit):
 
 def clear_event_cache():
 	for unit in webnotes.conn.sql_list("""select name from `tabUnit` where unit_type='Event'"""):
-		clear_cache(unit)
+		clear_unit_views(unit)
 
 def clear_cache_after_upvote(bean, trigger):
 	if bean.doc.ref_doctype != "Post": return
@@ -55,5 +56,5 @@ def clear_cache_after_upvote(bean, trigger):
 	
 	for view, opts in get_views(unit).items():
 		if opts.get("upvote"):
-			clear_cache(unit)
+			clear_unit_views(unit)
 			break

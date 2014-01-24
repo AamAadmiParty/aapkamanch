@@ -74,7 +74,7 @@
   "fieldname": "unit_type", 
   "fieldtype": "Select", 
   "label": "Unit Type", 
-  "options": "Forum\nQuestions\nTasks\nEvents\nPoll\nPage", 
+  "options": "Forum\nTasks\nEvents\nPoll\nPage", 
   "reqd": 1
  }, 
  {

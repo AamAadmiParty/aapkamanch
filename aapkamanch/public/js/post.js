@@ -244,3 +244,7 @@ app.toggle_upvote = function() {
 		$(".upvote").remove();
 	}
 }
+
+app.toggle_post_editor = function() {
+	$(".post-editor").toggleClass("hide", !window.app.access.write);
+}

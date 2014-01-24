@@ -31,7 +31,9 @@ $(function() {
 	
 	{%- if unit.unit_type == "Events" -%}
 	app.format_event_timestamps();
-	{%- endif -%}	
+	{%- endif -%}
+	
+	app.toggle_post_editor();
 });
 </script>
 {%- endblock -%}

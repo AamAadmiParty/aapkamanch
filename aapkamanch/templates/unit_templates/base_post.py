@@ -10,10 +10,20 @@ def get_unit_html(context):
 	if post.parent_post:
 		raise webnotes.PermissionError
 		
-	context["unit_title"] += " by {}".format(get_fullname(post.owner))
-	context["parent_post_html"] = get_parent_post_html(post, context)
-	context["post_list_html"] = get_child_posts_html(post, context.get("view"))
-	context["parent_post"] = post.name
+	def _get_post_context(post, context):
+		return {
+			"unit_title": context.get("unit_title") + " by {}".format(get_fullname(post.owner)),
+			"parent_post_html": get_parent_post_html(post, context),
+			"post_list_html": get_child_posts_html(post, context.get("view")),
+			"parent_post": post.name
+			
+		}
+	
+	post_context = webnotes.cache().get_value("post_context:{}".format(post.name), 
+		lambda: _get_post_context(post, context))
+	
+	context.update(post_context)
+	return context
 
 def get_parent_post_html(post, context):
 	profile = webnotes.bean("Profile", post.owner).doc

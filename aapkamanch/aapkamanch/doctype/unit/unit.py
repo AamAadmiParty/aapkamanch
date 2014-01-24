@@ -6,12 +6,13 @@
 from __future__ import unicode_literals
 import webnotes, re
 
-from aapkamanch.unit import clear_cache
+from aapkamanch.unit import clear_unit_views
 from webnotes.utils.nestedset import DocTypeNestedSet
 
 class DocType(DocTypeNestedSet):
 	def __init__(self, d, dl):
 		self.doc, self.doclist = d, dl
+		self.nsm_parent_field = "parent_unit"
 		
 	def autoname(self):
 		self.validate_name()
@@ -25,11 +26,11 @@ class DocType(DocTypeNestedSet):
 	
 	def on_update(self):
 		DocTypeNestedSet.on_update(self)
-		clear_cache(self.doc.name)
+		clear_unit_views(self.doc.name)
 	
 	def after_insert(self):
 		if self.doc.parent_unit:
-			clear_cache(self.doc.parent_unit)
+			clear_unit_views(self.doc.parent_unit)
 		
 	def make_private_if_parent_is_private(self):
 		if self.doc.parent_unit and not webnotes.conn.get_value("Unit", self.doc.parent_unit, "public_read"):

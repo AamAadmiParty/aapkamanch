@@ -47,7 +47,7 @@ def add_post(unit, title, content, picture, picture_name, parent_post=None,
 	# send email
 	if parent_post:
 		post.run_method("send_email_on_reply")
-	
+		
 	return post.doc.parent_post or post.doc.name
 		
 @webnotes.whitelist(allow_guest=True)
@@ -167,4 +167,5 @@ def suggest_user(unit, term):
 		"profile": pr.name
 	} for pr in profiles]
 
-	
+def clear_post_cache(post):
+	webnotes.cache().delete_value("post_context:{}".format(post))

@@ -17,16 +17,17 @@ def import_units():
 	def create_units(unit_name, unit_title, parent_unit, children_name):
 		units = []
 		units.append(webnotes.bean({"doctype":"Unit", "unit_name": unit_name, "unit_title":unit_title,
-			"parent_unit": parent_unit, "public_read":1}).insert())
+			"parent_unit": parent_unit, "public_read":1, "public_write": 1}).insert())
 		
-		for det in ((children_name, "Public"), ("Forum", "Public"), ("Discussion", "Private")):
+		for det in (children_name,):
 			units.append(webnotes.bean({
 				"doctype":"Unit", 
 				"parent_unit": units[0].doc.name, 
 				"unit_type": "Forum", 
-				"unit_title": det[0],
-				"public_read": 1 if det[1]=="Public" else 0,
-				"unit_name": unit_name + "-" + det[0]
+				"unit_title": det,
+				"public_read": 1,
+				"public_write": 1,
+				"unit_name": unit_name + "-" + det
 			}).insert())
 		return units
 	
