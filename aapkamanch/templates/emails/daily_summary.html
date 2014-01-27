@@ -241,7 +241,9 @@ a.no-decoration {
 								<td class="padding left-padding">
 									<p><b><a class="no-decoration"
 										href="/{{ post.unit }}/post?name={{ post.name }}" target="_blank">
-										{{ post.title }}</a></b></p>
+										{{ post.title }}</a></b>
+										<span class="text-muted">{{ post.event_display }}</span>
+									</p>
 									<p>{{ post.content }}</p>
 									{%- if post.picture_url -%}
 									<p><img src="{{ post.picture_url|scrub_url }}" /></p>
@@ -284,7 +286,7 @@ a.no-decoration {
 											</td>
 										</tr>
 									</table>
-									<p>{{ post.content }}</p>
+									<p>{{ post.content|markdown }}</p>
 									{%- if post.picture_url -%}
 									<p><img src="{{ post.picture_url|scrub_url }}" /></p>
 									{%- endif -%}
