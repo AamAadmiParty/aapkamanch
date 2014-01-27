@@ -84,21 +84,21 @@ def get_access(unit, profile=None):
 	
 	unit = unit.lower()
 	cache = webnotes.cache()
-	key = "unit_access:{}".format(profile)
-	unit_access = cache.get_value(key) or {}
-	if not unit_access.get(unit):
-		unit_access[unit] = _get_access(unit, profile)
-		cache.set_value(key, unit_access)
+	key = "permissions:{}".format(profile)
+	permissions = cache.get_value(key) or {}
+	if not permissions.get(unit):
+		permissions[unit] = _get_access(unit, profile)
+		cache.set_value(key, permissions)
 		
-	return unit_access.get(unit)
+	return permissions.get(unit)
 	
-def clear_unit_access(profiles):
+def clear_permissions(profiles):
 	if isinstance(profiles, basestring):
 		profiles = [profiles]
 	
 	cache = webnotes.cache()
 	for profile in profiles:
-		cache.delete_value("unit_access:{}".format(profile))
+		cache.delete_value("permissions:{}".format(profile))
 	
 def _get_access(unit, profile):
 	lft, rgt, public_read, public_write = webnotes.conn.get_value("Unit", unit, 
@@ -222,7 +222,7 @@ def clear_cache():
 		unit.clear_unit_views(name)
 		
 	# unit access for profiles
-	clear_unit_access(webnotes.conn.sql_list("""select name from `tabProfile`"""))
+	clear_permissions(webnotes.conn.sql_list("""select name from `tabProfile`"""))
 	
 	# post pages
 	for name in webnotes.conn.sql_list("""select name from `tabPost` where ifnull(parent_post, '')=''"""):

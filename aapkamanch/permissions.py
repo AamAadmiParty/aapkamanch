@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 import webnotes, json
 
-from helpers import get_access, clear_unit_access
+from helpers import get_access, clear_permissions
 from webnotes.utils.email_lib.bulk import send
 
 def get_unit_settings_html(unit):
@@ -59,7 +59,7 @@ def add_unit_profile(unit, profile):
 	unit.ignore_permissions = True
 	unit.save()
 	
-	clear_unit_access(profile)
+	clear_permissions(profile)
 	
 	unit_profile = unit.doclist[-1].fields
 	unit_profile.update(webnotes.conn.get_value("Profile", unit_profile.profile, 
@@ -88,4 +88,4 @@ def update_permission(unit, profile, perm, value):
 			<p>%s</p>\
 			<p style="color: #888">This is just for your information.</p>""" )
 
-	clear_unit_access(profile)
+	clear_permissions(profile)
