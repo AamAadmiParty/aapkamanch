@@ -57,6 +57,7 @@ def get_unit_context(unit, view):
 		context = {
 			"name": unit.name,
 			"public_read": unit.public_read,
+			"title": "Aam Aadmi Party: " + title,
 			"unit_title": title,
 			"public_write": unit.public_write,
 			"parents": parents,

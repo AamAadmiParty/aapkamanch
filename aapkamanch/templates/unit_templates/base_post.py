@@ -11,12 +11,13 @@ def get_unit_html(context):
 		raise webnotes.PermissionError
 		
 	def _get_post_context(post, context):
+		fullname = get_fullname(post.owner)
 		return {
-			"unit_title": context.get("unit_title") + " by {}".format(get_fullname(post.owner)),
+			"title": "Aam Aadmi Party: {} by {}".format(post.title, fullname),
+			"unit_title": context.get("unit_title") + " by {}".format(fullname),
 			"parent_post_html": get_parent_post_html(post, context),
 			"post_list_html": get_child_posts_html(post, context.get("view")),
 			"parent_post": post.name
-			
 		}
 	
 	post_context = webnotes.cache().get_value("post_context:{}".format(post.name), 
