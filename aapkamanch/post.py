@@ -51,7 +51,7 @@ def add_post(unit, content, picture, picture_name, title=None, parent_post=None,
 	return post.doc.parent_post or post.doc.name
 		
 @webnotes.whitelist(allow_guest=True)
-def save_post(post, content, picture, picture_name, title=None,
+def save_post(post, content, picture=None, picture_name=None, title=None,
 	assigned_to=None, status=None, event_datetime=None):
 	
 	post = webnotes.bean("Post", post)

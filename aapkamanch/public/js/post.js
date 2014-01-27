@@ -8,7 +8,7 @@ app.get_editor_values = function() {
 	});
 	
 	values.parent_post = $(".post-editor").attr("data-parent-post");
-	values.picture_name = $(".control-post-add-picture").val();
+	values.picture_name = $(".control-post-add-picture").val() || null;
 
 	var dataurl = $(".post-picture img").attr("src");
 	values.picture = dataurl ? dataurl.split(",")[1] : ""
