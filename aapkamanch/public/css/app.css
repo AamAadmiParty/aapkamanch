@@ -218,3 +218,8 @@ textarea {
 	padding: .4em .6em .4em;
 	margin-bottom: 7px;
 }
+
+a.no-decoration {
+	text-decoration: none;
+	color: inherit;
+}
