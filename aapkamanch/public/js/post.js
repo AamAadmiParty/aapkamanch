@@ -198,15 +198,14 @@ app.format_event_timestamps = function() {
 }
 
 app.process_external_links = function(content) {
-	return content.replace(/([^\(\[](ht|f)tp[s]?:\/\/[^\s\[\]\(\)]*)/g, function(match, p1) {
-		// hack to add back surrounding whitespace
-		var old_p1 = p1;
-		p1 = p1.trim();
-		var processed = "["+p1+"]("+p1+")";
-		if(old_p1!=p1) {
-			processed = old_p1.replace(p1, "") + processed;
-		}
-		return processed;
+	return content.replace(/([^\s]*)(http|https|ftp):\/\/[^\s\[\]\(\)]+/g, function(match, p1) {
+		// mimicing look behind! should not have anything in p1
+		// replace(/match/g)
+		// replace(/(p1)(p2)/g)
+		// so, when there is a character before http://, it shouldn't be replaced!
+		if(p1) return match;
+		
+		return "["+match+"]("+match+")";
 	});
 }
 
