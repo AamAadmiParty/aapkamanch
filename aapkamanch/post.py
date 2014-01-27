@@ -88,7 +88,7 @@ def process_picture(post, picture_name, picture):
 	file_data = save_file(picture_name, picture, "Post", post.doc.name, decode=True)
 	post.doc.picture_url = file_data.file_name or file_data.file_url
 	webnotes.conn.set_value("Post", post.doc.name, "picture_url", post.doc.picture_url)
-	clear_unit_views(unit.name)
+	clear_unit_views(post.doc.unit)
 	
 @webnotes.whitelist()
 def assign_post(post, profile=None):

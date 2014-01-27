@@ -91,12 +91,14 @@ app._update_post = function(btn, cmd) {
 				wn.msgprint(JSON.parse(data._server_messages).join("\n"));
 			}
 		},
-	}).always(function() {
-		$(btn).prop("disabled", false);
-	}).then(function(data) {
+	}).always(function(data) {
+		if(data.responseText) {
+			data = JSON.parse(data.responseText);
+		}
 		if(data.exc) {
 			console.log(JSON.parse(data.exc).join("\n"));
 		}
+		$(btn).prop("disabled", false);
 	});
 }
 
