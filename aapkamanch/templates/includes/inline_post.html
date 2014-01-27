@@ -5,6 +5,7 @@
 			<img src="{{ post.user_image|scrub_url }}" class="img-responsive post-avatar">
 		</div>
 		<div class="col-xs-10">
+			{%- if not post.parent_post -%}
 			<h4 itemprop="headline" style="margin-top: 0px;">
 				{%- if not post.parent_post and view != "post" -%}
 				<a class="no-decoration" href="/{{ post.unit }}/post?name={{ post.name }}">{{ post.title }}</a>
@@ -12,6 +13,7 @@
 				{{ post.title }}
 				{%- endif -%}
 			</h4>
+			{%- endif -%}
 			<ul class="list-inline small text-muted post-options">
 				{% if view_options and view_options.upvote %}<li class="upvote">
 					<a><span class="upvote-count {% if not post.upvotes %}hide{% endif %}">{{ post.upvotes }}</span>
@@ -33,10 +35,6 @@
 					<a class="text-muted" href="/{{ post.unit }}/edit?name={{ post.name }}">[edit]</a>
 				</li>
 			</ul>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-10 col-xs-offset-2">
 			<div itemprop="articleBody" class="post-content">
 				{%- if post.is_task==1 and post.assigned_to -%}
 				<span class="label label-info assigned-label">

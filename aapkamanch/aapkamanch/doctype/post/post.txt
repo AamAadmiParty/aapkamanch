@@ -2,7 +2,7 @@
  {
   "creation": "2014-01-07 14:00:04", 
   "docstatus": 0, 
-  "modified": "2014-01-20 10:54:10", 
+  "modified": "2014-01-27 16:59:35", 
   "modified_by": "Administrator", 
   "owner": "Administrator"
  }, 
@@ -22,8 +22,9 @@
   "permlevel": 0
  }, 
  {
-  "cancel": 1, 
+  "cancel": 0, 
   "create": 1, 
+  "delete": 1, 
   "doctype": "DocPerm", 
   "export": 1, 
   "name": "__common__", 
@@ -45,7 +46,7 @@
   "fieldname": "title", 
   "fieldtype": "Data", 
   "label": "Title", 
-  "reqd": 1
+  "reqd": 0
  }, 
  {
   "doctype": "DocField", 

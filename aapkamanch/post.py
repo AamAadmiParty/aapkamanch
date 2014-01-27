@@ -11,7 +11,7 @@ from unit import clear_unit_views
 from webnotes.utils.file_manager import get_file_url, save_file
 
 @webnotes.whitelist(allow_guest=True)
-def add_post(unit, title, content, picture, picture_name, parent_post=None, 
+def add_post(unit, content, picture, picture_name, title=None, parent_post=None, 
 	assigned_to=None, status=None, event_datetime=None):
 	
 	access = get_access(unit)
@@ -25,7 +25,7 @@ def add_post(unit, title, content, picture, picture_name, parent_post=None,
 	unit = webnotes.doc("Unit", unit)	
 	post = webnotes.bean({
 		"doctype":"Post",
-		"title": title.title(),
+		"title": (title or "").title(),
 		"content": content,
 		"unit": unit.name,
 		"parent_post": parent_post or None
@@ -51,7 +51,7 @@ def add_post(unit, title, content, picture, picture_name, parent_post=None,
 	return post.doc.parent_post or post.doc.name
 		
 @webnotes.whitelist(allow_guest=True)
-def save_post(post, title, content, picture, picture_name,
+def save_post(post, content, picture, picture_name, title=None,
 	assigned_to=None, status=None, event_datetime=None):
 	
 	post = webnotes.bean("Post", post)
@@ -70,7 +70,7 @@ def save_post(post, title, content, picture, picture_name,
 			webnotes.throw("You cannot change: Picture")
 			
 	post.doc.fields.update({
-		"title": title.title(),
+		"title": (title or "").title(),
 		"content": content,
 		"assigned_to": assigned_to,
 		"status": status,

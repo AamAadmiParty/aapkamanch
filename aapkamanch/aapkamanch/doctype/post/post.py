@@ -19,6 +19,9 @@ class DocType:
 		self.doc, self.doclist = d, dl
 		
 	def validate(self):
+		if not self.doc.parent_post and not self.doc.title:
+			webnotes.throw("Please enter title!")
+		
 		self.assigned_to = webnotes.conn.get_value(self.doc.doctype, self.doc.name, "assigned_to")
 		if self.doc.is_task:
 			if not self.doc.status:

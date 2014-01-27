@@ -14,7 +14,7 @@ app.get_editor_values = function() {
 	values.picture = dataurl ? dataurl.split(",")[1] : ""
 	
 	// validations
-	if(!values.title) {
+	if(!values.parent_post && !values.title) {
 		wn.msgprint("Please enter title!");
 		return;
 	} else if(!values.content) {
@@ -42,8 +42,9 @@ app.bind_add_post = function() {
 }
 
 app.bind_save_post = function() {
-	$(".btn-post-add").addClass("hide")
+	$(".btn-post-add").addClass("hide");
 	$(".btn-post-save").removeClass("hide").on("click", app.save_post);
+	$(".post-picture").toggleClass("hide", !$(".post-picture").attr("src"));
 }
 
 app.add_post = function() {
@@ -112,7 +113,7 @@ app.add_picture = function() {
 					crop: false,
 					quality: 80,
 					callback: function(data, width, height) {
-						$(".post-picture").toggle(true).find("img").attr("src", data);
+						$(".post-picture").removeClass("hide").find("img").attr("src", data);
 					}
 				});
 			}
