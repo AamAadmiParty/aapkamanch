@@ -1,15 +1,6 @@
 <div class="unit-container">
 	<div class="row">
-		<div class="col-sm-3 sidebar hidden-xs">
-			{% include "templates/includes/user_nav.html" %}
-
-			{% block unit_list %}
-			<div class="list-group unit-list-group">
-				{% include "templates/includes/unit_list.html" %}
-			</div>
-			{% endblock %}
-		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-10">
 			{%- block feed -%}
 			<div class="feed">
 				{%- block unit_description -%}
@@ -34,6 +25,13 @@
 				{%- block view -%}{%- endblock -%}
 			</div>
 			{%- endblock -%}
+		</div>
+		<div class="col-sm-2 sidebar hidden-xs">
+			{% block unit_list %}
+			<div class="unit-list-group">
+				{% include "templates/includes/unit_list.html" %}
+			</div>
+			{% endblock %}
 		</div>
 	</div>
 </div>

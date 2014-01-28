@@ -3,6 +3,7 @@
 wn.provide("app");
 
 $(function() {
+	$('.dropdown-toggle').dropdown();
 	wn.datetime.refresh_when();
 	
 	$(".titlebar .toggle-sidebar").on("click", function() {

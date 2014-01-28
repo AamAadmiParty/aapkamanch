@@ -1,20 +1,21 @@
 {%- if children -%}
 {%- for child in children -%}
-<a href="/{{ child.url|lower }}" class="list-group-item">
-	<div class="row">
-		<div class="col-xs-9 child-unit-title" title="{{ child.unit_title }}">
-			{{ child|get_icon }}
-			{{ child.unit_title }}
-		</div>
-		<div class="col-xs-3">
-			<div class="text-right">
-				{% if not child.public_read %}
-				<i class="icon-lock text-warning"></i>
-				{% endif %}
-				<i class="icon-angle-right"></i>
+<div class="unit-list-group-item">
+	<a href="/{{ child.url|lower }}">
+		<div class="row">
+			<div class="col-xs-9 child-unit-title" title="{{ child.unit_title }}">
+				{{ child|get_icon }}
+				{{ child.unit_title }}
+			</div>
+			<div class="col-xs-3">
+				<div class="text-right">
+					{% if not child.public_read %}
+					<i class="icon-lock"></i>
+					{% endif %}
+				</div>
 			</div>
 		</div>
-	</div>
-</a>
+	</a>
+</div>
 {%- endfor -%}
 {%- endif -%}

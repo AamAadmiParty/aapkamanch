@@ -10,64 +10,42 @@ footer {
 	width: 100%;
 }
 
+#content {
+	margin-top: 15px;
+	min-height: 400px;
+}
+
 .unit-container > .row {
 	margin-left: 0px;
 	margin-right: 0px;
 }
 
-.unit-container > .row > .col-sm-3,
-.unit-container > .row > .col-sm-9 {
+.unit-container > .row > .col-sm-2,
+.unit-container > .row > .col-sm-10 {
 	padding-left: 0px;
 	padding-right: 0px;
 }
 
 .unit-list-group {
-	font-size: 90%;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: whitesmoke;
 }
 
-@media (min-width: 801px) {
-	html {
-		background: url("../img/splash.jpg") no-repeat center center fixed;
-		background-size: cover;
-	}
-	body {
-		margin: 30px auto;
-		max-width: 800px;
-		position: relative;
-		background-color: white;
-		border-radius: 15px;
-	    box-shadow: 0 0 25px 15px rgba(0, 0, 0, 0.6);
-	}
-	
+.unit-list-group-item {
+	font-size: 90%;
+	margin: 5px 0px;
+}
 
-	.titlebar, .titlebar-head {
-		border-top-left-radius: 15px; border-top-right-radius: 15px;
-		overflow: hidden;
-	}
+.unit-list-group-item a {
+	color: grey;
+}
 
-	.titlebar .title {
-		text-align: center;
-	}
-	
-	.footer-baseline {
-		border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;
-	}
-	
-	.sidebar {
-		box-shadow: 3px 0px 7px -5px rgba(0,0,0,0.5);
-	}
-	
+@media (min-width: 801px) {			
 	.feed-list {
 		padding-left: 6px !important;
 	}
 	
-}
-
-@media (max-width: 800px) {
-	.sidebar {
-		padding-right: 0px;
-		box-shadow: 0px -3px 7px -5px rgba(0,0,0,0.5), 0px 3px 7px -5px rgba(0,0,0,0.5);
-	}
 }
 
 .toggle-sidebar {
@@ -137,10 +115,6 @@ footer {
 .user-profile {
 	min-height: 50px;
 	min-width: 70px;
-}
-
-.titlebar .breadcrumb {
-	margin-bottom: 0px;
 }
 
 .footer-baseline {

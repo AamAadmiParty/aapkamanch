@@ -68,7 +68,10 @@ def get_unit_context(unit, view):
 			"view_options": view_options
 		}
 		return context
-		
+
+	if webnotes.conf.get("disable_website_cache"):
+		return _get_unit_context(unit, view)	
+	
 	return webnotes.cache().get_value("unit_context:{unit}:{view}".format(unit=unit.lower(), view=view), 
 		lambda:_get_unit_context(unit, view))
 		
@@ -83,7 +86,10 @@ def get_unit_html(context):
 	
 	if context.get("view_options", {}).get("no_cache"):
 		return _get_unit_html(context)
-	
+
+	if webnotes.conf.get("disable_website_cache"):
+		return _get_unit_html(context)
+		
 	return webnotes.cache().get_value("unit_html:{unit}:{view}".format(unit=context.get("name").lower(),
 		view=context.get("view")), lambda:_get_unit_html(context))
 

@@ -116,26 +116,24 @@ def _get_access(unit, profile):
 	elif public_read:
 		read = 1
 
-	if profile != "Guest":
-		for perm in webnotes.conn.sql("""select 
-			up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
-			from `tabUnit Profile` up, tabUnit u
-			where up.profile = %s
-				and up.parent = u.name order by lft asc""", (profile,), as_dict=True):
-			if perm.lft <= lft and perm.rgt >= rgt:
-				if not read: read = perm.read
-				if not write: write = perm.write
-				if not admin: admin = perm.admin
-				if write: read = write
-		
-				if read and write and admin:
-					break
+	if profile == "Guest":
+		return { "read": read, "write": 0, "admin": 0 }
 
-	return {
-		"read": read,
-		"write": write,
-		"admin": admin
-	}
+	for perm in webnotes.conn.sql("""select 
+		up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
+		from `tabUnit Profile` up, tabUnit u
+		where up.profile = %s
+			and up.parent = u.name order by lft asc""", (profile,), as_dict=True):
+		if perm.lft <= lft and perm.rgt >= rgt:
+			if not read: read = perm.read
+			if not write: write = perm.write
+			if not admin: admin = perm.admin
+			if write: read = write
+	
+			if read and write and admin:
+				break
+
+	return { "read": read, "write": write, "admin": admin }
 
 def get_user_image():
 	return webnotes.cache().get_value(webnotes.session.user + ":user_image", 
@@ -171,11 +169,8 @@ def get_icon(unit):
 	}
 	unit_type = unit["unit_type"].lower()
 	icon = icon_map.get(unit_type) or ""
-	color_class = ""
-	if not unit.get("public_read"):
-		color_class = "text-warning"
 	
-	return '<i class="icon-fixed-width {} {}"></i>'.format(icon, color_class)
+	return '<i class="icon-fixed-width {}"></i>'.format(icon)
 
 def update_gravatar(bean, trigger):
 	import md5
