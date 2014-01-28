@@ -1,18 +1,26 @@
 {% extends "templates/base.html" %}
 
 {% block content %}
-<div class="row">
-	<div class="col-sm-4 sidebar hidden-xs">
-		{% include "templates/includes/user_nav.html" %}
-	</div>
-	<div class="col-sm-8">
-		<div class="feed">
-			<div class="post-list">
-			{{ post_list_html }}
+<div class="container unit-container">
+	<div class="row">
+		<div class="col-sm-9 feed-col">
+			{%- block feed -%}
+			<div class="feed">
+				{% include "templates/includes/titlebar.html" %}
+				{{ post_list_html }}
+				</div>
+				<div class="text-center">
+					<button class="btn btn-default btn-more">More</button>
+				</div>
 			</div>
-			<div class="text-center">
-				<button class="btn btn-default btn-more">More</button>
+			{%- endblock -%}
+		</div>
+		<div class="col-sm-3 sidebar hidden-xs">
+			{% block unit_list %}
+			<div class="unit-list-group">
+				{% include "templates/includes/unit_list.html" %}
 			</div>
+			{% endblock %}
 		</div>
 	</div>
 </div>

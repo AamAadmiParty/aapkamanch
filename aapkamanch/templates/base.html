@@ -17,7 +17,7 @@
 	{% block css %}{% endblock %}
 </head>
 <body>
-	<nav class="navbar navbar-default" role="navigation" style="padding: 5px 0px; border-bottom: 2px solid orange;">
+	<nav class="navbar navbar-default" role="navigation">
 	  <!-- Brand and toggle get grouped for better mobile display -->
 	  <div class="container">
 		  <div class="navbar-header">
@@ -40,17 +40,15 @@
 		    </form>
 		  </div><!-- /.navbar-collapse -->
 	  </div>
-
 	</nav>
-	<div id="content" class="container">
-		{% include "templates/includes/titlebar.html" %}
+	<div id="content">
 		{% block content %}{% endblock %}
 	</div>
 	<footer>
-		<div class="footer-baseline clearfix small" style="border-top: 2px solid green;">
-			<div clas="row">
+		<div class="container small">
+			<div class="row">
 				<div class="col-xs-6">
-					<p class="text-muted">Aam Aadmi Party</p>
+					<span class="text-muted">Aam Aadmi Party</span>
 				</div>
 				<div class="col-xs-6 text-right">
 					<span class="text-muted">{{ total_users }} users | </span>

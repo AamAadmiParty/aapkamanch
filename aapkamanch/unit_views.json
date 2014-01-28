@@ -21,14 +21,16 @@
 			"upvote": true,
 			"idx": 2
 		},
-		"add": {
-			"view": "add",
-			"template": "templates/unit_templates/base_edit.html",
-			"update_context": null,
-			"url": "/{unit}/add",
-			"label": "Add Post",
-			"icon": "icon-plus",
+		"post": {
+			"view": "post",
+			"template": "templates/unit_templates/base_post.html",
+			"update_context": "aapkamanch.templates.unit_templates.base_post.get_unit_html",
+			"url": "/{unit}/post?name={post}",
+			"label": "Post",
+			"icon": "icon-comments",
+			"upvote": true,
 			"hidden": true,
+			"no_cache": true,
 			"idx": 3
 		},
 		"edit": {
@@ -42,6 +44,16 @@
 			"no_cache": true,
 			"idx": 4
 		},
+		"add": {
+			"view": "add",
+			"template": "templates/unit_templates/base_edit.html",
+			"update_context": null,
+			"url": "/{unit}/add",
+			"label": "Add Post",
+			"icon": "icon-plus",
+			"hidden": true,
+			"idx": 5
+		},
 		"settings": {
 			"view": "settings",
 			"template": "templates/unit_templates/base_settings.html",
@@ -50,18 +62,6 @@
 			"label": "Settings",
 			"icon": "icon-cog",
 			"hidden": true,
-			"idx": 5
-		},
-		"post": {
-			"view": "post",
-			"template": "templates/unit_templates/base_post.html",
-			"update_context": "aapkamanch.templates.unit_templates.base_post.get_unit_html",
-			"url": "/{unit}/post?name={post}",
-			"label": "Post",
-			"icon": "icon-comments",
-			"upvote": true,
-			"hidden": true,
-			"no_cache": true,
 			"idx": 6
 		}
 	},
@@ -86,14 +86,16 @@
 			"icon": "icon-smile",
 			"idx": 2
 		},
-		"add": {
-			"view": "add",
-			"template": "templates/unit_templates/tasks_edit.html",
-			"update_context": null,
-			"url": "/{unit}/add",
-			"label": "Add Task",
-			"icon": "icon-plus",
+		"post": {
+			"view": "post",
+			"template": "templates/unit_templates/base_post.html",
+			"update_context": "aapkamanch.templates.unit_templates.base_post.get_unit_html",
+			"url": "/{unit}/post?name={post}",
+			"label": "Post",
+			"icon": "icon-comments",
+			"upvote": true,
 			"hidden": true,
+			"no_cache": true,
 			"idx": 3
 		},
 		"edit": {
@@ -107,6 +109,16 @@
 			"no_cache": true,
 			"idx": 4
 		},
+		"add": {
+			"view": "add",
+			"template": "templates/unit_templates/tasks_edit.html",
+			"update_context": null,
+			"url": "/{unit}/add",
+			"label": "Add Task",
+			"icon": "icon-plus",
+			"hidden": true,
+			"idx": 5
+		},
 		"settings": {
 			"view": "settings",
 			"template": "templates/unit_templates/base_settings.html",
@@ -115,18 +127,6 @@
 			"label": "Settings",
 			"icon": "icon-cog",
 			"hidden": true,
-			"idx": 5
-		},
-		"post": {
-			"view": "post",
-			"template": "templates/unit_templates/base_post.html",
-			"update_context": "aapkamanch.templates.unit_templates.base_post.get_unit_html",
-			"url": "/{unit}/post?name={post}",
-			"label": "Post",
-			"icon": "icon-comments",
-			"upvote": true,
-			"hidden": true,
-			"no_cache": true,
 			"idx": 6
 		}
 	},
@@ -150,14 +150,15 @@
 			"icon": "icon-time",
 			"idx": 2
 		},
-		"add": {
-			"view": "add",
-			"template": "templates/unit_templates/events_edit.html",
-			"update_context": null,
-			"url": "/{unit}/add",
-			"label": "Add Event",
-			"icon": "icon-plus",
+		"post": {
+			"view": "post",
+			"template": "templates/unit_templates/base_post.html",
+			"update_context": "aapkamanch.templates.unit_templates.base_post.get_unit_html",
+			"url": "/{unit}/post?name={post}",
+			"label": "Post",
+			"icon": "icon-comments",
 			"hidden": true,
+			"no_cache": true,
 			"idx": 3
 		},
 		"edit": {
@@ -171,6 +172,16 @@
 			"no_cache": true,
 			"idx": 4
 		},
+		"add": {
+			"view": "add",
+			"template": "templates/unit_templates/events_edit.html",
+			"update_context": null,
+			"url": "/{unit}/add",
+			"label": "Add Event",
+			"icon": "icon-plus",
+			"hidden": true,
+			"idx": 5
+		},
 		"settings": {
 			"view": "settings",
 			"template": "templates/unit_templates/base_settings.html",
@@ -179,17 +190,6 @@
 			"label": "Settings",
 			"icon": "icon-cog",
 			"hidden": true,
-			"idx": 5
-		},
-		"post": {
-			"view": "post",
-			"template": "templates/unit_templates/base_post.html",
-			"update_context": "aapkamanch.templates.unit_templates.base_post.get_unit_html",
-			"url": "/{unit}/post?name={post}",
-			"label": "Post",
-			"icon": "icon-comments",
-			"hidden": true,
-			"no_cache": true,
 			"idx": 6
 		}
 	}

@@ -35,6 +35,8 @@ $(function() {
 	{%- endif -%}
 	
 	app.toggle_post_editor();
+	
+	$('[data-view="post"]').removeClass("hide");
 });
 </script>
 {%- endblock -%}

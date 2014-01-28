@@ -12,8 +12,9 @@ $(function() {
 	
 	{%- if view == "edit" -%}
 	app.bind_save_post();
-	{% if post %}window.app.post = "{{ post.name }}"{% endif %}
+	{% if post %}window.app.post = "{{ post.name }}";{% endif %}
+	$('[data-view="edit"]').removeClass("hide");
 	{%- endif -%}
-})
+});
 </script>
 {%- endblock -%}

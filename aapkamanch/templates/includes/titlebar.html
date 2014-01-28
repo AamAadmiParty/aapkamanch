@@ -1,30 +1,25 @@
-<div class="titlebar">
-	<!-- <div class="titlebar-head">
-		<div class="col-xs-12 title">
-			<b class="app-title">
-				{% if public_read==False %}<i class="icon-lock"></i> {% endif %}
-				{{ "Aam Aadmi Party: " + unit_title if unit_title else title }}
-			</b>
-			<button type="button" class="btn btn-default toggle-sidebar pull-right visible-xs">Menu</button>
-		</div>
-	</div>
-	<table class="table">
-		<tr>
-			<td style="width: 32.7%; background-color: #F28300;"></td>
-			<td style="width: 67.3%; background-color: #61a220;"></td>
-		</tr>
-	</table> -->
-	{% if unit_title %}
+<div class="breadcrumb-container">
+	{% if children %}
+	<a class="pull-right visible-xs toggle-sidebar no-decoration">
+		<i class="icon-fixed-width icon-chevron-down"></i>
+	</a>
+	{% endif %}
+	{%- if unit_title -%}
 	<ul class="breadcrumb">
 		{% for parent in parents %}
 			<li><a href="/{{ parent.name|lower }}">{{ parent.unit_title }}</a></li>
 		{% endfor %}
 		<li class="active">{{ unit_title }}</li>
 	</ul>
-	{% else %}
+	{%- else -%}
 	<ul class="breadcrumb">
 			<li><a href="/">Home</a></li>
 		<li class="active">{{ title }}</li>
 	</ul>
-	{% endif %}
+	{%- endif -%}
 </div>
+{%- block unit_description -%}
+{%- if unit and unit.unit_description -%}
+<p class="lead unit-description">{{ unit.unit_description }}</p>
+{%- endif -%}
+{%- endblock -%}

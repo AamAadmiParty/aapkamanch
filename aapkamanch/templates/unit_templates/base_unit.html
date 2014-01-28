@@ -1,12 +1,17 @@
-<div class="unit-container">
+<div class="container unit-container">
 	<div class="row">
-		<div class="col-sm-10">
+		<div class="col-sm-3 col-sm-push-9">
+			{% block unit_list %}
+			<div class="unit-list-group sidebar hidden-xs">
+				{% include "templates/includes/unit_list.html" %}
+			</div>
+			{% endblock %}
+		</div>
+		<div class="col-sm-9 col-sm-pull-3 feed-col">
 			{%- block feed -%}
 			<div class="feed">
-				{%- block unit_description -%}
-				{% if unit.unit_description %}<p class="lead">{{ unit.unit_description }}</p>{% endif %}
-				{%- endblock -%}
-			
+				{% include "templates/includes/titlebar.html" %}
+				
 				{%- block unit_toolbar -%}
 				<ul class="nav nav-tabs unit-toolbar">
 					{%- for t in views -%}
@@ -25,13 +30,6 @@
 				{%- block view -%}{%- endblock -%}
 			</div>
 			{%- endblock -%}
-		</div>
-		<div class="col-sm-2 sidebar hidden-xs">
-			{% block unit_list %}
-			<div class="unit-list-group">
-				{% include "templates/includes/unit_list.html" %}
-			</div>
-			{% endblock %}
 		</div>
 	</div>
 </div>

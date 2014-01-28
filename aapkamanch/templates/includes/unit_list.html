@@ -2,19 +2,11 @@
 {%- for child in children -%}
 <div class="unit-list-group-item">
 	<a href="/{{ child.url|lower }}">
-		<div class="row">
-			<div class="col-xs-9 child-unit-title" title="{{ child.unit_title }}">
-				{{ child|get_icon }}
-				{{ child.unit_title }}
-			</div>
-			<div class="col-xs-3">
-				<div class="text-right">
-					{% if not child.public_read %}
-					<i class="icon-lock"></i>
-					{% endif %}
-				</div>
-			</div>
-		</div>
+		{{ child|get_icon }}
+		{{ child.unit_title }}
+		{% if not child.public_read %}
+		(<i class="icon-fixed-width icon-lock"></i>)
+		{% endif %}
 	</a>
 </div>
 {%- endfor -%}
