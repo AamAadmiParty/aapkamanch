@@ -5,7 +5,8 @@ from __future__ import unicode_literals
 
 import webnotes, json
 
-from aapkamanch.helpers import get_child_unit_items, get_access, get_views
+from aapkamanch.helpers import get_child_unit_items, get_access, get_views, \
+	get_private_units_html
 
 no_cache = True
 
@@ -102,3 +103,13 @@ def has_access(unit, view):
 		return access.get("write")
 	else:
 		return access.get("read")
+
+@webnotes.whitelist(allow_guest=True)	
+def fetch_content():
+	context = get_context()
+	return {
+		"content": context.get("content"),
+		"access": context.get("access"),
+		"private_units": get_private_units_html(context.get("unit").get("name"),
+			context.get("access"))
+	}

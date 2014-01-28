@@ -71,11 +71,14 @@ def get_user_details(unit, fb_access_token=None):
 		
 	out["access"] = access
 	
-	if access and access.get("read"):
-		out["private_units"] = webnotes.get_template("templates/includes/unit_list.html")\
-			.render({"children": get_child_unit_items(unit, public_read=0)})
-	
+	out["private_units"] = get_private_units_html(unit, access) or ""
+
 	return out
+	
+def get_private_units_html(unit, access):
+	if access and access.get("private_read"):
+		return webnotes.get_template("templates/includes/unit_list.html")\
+			.render({"children": get_child_unit_items(unit, public_read=0)})
 
 @webnotes.whitelist()
 def get_access(unit, profile=None):
@@ -117,14 +120,16 @@ def _get_access(unit, profile):
 		read = 1
 
 	if profile == "Guest":
-		return { "read": read, "write": 0, "admin": 0 }
+		return { "read": public_read, "write": 0, "admin": 0 }
 
+	private_read = 0
 	for perm in webnotes.conn.sql("""select 
 		up.`read`, up.`write`, up.`admin`, u.lft, u.rgt, u.name
 		from `tabUnit Profile` up, tabUnit u
 		where up.profile = %s
 			and up.parent = u.name order by lft asc""", (profile,), as_dict=True):
 		if perm.lft <= lft and perm.rgt >= rgt:
+			if not (public_read or private_read): private_read = perm.read
 			if not read: read = perm.read
 			if not write: write = perm.write
 			if not admin: admin = perm.admin
@@ -133,7 +138,7 @@ def _get_access(unit, profile):
 			if read and write and admin:
 				break
 
-	return { "read": read, "write": write, "admin": admin }
+	return { "read": read, "write": write, "admin": admin, "private_read": private_read }
 
 def get_user_image():
 	return webnotes.cache().get_value(webnotes.session.user + ":user_image", 

@@ -6,10 +6,66 @@ $(function() {
 	$('.dropdown-toggle').dropdown();
 	wn.datetime.refresh_when();
 	
-	$(".titlebar .toggle-sidebar").on("click", function() {
+	$(".toggle-sidebar").on("click", function() {
 		$(".sidebar").toggleClass("hidden-xs");
+		$(".toggle-sidebar i").toggleClass("icon-rotate-180");
 	});
+	
+	// bind push and pop state
+	app.bind_state_change()
 });
+
+app.bind_state_change = function() {
+	if(history.pushState) {
+		$(document).on("click", "#content a", function() {
+			var href = $(this).attr("href");
+			console.log(href);
+			if(href.indexOf("/")===0) {
+				// console.log("pushstate!");
+				history.pushState(null, null, href);
+				app.get_content(href);
+				return false;
+			}
+			return false;
+		});
+		
+		$(window).on("popstate", function(event) {
+			if(!event.originalEvent.state) return;
+			var data = event.originalEvent.state.data;
+			if(data) {
+				$("#content").html(data.content);
+				app.toggle_based_on_permissions(data);
+			} else {
+				history.go();
+			}
+		})
+	}
+};
+
+app.get_content = function(href) {
+	$.ajax({
+		url: href,
+		data: {
+			cmd: "aapkamanch.templates.pages.index.fetch_content"
+		},
+		statusCode: {
+			200: function(data) {
+				// for use in popstate event
+				history.replaceState({"data": data.message}, null, href);
+				
+				$("#content").html(data.message.content);
+				app.toggle_based_on_permissions(data.message);
+			}
+		}
+	}).always(function(data) {
+		if(data.responseText) {
+			data = JSON.parse(data.responseText);
+		}
+		if(data.exc) {
+			console.log(JSON.parse(data.exc).join("\n"));
+		}
+	});
+}
 
 app.setup_user = function(data) {
 	// user
@@ -27,6 +83,7 @@ app.setup_user = function(data) {
 					setTimeout(function() { window.location.reload() }, 2000);
 				}
 				app.render_authenticated_user(data.message);
+				app.toggle_based_on_permissions(data.message);
 			}
 		}
 	});
@@ -37,7 +94,9 @@ app.render_authenticated_user = function(data) {
 	$(".logged-in").toggle(true);
 	$(".full-name").html(wn.get_cookie("full_name"));
 	$(".user-picture").attr("src", data.user_image)
+};
 
+app.toggle_based_on_permissions = function(data) {
 	// hide editor / add button if no access
 	if(data.access && data.access.write) {
 		$('li[data-view="add"]').removeClass("hide");
@@ -53,7 +112,7 @@ app.render_authenticated_user = function(data) {
 	}
 	
 	app.show_cannot_post_message(data.access);
-};
+}
 
 app.setup_upvote = function() {
 	$(".post-list, .parent-post").on("click", ".upvote a", function() {
