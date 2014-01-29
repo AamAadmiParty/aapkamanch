@@ -21,6 +21,8 @@ footer {
 	}
 	.feed-col {
 		border: 1px solid #e7e7e7;
+		border-radius: 5px;
+		overflow: hidden;
 	}
 }
 
@@ -64,7 +66,7 @@ footer {
 }
 
 .navbar {
-	padding: 5px 0px; 
+	padding: 10px 0px; 
 	margin-bottom: -2px;
 }
 

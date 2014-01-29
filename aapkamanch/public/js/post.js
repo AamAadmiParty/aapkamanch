@@ -82,7 +82,12 @@ app._update_post = function(btn, cmd) {
 		}, values),
 		statusCode: {
 			200: function(data) {
-				window.location.href = "/" + app.get_unit().toLowerCase() + "/post?name=" + data.message;
+				var url = "/" + app.get_unit().toLowerCase() + "/post?name=" + data.message;
+				if(history.pushState) {
+					app.get_content(url);
+				} else {
+					window.location.href = url;
+				}
 			},
 			403: function(xhr) {
 				wn.msgprint("Not Permitted");

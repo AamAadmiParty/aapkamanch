@@ -19,10 +19,8 @@ app.bind_state_change = function() {
 	if(history.pushState) {
 		$(document).on("click", "#content a", function() {
 			var href = $(this).attr("href");
-			console.log(href);
 			if(href.indexOf("/")===0) {
 				// console.log("pushstate!");
-				history.pushState(null, null, href);
 				app.get_content(href);
 				return false;
 			}
@@ -43,6 +41,7 @@ app.bind_state_change = function() {
 };
 
 app.get_content = function(href) {
+	history.pushState(null, null, href);
 	$.ajax({
 		url: href,
 		data: {
