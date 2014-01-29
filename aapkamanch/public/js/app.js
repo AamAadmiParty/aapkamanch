@@ -17,6 +17,10 @@ $(function() {
 
 app.bind_state_change = function() {
 	if(history.pushState) {
+		// hack for chrome's onload popstate call
+		window.popped = ('state' in window.history && window.history.state !== null);
+		window.initial_url = location.href;
+		
 		$(document).on("click", "#content a", function() {
 			var href = $(this).attr("href");
 			if(href.indexOf("/")===0) {
@@ -27,20 +31,30 @@ app.bind_state_change = function() {
 		});
 		
 		$(window).on("popstate", function(event) {
-			if(!event.originalEvent.state) return;
-			var data = event.originalEvent.state.data;
-			if(data) {
-				$("#content").html(data.content);
-				app.toggle_based_on_permissions(data);
+			// hack for chrome's onload popstate call
+			var initial_pop = !window.popped && location.href==window.initial_url;
+			window.popped = true;
+			if(initial_pop) return;
+			
+			var state = event.originalEvent.state;
+			if(state && state.data) {
+				$("#content").html(state.data.content);
+				app.toggle_based_on_permissions(state.data);
 			} else {
-				history.go();
+				app.get_content(location.href, true);
 			}
-		})
+		});
+		
 	}
 };
 
-app.get_content = function(href) {
-	history.pushState(null, null, href);
+app.get_content = function(href, replace) {
+	if(replace) {
+		history.replaceState(null, null, href);
+	} else {
+		history.pushState(null, null, href);
+	}
+	
 	$.ajax({
 		url: href,
 		data: {
