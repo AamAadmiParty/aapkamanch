@@ -19,9 +19,12 @@ def get_unit_html(context):
 			"post_list_html": get_child_posts_html(post, context.get("view")),
 			"parent_post": post.name
 		}
-	
-	post_context = webnotes.cache().get_value("post_context:{}".format(post.name), 
-		lambda: _get_post_context(post, context))
+		
+	if webnotes.conf.get("disable_website_cache"):
+		post_context = _get_post_context(post, context)
+	else:
+		post_context = webnotes.cache().get_value("post_context:{}".format(post.name), 
+			lambda: _get_post_context(post, context))
 	
 	context.update(post_context)
 	return context

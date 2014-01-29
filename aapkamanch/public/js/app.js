@@ -24,7 +24,6 @@ app.bind_state_change = function() {
 				app.get_content(href);
 				return false;
 			}
-			return false;
 		});
 		
 		$(window).on("popstate", function(event) {
@@ -111,6 +110,8 @@ app.toggle_based_on_permissions = function(data) {
 	}
 	
 	app.show_cannot_post_message(data.access);
+	
+	wn.datetime.refresh_when();
 }
 
 app.setup_upvote = function() {

@@ -151,8 +151,8 @@ footer {
 	border-radius: 4px;
 }
 
-.post-options {
-	margin-top: 12px;
+.post .media-heading {
+	margin-bottom: 12px;
 }
 
 .parent-post .post {

@@ -4,13 +4,15 @@
 		<img class="media-object post-avatar" src="{{ post.user_image|scrub_url }}">
 	</a>
 	<div class="media-body">
+		{%- if not post.parent_post -%}
 		<h4 class="media-heading" itemprop="headline">
-			{%- if not post.parent_post and view != "post" -%}
+			{%- if view != "post" -%}
 			<a class="no-decoration" href="/{{ post.unit }}/post?name={{ post.name }}">{{ post.title }}</a>
 			{%- else -%}
 			{{ post.title }}
 			{%- endif -%}
 		</h4>
+		{%- endif -%}
 		<ul class="list-inline small text-muted post-options">
 			{% if view_options and view_options.upvote %}<li class="upvote">
 				<a><span class="upvote-count {% if not post.upvotes %}hide{% endif %}">{{ post.upvotes }}</span>
