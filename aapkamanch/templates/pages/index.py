@@ -8,7 +8,7 @@ import webnotes, json
 from aapkamanch.helpers import get_child_unit_items, get_access, get_views, \
 	get_private_units_html
 
-no_cache = True
+no_cache = 1
 
 def get_context():
 	view = None

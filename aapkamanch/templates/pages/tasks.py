@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 import webnotes
 
 no_cache = 1
+no_sitemap = 1
 
 def get_context():
 	tasks = get_task_list()

@@ -148,6 +148,7 @@ def get_fb_userid(fb_access_token):
 	import requests
 	response = requests.get("https://graph.facebook.com/me?access_token=" + fb_access_token)
 	if response.status_code==200:
+		print response.json()
 		return response.json().get("id")
 	else:
 		return webnotes.AuthenticationError
