@@ -4,12 +4,6 @@ from webnotes.website import rebuild_config
 from webnotes.webutils import cleanup_page_name
 
 def execute():
-	webnotes.reload_doc("website", "doctype", "website_sitemap")
-	webnotes.reload_doc("website", "doctype", "website_sitemap_permission")
-	webnotes.reload_doc("website", "doctype", "website_group")
-	webnotes.reload_doc("website", "doctype", "post")
-	webnotes.reload_doc("website", "doctype", "user_vote")
-	
 	# move fb data from custom to profile fields
 	webnotes.conn.sql("""update `tabProfile` set location=fb_location, bio=fb_bio""")
 	
