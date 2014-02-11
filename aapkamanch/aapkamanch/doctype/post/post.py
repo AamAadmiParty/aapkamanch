@@ -8,7 +8,6 @@ from __future__ import unicode_literals
 import webnotes
 from webnotes.utils import get_fullname
 from webnotes.utils.email_lib.bulk import send
-from webnotes.utils.email_lib import sendmail
 
 from aapkamanch.helpers import get_access
 from aapkamanch.post import clear_post_cache
@@ -48,7 +47,7 @@ class DocType:
 			and webnotes.session.user != self.doc.assigned_to:
 			
 			# send assignment email
-			sendmail(recipients=[self.doc.assigned_to], 
+			webnotes.sendmail(recipients=[self.doc.assigned_to], 
 				subject="You have been assigned this Task by {}".format(get_fullname(self.doc.modified_by)),
 				msg=self.get_reply_email_message(self.doc.name, get_fullname(self.doc.owner)))
 		
