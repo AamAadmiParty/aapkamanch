@@ -14,7 +14,7 @@ def import_groups():
 	
 	with open(webnotes.get_pymodule_path("aapkamanch", "data", "groups.json")) as f:
 		data = json.loads(f.read())
-
+		
 	def create_groups(group_name, group_title, parent_website_sitemap):
 		group = webnotes.bean({
 			"doctype":"Website Group", 
