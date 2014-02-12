@@ -1,0 +1,33 @@
+[
+ {
+  "__islocal": 1, 
+  "_comments": null, 
+  "_user_tags": null, 
+  "add_css": "body {\n  line-height: 1.6;\n}\n\n.page-header {\n  background-color: #61A220;\n}\n\n.page-header h2 {\n  color: #fff !important;\n}", 
+  "background_color": null, 
+  "background_image": null, 
+  "custom_css": null, 
+  "docstatus": 0, 
+  "doctype": "Style Settings", 
+  "font": "", 
+  "font_size": "15px", 
+  "google_web_font_for_heading": null, 
+  "google_web_font_for_text": null, 
+  "heading_font": "Arial", 
+  "heading_text_as": null, 
+  "idx": null, 
+  "modified_by": "Administrator", 
+  "name": "Style Settings", 
+  "owner": "", 
+  "page_background": null, 
+  "page_border": 0, 
+  "page_headings": "525252", 
+  "page_links": "000000", 
+  "page_text": "525252", 
+  "parent": null, 
+  "parentfield": null, 
+  "parenttype": null, 
+  "top_bar_background": null, 
+  "top_bar_foreground": "524D4D"
+ }
+]
