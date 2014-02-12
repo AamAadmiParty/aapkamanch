@@ -1,4 +1,4 @@
-### Baseless doubts & assumptions
+# Baseless Doubts & Assumptions
 
 When the proposals are mooted for giving power directly to the people then detractors come up with a lot of doubts. We are making an attempt to assuage those fears and phobias over here.
 

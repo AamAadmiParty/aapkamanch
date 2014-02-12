@@ -1,4 +1,4 @@
-### Self Governance in cities is essential too
+# Self Governance in Cities
 
 It is defined in the constitution that Gram sabha is the common assembly of people living in a village.  In spite of the fact that constitution recognizes the gram sabha yet the sabha has been vested with no power. Under self governance we believe that Government funds, government servants, government laws, actions that go towards making laws and natural resources should come under the control of people through the gram sabhas. Unfortunately any social set up of people living in the cities has no constitutional recognition or legal legitimacy. For this separate law will have to be drafted.
 

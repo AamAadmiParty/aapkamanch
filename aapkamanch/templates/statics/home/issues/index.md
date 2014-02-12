@@ -1,1 +1,8 @@
-Core Issues of Aam Aadmi Party
+### Why this Party?
+
+For the past two years, millions of people came out on the streets to fight corruption and demand JanLokpal. This two year anti-corruption movement has exposed all our political parties and has made us all realizethatwecannotexpect anypoliticalpartytoworkforacorruption free India.
+
+For two years we tried all available avenues. We negotiated for our cause with the government, prayed to all parties, begged in front of them, sat on dharna, organized protests and sat on indefinite fasts thrice; but nobody listened, neither the parties nor the leaders. They went on fooling the people of this country.
+We realize now that begging will not work. It is the time to uproot these parties and change the whole system. We are not saying that every single politician is corrupt nor are we saying that only we are honest and only we will run the Government honestly if we come to power. We are saying that the whole political system of the Government needs a complete overhaul so that the key of the system rests only with the public. Hence we are not planning to enjoy the power if we get it, but to tear down the power conclaves and pass on the power directly to public.
+
+Millions of martyrs including Mahatma Gandhi, Netaji Subhash Chandra Bose, Bhagat Singh, Afshaq Ullah, Chandra Shekhar Azad, Ram Prasad Bismil, Mangal Pandey, sacrificed their lives to free the nation. Did they sacrifice their lives so that our own people should plunder the country instead of the British? These gallant freedom fighters envisaged an India that is described in the preamble of our Constitution.

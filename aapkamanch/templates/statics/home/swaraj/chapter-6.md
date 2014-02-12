@@ -1,4 +1,4 @@
-### Citizens are the masters
+# Citizens are the Masters
 
 We had adopted the model of democracy after the independence in 1947, Government by the people, of the people and for the people.
 

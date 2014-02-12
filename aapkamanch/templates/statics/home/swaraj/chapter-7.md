@@ -1,4 +1,4 @@
-### Internal Islands of self-governance
+# Internal Islands of Self-Governance
 
 In  ancient  India,  people  used  to  take  decision on issues  of  governance.  In modern times  same  is happening in some countries which are known to a lot of people. However, there are examples of such a system in India, too which people are not aware off. Everyone thinks that it is not possible in India. But this assumption is wrong. In many areas of our country, by the efforts of local leadership, certain experiments in democracy have been found to be successful. These experiments brought about valuable change in the local administration. We look into some of them.
 

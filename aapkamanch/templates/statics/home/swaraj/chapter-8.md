@@ -1,4 +1,4 @@
-### When the citizens take decisions
+# When Citizens take Decisions
 
 Let us see if self governance is introduced and the power is given in the hands of people then how doors would open of opportunities for progress in various fields. In fact there would be possibilities of progress in every field but we are taking only few examples below.
 

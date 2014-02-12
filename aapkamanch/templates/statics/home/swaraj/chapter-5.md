@@ -1,4 +1,4 @@
-### Some examples of other countries
+# Some Examples of Other Countries
 
 We have studied some democratic models of establishments that are prevalent in other countries like
 United States of America, Brazil and Switzerland.

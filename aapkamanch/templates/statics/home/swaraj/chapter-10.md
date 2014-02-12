@@ -1,4 +1,4 @@
-### Law needed for self governance of villages
+# Law Needed for Self Governance of Villages
 
 For people to take decisions under the aegis of gram sabhas following changes will have to be brought about in our legislation so that people will have control over their fate and their lives. They would then be responsible for their own progress.
 

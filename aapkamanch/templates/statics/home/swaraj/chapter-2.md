@@ -1,4 +1,4 @@
-### Citizens have no control
+# Citizens Have No Control
 
 Root problem is the politics of electing our representatives once in five years who are not accountable to the people. The elected representatives once sent to the parliament are law unto themselves. People have no control over the same people in whom they had reposed their trust.
 

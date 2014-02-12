@@ -1,4 +1,4 @@
-### Times gone by
+# Times Gone By
 
 Ability to take decision by the common man is doubted by many. It is argued that people would fight amongst each other and would never be able to come to a decision.
 

@@ -1,4 +1,4 @@
-### Please connect with your RWA or Gram Sabha
+# Connect with your RWA or Gram Sabha
 
 Whenever a proposal is mooted to give direct power to people through RWA’s and gram sabha, then government argues that people will fight with each other. That people are divided in the name of religion and in the name of caste and, therefore, they can not be given power. History is proof that whenever  people have  demanded  independence,  then  rulers  have  taken  the  refuge  of  “division between groups” as the reason to deny power to the people. The English used division as a tool to rule the country. Instead of bridging the differences amongst people, rulers tried to widen the rift between them and then use this as an excuse to deny the power. Our leaders, the political parties and the government officers of our country are playing the same dirty game of religion and caste which drives a wedge of separation between the people.
 

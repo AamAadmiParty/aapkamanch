@@ -1,4 +1,4 @@
-###Present anomalies of Panchayati Raj
+# Present Anomalies of Panchayati Raj
 
 There is nothing new, the people argue that the panchayats exists even now. Through the panchayati raj the villagers are connected with the government. The anomaly is that after independence in the name of panchayati raj the kind of set up that is created fosters corruption because it gives the rights and power to the political leaders, government officers instead of people.
 

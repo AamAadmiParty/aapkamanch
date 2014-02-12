@@ -1,0 +1,9 @@
+Government schools are in pitiable condition today. There are neither good teachers nor good education. To get admission in a private school, you have to pay a large donation and a fat fees. It has become difficult for a common man to provide good education to his child. How can a nation develop if the children are denied good education? Government schools will be upgraded to the standard of good private schools. Education will be free in these schools for all—rich or poor.
+
+Government hospitals are in equally bad condition. Previously there used to be atleast free treatment and medication. But now even the Government hospitals are charging big fees. A poor man can go bankrupt if someone falls sick in the family. Many farmers are committing suicide due to the expenses incurred in sickness. Government hospitals will be made at par with private hospitals, and they will provide free treatment and medication.
+
+Our aim is not to close down private schools and hospitals, but to upgrade Government schools and hospitals to world standards.
+
+Bur how will these be financed? At first glance it seems that even today Government is spending a lot of money on education and health, but all of it gets stolen. Benefit hardly reaches to the public. If we are able to stop corruption then enough funds would be available for education and health for all. Still, we are constituting a team of experts from all over the country to study the matter and estimate how much money will be needed and how can it be arranged.
+
+All the resources and finances of Local Government schools and hospitals will be directly under Gram Sabha and Mohalla Sabhas making them directly answerable to the local citizens. Hence if the doctor or the teacher does not work properly, Local Gram or Mohalla Sabha would be able to take action against them.
