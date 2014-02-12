@@ -42,7 +42,7 @@ To make this website + forum, we built a new web application. It seems an overki
 
 ---
 
-### Whats Next
+### What's Next
 
 We did our bit, if you like what we did, tell Aam Aadmi Party Leaders to make this the official website of the Aam Aadmi Party.
 
@@ -50,3 +50,9 @@ Thanks!
 
 [https://github.com/AamAadmiParty/aapkamanch](https://github.com/AamAadmiParty/aapkamanch)
 
+---
+
+### Appeal AAP To Read This Page
+
+<a href="https://twitter.com/intent/tweet?url=http%3A//aapkamanch.org/why&text=.%40AamAadmiParty%20%40ArvindKejriwal%20%40AapYogendra%20%40msisodia%20-%20Aam%20Aadmi%20Party%20Deserves%20A%20Better%20Website"
+	target="_blank">Tweet "Aam Aadmi Party Deserves A Better Website"</a>

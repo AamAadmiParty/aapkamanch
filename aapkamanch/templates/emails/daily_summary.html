@@ -1,0 +1,84 @@
+<table>
+	{%- if events -%}
+	<tr>
+		<td>
+			<h2>Events on {{ formatted_event_date }}</h2>
+			<table>
+				{%- for post in events -%}
+				<tr class="padding">
+					<td class="padding left-padding" style="vertical-align: top; border-top: 1px solid #f0f0f0;">
+						<p><b><a class="no-decoration"
+							href="{{ post.pathname }}?view=post&name={{ post.name }}" target="_blank">
+							{{ post.title }}</a></b>
+							<span class="text-muted">{{ post.event_display }}</span>
+						</p>
+						<p>{{ post.content }}</p>
+						{%- if post.picture_url -%}
+						<p><img src="{{ post.picture_url }}" /></p>
+						{%- endif -%}
+					</td>
+				</tr>
+				{%- endfor -%}
+			</table>
+		</td>
+	</tr>
+	{%- endif -%}
+	
+	{%- if posts -%}
+	<tr>
+		<td>
+			<h2>Popular Posts</h2>
+			<table>
+				{%- for post in posts -%}
+				<tr class="padding">
+					<td class="padding left-padding" style="vertical-align: top; border-top: 1px solid #f0f0f0;">
+						<table>
+							<tr>
+								<td style="width: 50px; vertical-align: top;"><img src="{{ post.user_image }}" /></td>
+								<td class="left-padding" style="vertical-align: top;">
+									<p><a class="no-decoration"
+										href="{{ post.pathname }}?view=post&name={{ post.name }}" target="_blank">
+										<b>{{ post.title }}</b></a></p>
+									<p class="small text-muted">
+										Posted by {{ post.first_name or "" }} {{ post.last_name or "" }}
+									</p>
+									<ul class="breadcrumb small text-muted">
+										{%- if post.parents -%}
+										{% for parent in post.parents %}
+										<li>{{ parent.group_title }}</li>
+										<li>/</li>
+										{% endfor %}
+										{%- endif -%}
+										<li>{{ post.group_title }}</li>
+									</ul>
+								</td>
+							</tr>
+						</table>
+						<p>{{ post.content|markdown }}</p>
+						{%- if post.picture_url -%}
+						<p><img src="{{ post.picture_url }}" /></p>
+						{%- endif -%}
+						{% if post.event_display %}
+						<p class="text-muted">Event: {{ post.event_display }}</p>
+						{% endif %}
+						<p class="small">
+							{% if "post_reply_count" in post %}
+							<a href="{{ post.pathname }}?view=post&name={{ post.name }}" class="text-muted">
+								{% if not post.post_reply_count -%}
+								No Replies Yet
+								{% elif post.post_reply_count == 1 %}
+								{{ post.post_reply_count }} Reply
+								{% else %}
+								{{ post.post_reply_count }} Replies
+								{%- endif %}
+							</a>
+							{% endif %}
+						</p>
+					</td>
+				</tr>
+				{%- endfor -%}
+			</table>
+		</td>
+	</tr>
+	{%- endif -%}
+</table>

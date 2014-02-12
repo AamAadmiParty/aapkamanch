@@ -2,7 +2,9 @@
 
 <img src="/assets/aapkamanch/img/arvind-kejriwal.jpg" class="img-responsive" style="margin-bottom: 15px;">
 
-<script>$('.page-header h2').html("Join The Revolution");$("[data-html-block='sidebar']").html('');</script>
+<script>
+	$('.page-header h2').html("Join The Revolution");
+</script>
 
 The people's anti-corruption movement has exposed the ugly and greedy face of our politicians. No political party in India today works for the common man's needs. 
 
