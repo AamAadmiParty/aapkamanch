@@ -8,11 +8,11 @@ def execute():
 	webnotes.conn.sql("""update `tabProfile` set location=fb_location, bio=fb_bio""")
 	
 	# rebuild website sitemap config
-	rebuild_config()
+	# rebuild_config()
 	
 	# move unit data to website group and unit profile to website sitemap permission
-	for unit in webnotes.conn.sql_list("""select name from `tabUnit` order by lft"""):
-		migrate_unit_to_website_group(unit)
+	# for unit in webnotes.conn.sql_list("""select name from `tabUnit` order by lft"""):
+	# 	migrate_unit_to_website_group(unit)
 		
 	webnotes.delete_doc("DocType", "Unit")
 	webnotes.delete_doc("DocType", "Unit Profile")
