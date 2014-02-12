@@ -15,7 +15,7 @@ after_install = aapkamanch.utils.after_install
 update_website_context = aapkamanch.helpers.update_website_context
 scheduler_event = daily:aapkamanch.summary.send_daily_summary
 brand_html = Aam Aadmi Party
-home_page = home
+home_page = index
 
 # bean
 
