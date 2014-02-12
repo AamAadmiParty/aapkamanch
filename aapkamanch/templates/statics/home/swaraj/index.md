@@ -1,4 +1,6 @@
-60 years ago India's founding forefathers had a dream for all of us - a dream of an equal and just society where every man, woman and child has the right and privilege to lead a fulfilling and nurturing life, free from all kinds of oppression. This was a dream and a hope over 60 years ago. The Constituion of India and specifically the Preamble to the Constitution of India, defines a clear roadmap for the future of our country wherein the common man and woman hold the power to decide their destiny.
+<p class="lead">60 years ago India's founding forefathers had a dream for all of us - a dream of an equal and just society where every man, woman and child has the right and privilege to lead a fulfilling and nurturing life, free from all kinds of oppression.</p>
+
+This was a dream and a hope over 60 years ago. The Constituion of India and specifically the Preamble to the Constitution of India, defines a clear roadmap for the future of our country wherein the common man and woman hold the power to decide their destiny.
 
 Today nobody can say that India has achieved this dream. Before independence the common man was a slave to foreign powers; today he has become a slave of the political system of our country. There is a new master in our country today - the political Neta. This Neta, who asks for our votes during elections, and then forgets us after he wins, this political entity decides the common man's destiny.
 
