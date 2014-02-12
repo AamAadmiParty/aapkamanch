@@ -6,7 +6,7 @@ Let us see if self governance is introduced and the power is given in the hands 
 
 Today the schools are in bad shape. Teaching is not proper; the children do not have desks to sit, water to drink, fans and urinals are not available. Whenever complaints are sent to the government then no action is taken on those complaints.
 
-If government decides to send free fund then people can, in a gram Sabha, decide what essential things are to be provided to the children in school. They will be able to take direct decisions. They would not be obliged to seek some officer’s consent or from a politician or will not be obliged to seek permission from the state government.
+If government decides to send free fund then people can, in a gram Sabha, decide what essential things are to be provided to the children in school. They will be able to take direct decisions. They would not be obliged to seek some officer's consent or from a politician or will not be obliged to seek permission from the state government.
 
 In the same way  all schools have shortage of teachers. One teacher teaches 200 to 300 children. Sometimes only one teacher teaches children of at least three or four classes at the same time. This type of education is ineffective and wasteful for children. In the name of education a mockery is going on. If power is given to people then they would look at the problem of shortage of teachers in gram sabhas meeting and employ more teachers that are needed. They would not be required to write to state government to create more posts, fill more vacancies and employ staff. They will decide this issue in the gram Sabha meetings and employ themselves as many teachers as may be needed.
 
@@ -24,13 +24,13 @@ By giving power to the gram sabhas there would be direct effect on the naxal mov
 
 If people had the power to take decisions regarding their own village then they would not have joined the Naxal ranks or would not have supported the Naxals. Without the base and without the support of people Naxals could not have grown.
 
-Suggestion: It was people’s voice and their genuine demands that were suppressed. It was the state of helplessness and anger that led the people in the willing arms of armed Naxals. If the law had given them the power to decide what they wanted then they would have never joined the Naxals. This is the kind of base and the support of the people on which thrives Naxalism.
+Suggestion: It was people's voice and their genuine demands that were suppressed. It was the state of helplessness and anger that led the people in the willing arms of armed Naxals. If the law had given them the power to decide what they wanted then they would have never joined the Naxals. This is the kind of base and the support of the people on which thrives Naxalism.
 
 #### Success in containing Alcoholism
 
 In many wards of Delhi, meetings of Welfare Associations are taking place from last one year in various localities. The residents, local leaders and government officials in the association meetings deliberate on the issues of development of their own areas. Sonia Vihar is one such locality. In a meeting of the Association some youngsters demanded that the Liquor shop was far away from the colony and, therefore, a shop should be opened nearby. There were a lot of elders, present in the meeting, who were regular drinkers of alcohol but projected an image of being saints, started a discourse on the vices of drinking alcohol and advised that such a move was harmful for the local residents.  In this open forum no one supported the motion to open the liquor shop and so the proposal to open the shop was shot down. It is very difficult for anyone to get a proposal which is not in the interest of the community to be passed in an open forum.
 
-In today’s laws the permission to open a shop of liquor is to be taken from the government officials or local leaders. No one ever bothers to ask the people if they like it or not. Political leaders and the government officials accept bribes and give permission to open the shops. If a law is enacted that no liquor shop can be opened without the consent of the gram sabhas or the local resident association then it will become very difficult to open the liquor shops. Such a law will be a great step in curbing the prevalence of alcoholism in the society.
+In today's laws the permission to open a shop of liquor is to be taken from the government officials or local leaders. No one ever bothers to ask the people if they like it or not. Political leaders and the government officials accept bribes and give permission to open the shops. If a law is enacted that no liquor shop can be opened without the consent of the gram sabhas or the local resident association then it will become very difficult to open the liquor shops. Such a law will be a great step in curbing the prevalence of alcoholism in the society.
 
 #### Freedom from poverty, hunger and unemployment
 

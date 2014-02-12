@@ -1,0 +1,3 @@
+<div class="leader-image leader-image-container" style="background-image: url(/assets/aapkamanch/img/leaders/prof-rakesh-sinha.jpeg)"></div>
+
+He is Ceramic Engineer by profession. After having worked in TATA at Raurkela, he has taught at prestigious institutions like I.I.T. and B.H.U.. Professor Sinha has been founder member of "Samta" organisation. Known as a social and political thinker, Prof. Sinha has edited "Varta" a current affairs magazine.

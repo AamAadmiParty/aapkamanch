@@ -91,7 +91,7 @@ Each District Executive shall organize and coordinate the activities of the Part
 1. In addition, the District Executive will have one representative from each block of the District as decided by that Block Council.
 1. If the Coordinator of a Primary/Block Unit is elected to the District Executive, he/she shall resign as the Coordinator of the concerned Primary/Block Unit.
 1. The District Executive may co-opt upto 5 members in order to give fair representation to disadvantaged social groups, such as SC, ST, Backward Classes and Minorities. If the co-opted members are not already Active members of the Party, they shall be deemed to be Active Members of the Party as soon as they are co-opted and shall have all the rights of elected members of the Executive.
-1. The District Executive may, through consensus, invite anyone from within or outside the Party to attend its meetings as a ‘Special Invitee’ for one or more meetings. However, Special Invitees shall not enjoy any voting rights.
+1. The District Executive may, through consensus, invite anyone from within or outside the Party to attend its meetings as a 'Special Invitee' for one or more meetings. However, Special Invitees shall not enjoy any voting rights.
 1. The members referred to in sub-clause (i) above shall elect one person from amongst themselves as the District Coordinator.
 1. All elected members of the District Executive shall be available for the Party work on regular basis.
  
@@ -135,7 +135,7 @@ Composition of the State Executive
 1. In addition, the State Executive will have one representative from each District as decided by that District Executive.
 1. If the Coordinator of any Unit is elected to the State Executive, he/she shall resign as the Coordinator of the concerned District.
 1. The State Executive may co-opt up to 5 members in order to give fair representation to disadvantaged social groups, such as SC, ST, Back-Ward Classes and Minorities. If the co-opted members are not already Active members of the Party, they shall be deemed to be Active Members of the Party as soon as they are co-opted and shall have all the rights of elected members of the Executive.
-1. The State Executive may, through consensus, invite anyone from within or outside the Party to attend its meetings as a ‘Special Invitee’ for one or more meetings. However, Special Invitees shall not enjoy any voting rights.
+1. The State Executive may, through consensus, invite anyone from within or outside the Party to attend its meetings as a 'Special Invitee' for one or more meetings. However, Special Invitees shall not enjoy any voting rights.
 1. The members referred to in sub-clause (i) above shall elect one person from amongst themselves as the State Coordinator.
 1. All elected members of the State Executive shall be available for the Party work on regular basis.
  
@@ -184,7 +184,7 @@ The National Executive would be the highest executive body of the Party. It shal
 1. In addition, the National Executive will have one representative from each State as decided by that State Executive.
 1. If the Coordinator of any Unit is elected to the National Executive, he/she shall resign as the Coordinator of the concerned Unit.
 1. The National Executive may co-opt upto 5 members in order to give fair representation to disadvantaged social groups, such as SC, ST, Back-Ward Classes and Minorities. If the co-opted members are not already Active members of the Party, they shall be deemed to be Active Members of the Party as soon as they are co-opted and shall have all the rights of elected members of the Executive.
-1. The National Executive may, through consensus, invite anyone from within or outside the Party to attend its meetings as a ‘Special Invitee’ for one or more meetings. However, Special Invitees shall not enjoy any voting rights.
+1. The National Executive may, through consensus, invite anyone from within or outside the Party to attend its meetings as a 'Special Invitee' for one or more meetings. However, Special Invitees shall not enjoy any voting rights.
 1. The members referred to in sub-clause (i) above shall elect one person from amongst themselves as the National Coordinator.
 1. All elected members of the National Executive shall be available for the Party work on regular basis.
  

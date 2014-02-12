@@ -6,15 +6,15 @@ It is defined in the constitution that Gram sabha is the common assembly of peop
 
 This is true that Resident welfare Associations (RWA) has not been legally recognized but at many a places people have taken initiative and formed associations. It would be worthwhile to high light the initiative in Delhi. For a long time in certain areas of East Delhi, under the initiation of Swaraj movement, local assemblies are being organized. The people are taking decisions in local matters of the government. Government officials and political leaders are getting those works implemented. This commendable work is being carried out in Trilokpuri and Sundarnagri ward of NDMC. Each ward has been divided in ten localities. Each locality meets once in one or two months.
 
-In these assemblies of people, under the aegis of self governance movement, officials of Municipal Corporations and representative of people join hands in the proceedings. How and where the money of corporation is to be spent is decided by the assembly of the people. Before this all these decisions were taken by few government officers and political leaders in “closed rooms”.  But today the situation is such that any member of the assembly can raise his voice against problems related to water, electricity, roads, etc. His demand is noted by the government officers and councilors, present in the meeting, who get the funds released for the same. In case the list of demands is long and adequate funds are not available then in the same meetings the priority of works is decided by the votes of the people, on the basis of which the work would be carried out.
+In these assemblies of people, under the aegis of self governance movement, officials of Municipal Corporations and representative of people join hands in the proceedings. How and where the money of corporation is to be spent is decided by the assembly of the people. Before this all these decisions were taken by few government officers and political leaders in "closed rooms".  But today the situation is such that any member of the assembly can raise his voice against problems related to water, electricity, roads, etc. His demand is noted by the government officers and councilors, present in the meeting, who get the funds released for the same. In case the list of demands is long and adequate funds are not available then in the same meetings the priority of works is decided by the votes of the people, on the basis of which the work would be carried out.
 
 The councilors of Sundarnagari and Trilokpuri have already announced that the payment against the work carried out in their area would be made to the contractors only when local body expresses its satisfaction with the quality of work. This decision has improved the quality of work carried out in their areas.    There  are  various  social  welfare  schemes  like  pension  for  the  old,  physically  challenged individuals and pension for widows. List for such residents is made in an open assembly. People are transparent and discuss among themselves as to who is the poorest and who should get benefit of these schemes first. Earlier this benefit used to accrue to near dears of the councilors. The governor of Delhi has congratulated the councilors who were conducting these types of meetings. He directed the local police officers to be present in such meetings. He also directed the commissioner of corporation to conduct such meetings in all areas of Delhi.
 
 #### Steps by the Central Government
 
-There is a wide spread demand in Delhi for giving legal recognition to residents welfare associations. A draft of  “Model Nagar Raj Bill” has been sent to all state governments by the central government last year in which it was requested that they should make necessary amendments, using their intellectual discretion, and pass the bill in their Vidhan Sabhas. This step is a big event of the central government. This is for the first time that resident welfare associations are being recognized as a unit of a city. But the sad part is that in draft of the central government, RWA have not been vested with real power.
+There is a wide spread demand in Delhi for giving legal recognition to residents welfare associations. A draft of  "Model Nagar Raj Bill" has been sent to all state governments by the central government last year in which it was requested that they should make necessary amendments, using their intellectual discretion, and pass the bill in their Vidhan Sabhas. This step is a big event of the central government. This is for the first time that resident welfare associations are being recognized as a unit of a city. But the sad part is that in draft of the central government, RWA have not been vested with real power.
 
-Civil society members have rejected the current draft of Local government bill. Many prominent citizens like Mr. Prashant Bhushan, Lawyer of Supreme Court, Social worker Mr. Anna Hazare, Former Chief Secretary Mr. S. C. Bahar, have come up with a new draft for the Local government bill. Let us look at the prominent provisions of the “Local government bill” which is being demanded by the members of the civil society.
+Civil society members have rejected the current draft of Local government bill. Many prominent citizens like Mr. Prashant Bhushan, Lawyer of Supreme Court, Social worker Mr. Anna Hazare, Former Chief Secretary Mr. S. C. Bahar, have come up with a new draft for the Local government bill. Let us look at the prominent provisions of the "Local government bill" which is being demanded by the members of the civil society.
 
 ##### Salient Provisions of the proposed Law
 
@@ -29,9 +29,9 @@ d. Management of all matters related to a locality should be carried out by the 
 Actions should be taken by the Association on all related matters of the ward by voice vote
 and mutual consent of the members of the ward.
 
-e. Meetings of the Locality Association should be headed by a member of the locality. He should be the conduit for communication between the Locality Association and the ward committee. It will be mandatory for him to accept all decisions of the Association. He cannot over look and by pass the Locality’s Association and takes independent decisions.
+e. Meetings of the Locality Association should be headed by a member of the locality. He should be the conduit for communication between the Locality Association and the ward committee. It will be mandatory for him to accept all decisions of the Association. He cannot over look and by pass the Locality's Association and takes independent decisions.
 
-f. All decisions should be taken in the open house meeting of the Locality’s Association on
+f. All decisions should be taken in the open house meeting of the Locality's Association on
 monthly  basis.  If  any  decision  has  been  taken  elsewhere  then  the  acceptance  of  that decision will have to be taken in the open meeting of the Association.
 
 ##### Economic Control
@@ -40,12 +40,12 @@ a. Ward committee must have independent revenue. Ward committees should be empow
 
 b. Ward   committees   should   get   independent   funds   for   development   from   Municipal corporation, state and central government, besides the tax that they collect independently from their ward.
 
-c. What type of development work and where it should be carried out would be decided by the locality’s Association.
+c. What type of development work and where it should be carried out would be decided by the locality's Association.
 
-d. Unless the completion certificate is provided by the Locality’s Association, the contractor
+d. Unless the completion certificate is provided by the Locality's Association, the contractor
 who has carried out the work should not be paid.
 
-e. All decisions should be taken collectively by Locality’s Association in the meetings of the Association only. The elected members of the Association and the local government’s officer’s roles are limited to implementation of the decisions.
+e. All decisions should be taken collectively by Locality's Association in the meetings of the Association only. The elected members of the Association and the local government's officer's roles are limited to implementation of the decisions.
 
 f. If representatives of an Association or ward members do not abide by the directions given by the local Association then the local Association must have the right to recall their representatives.
 

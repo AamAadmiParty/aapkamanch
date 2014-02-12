@@ -1,1 +1,3 @@
+<div class="leader-image leader-image-container" style="background-image: url(/assets/aapkamanch/img/leaders/prashant-bhushan.jpeg)"></div>
+
 He is lawyer by profession and his image is that of a crusader for social causes. He has given voice to exploited section of society through his Public Interest Litigations (PIL) and exposed the corrupt. He has expertise in PIL related to issues of Human Rights, Environment and Accountability of Government servants. He is associated with Jan Lokpal movement right from the very beginning.

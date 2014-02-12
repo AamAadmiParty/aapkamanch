@@ -1,1 +1,3 @@
+<div class="leader-image leader-image-container" style="background-image: url(/assets/aapkamanch/img/leaders/kumar-vishwas.jpeg)"></div>
+
 He is a well-known poet. He has recited his poetry both in India and abroad. Through his poetry he is known as one of the most popular poets of the country. Kumar Vishwas is very popular amongst the youth. He makes some bold and scathing remarks on the social issue through the medium of his poetry. He is associated with the Janlokpal movement right from the very beginning.

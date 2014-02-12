@@ -1,5 +1,5 @@
 Leaders like to divide the society on the basis of religion to play the vote bank politics. Some parties have created Hindus as their vote bank and some lure Muslims and Christians. They try to instill venom in people's minds regarding other religions and create riots. Several parties of the country are doing this kind of cheap communal politics. This has to be stopped immediately if we do not want our country to break.
 
-Aam Aadmi Party believes that this country belongs to people of all religions. Hindus, Muslims, Sikhs, Christians, Buddhists —absence of any one of these will render the country incomplete. The diversity of India is its distinct trait. The people playing politics in the name of religion would be dealt with strictly. There would be zero tolerance towards attempts to spread poison towards any religion.
+Aam Aadmi Party believes that this country belongs to people of all religions. Hindus, Muslims, Sikhs, Christians, Buddhists -absence of any one of these will render the country incomplete. The diversity of India is its distinct trait. The people playing politics in the name of religion would be dealt with strictly. There would be zero tolerance towards attempts to spread poison towards any religion.
 
 All possible efforts would be made to make people respect all religions.

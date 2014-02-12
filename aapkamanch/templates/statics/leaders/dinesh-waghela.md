@@ -1,1 +1,3 @@
+<div class="leader-image leader-image-container" style="background-image: url(/assets/aapkamanch/img/leaders/dinesh-waghela.jpeg)"></div>
+
 Active in both social and spiritual works Dinesh Waghela had participated in J.P. Narayan movement and Navnirman movement. Fighting corruption as a worker of Right to Information Act he got involved actively with the Janlokpal movement, providing meaningful support.

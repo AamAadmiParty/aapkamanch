@@ -1,1 +1,3 @@
+<div class="leader-image leader-image-container" style="background-image: url(/assets/aapkamanch/img/leaders/prem-singh-pahari.jpeg)"></div>
+
 He joined many political parties where he has had bad experiences. He realised that these parties had no agenda for welfare of the country and therefore, he distanced himself from politics. Now he is seeing sentiment of welfare with the AAM AADMI party, which is promising to change the political system of the country, he has decided to re-join politic.

@@ -1,1 +1,3 @@
-He is involved in social service work. He had started the movement for Right to Information Act and campaigned for Swaraj in Haryana.  He has been organising Blood donation camps and camps for donation of body organs.  Under the name “Jaihind” he formed an organisation of students on 15th. August 2006. Navin has been associated with Janlokpal movement right from the very beginning.
+<div class="leader-image leader-image-container" style="background-image: url(/assets/aapkamanch/img/leaders/naveen-jaihind.jpeg)"></div>
+
+He is involved in social service work. He had started the movement for Right to Information Act and campaigned for Swaraj in Haryana.  He has been organising Blood donation camps and camps for donation of body organs.  Under the name "Jaihind" he formed an organisation of students on 15th. August 2006. Navin has been associated with Janlokpal movement right from the very beginning.

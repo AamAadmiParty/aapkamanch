@@ -1,8 +1,10 @@
 # Aam Aadmi Party
 
-<p class="lead">In the past two years, millions of common Indians came out on streets to fight against the biggest evil in our country today - <strong>corruption</strong>.</p>
+<img src="/assets/aapkamanch/img/arvind-kejriwal.jpg" class="img-responsive" style="margin-bottom: 15px;">
 
-This people's anti-corruption movement has exposed the ugly and greedy face of our politicians. No political party in India today works for the common man's needs. 
+<script>$('.page-header h2').html("Join The Revolution");$("[data-html-block='sidebar']").html('');</script>
+
+The people's anti-corruption movement has exposed the ugly and greedy face of our politicians. No political party in India today works for the common man's needs. 
 
 The Janlokpal Movement was a call to all the politicians of India to listen to the common man's plea. For almost 2 years we tried every single way available to plead our cause to the government - peaceful protesting, courting arrest, indefinite fasting several rounds of negotiations with the ruling government - **we tried everything possible to convince the government to form a strong anti-corruption law.** But despite the huge wave of public support in favour of a strong anti-corruption law, all political parties cheated the people of India and deliberately sabotaged the Janlokpal Bill. 
 
