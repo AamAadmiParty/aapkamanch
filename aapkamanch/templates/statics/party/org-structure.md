@@ -222,4 +222,12 @@ For all towns and cities governed by Municipal laws, Council/Executive shall be 
 **C. Parliamentary Level**
 
 1. If there are one or more Parliamentary constituencies in any Municipality, then Parliamentary Level Council/Executive shall be formed in that Municipality. Parliamentary Level Council/Executive shall be formed in similar manner as District Council/Executive and they shall work similarly.
+1. This will apply to the National Capital territory of Delhi. State Council for Delhi shall consist of Convenors of all primary units and Assembly constituencies and Joint Convenors of all Primary Units. State Council shall have similar powers as enjoyed by the State Council mentioned at Clause E of Article IV
+1. State Council shall elect State Executive Committee, which shall be formed and shall function in similar fashion as State Executive Committee mentioned at Clause E of Article IV
+
+**D. Municipal Committee:**
+
+1. Municipal Council will be formed at the level of each municipality or Municipal Corporation. Municipal Council will consist of Convenors and Joint Convenors of all Primary units in that municipal area.
+1. Municipal Council shall form a Municipal Executive Committee, Municipal Council and Municipal Executive Committee will be formed and shall function in similar fashion as District Council and District Executive Committee at clause D of Article IV above.
+1. The provisions of this sub-clause shall not apply to NCT of Delhi
 
