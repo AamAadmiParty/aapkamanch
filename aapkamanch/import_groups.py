@@ -29,7 +29,7 @@ def import_groups():
 		return webnotes.conn.get_value("Website Sitemap", {"ref_doctype":"Website Group", 
 			"docname": group.doc.name})
 			
-	india = create_groups("India", "India", "")
+	india = create_groups("Forum", "Forum", "")
 
 	for state in data:
 		state_groups = create_groups(state, state, india)
