@@ -1,0 +1,1 @@
+As professional engineer Pankaj Gupta after having worked for twenty five years on various senior positions in software companies resigned and took up active social work. He began to teach children from economically backward section of society. Pankaj Gupta is associated with Janlokpal movement on a full time basis.

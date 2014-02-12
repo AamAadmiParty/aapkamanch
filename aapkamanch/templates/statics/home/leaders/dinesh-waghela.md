@@ -1,0 +1,1 @@
+Active in both social and spiritual works Dinesh Waghela had participated in J.P. Narayan movement and Navnirman movement. Fighting corruption as a worker of Right to Information Act he got involved actively with the Janlokpal movement, providing meaningful support.

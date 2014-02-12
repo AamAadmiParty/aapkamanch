@@ -1,0 +1,1 @@
+She is active in Karur district of Tamil Nadu where Kristina had successfully galvanised people from Tamil Nadu against the sand mafia. She also floated a women’s political party under the name “Women’s Front” (Tamil Nadu). This party fought elections for Parliament, state legislature and Panchayats. Women’s Front was quiet successful in Panchayati elections.

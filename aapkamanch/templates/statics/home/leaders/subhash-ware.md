@@ -1,0 +1,1 @@
+He was the President of “Chatrabharati”  for Maharashtra. He has headed many agitations and now decided to work towards changing the politic of the country along with “AAM AADMI” party.

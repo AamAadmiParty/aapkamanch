@@ -1,0 +1,1 @@
+He is a social worker. For the rights of the exploited Ashok Aggarwal has been filing Public Interest Litigations for issues related to public welfare. For getting free education to children of economically backward section of society and getting medical treatment in government and private hospital he has fought long battles, with success.

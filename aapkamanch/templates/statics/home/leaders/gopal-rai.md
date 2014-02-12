@@ -1,0 +1,1 @@
+Gopal Rai is associated with Student’s movement and for a long time with All India Students Association. After resigning from A.I.S.A he was associated with Indian Students Union as its President. Right from the very beginning he was working for Janlokpal movement. For this Gopal Rai sat on a fast in July 2012 for ten days.
