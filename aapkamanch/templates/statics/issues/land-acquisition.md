@@ -1,5 +1,5 @@
-## Forced Land Acquisition from Farmers
+### Forced Land Acquisition from Farmers
 
 Present economic policies victimizes farming, farmers and villages. This victimization is under several guises. Land from many villages is procured against the wishes of the owners and given to big industrialists and builders. Villagers who lose their land, become unemployed and keep lamenting to no avail. Recently several scams have come to light where nexus of leaders and industrialists bought land very cheaply from farmers in the name of development, got the land use changed and sold it for enormous profit.
 
-Aam Aadmi Party believes this practice should be stopped. No land should be acquired without the permission of the Gram Sabha of that village. Only the Gram Sabha will have the right to decide if any land can be sold and at what price and terms. The right to change the Land Use will rest only with the Gram Sabha or Mohalla Sabha. This will ensure that farmers and other poor people of the village will be able to have stake in development and progress.
+Aam Aadmi Party believes this practice should be stopped. **No land should be acquired without the permission of the Gram Sabha of that village.** Only the Gram Sabha will have the right to decide if any land can be sold and at what price and terms. The right to change the Land Use will rest only with the Gram Sabha or Mohalla Sabha. This will ensure that farmers and other poor people of the village will be able to have stake in development and progress.

@@ -1,5 +1,7 @@
 # Why Swaraj?
 
+*by Arvind Kejriwal*
+
 I was working for the income tax department earlier.  At the end of the 90's, the income tax department carried out a survey of many MNC's. During this survey, these MNC's were caught red handed evading income tax.  They  accepted their  crime and paid the  entire amount without  an appeal.  Had these companies been in other countries, their senior executives would have been jailed. During the survey one chief executive of an MNC threatened the income tax team by saying that their presence in the country boosted its economy; that they were here to help a poor country like India but if the income tax department continued to bother them they would pack up and leave. His boast did not seem an idle one when he said that he had access to the parliamentarians at the centre that he could get his bills passed and could even get personnel who bothered them transferred. The threat rang true when one of the senior officers of our team was actually transferred.
 
 At that time I did not give much importance to the talks of these foreign companies. I thought they were venting their anger, frustrated with the process of survey. But I started to see the truth behind their talks by many incidents that happened in the last few years. I started to question the truth of their claim; "Did they really have control over our parliament?"

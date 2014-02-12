@@ -1,11 +1,12 @@
-Education has been totally commercialized. Degrees are sold openly. Leaders have started large collages where you have to spend lakhs to get education. Commercialization of education has to stop immediately.
+<p class="lead">Education has been totally commercialized. Degrees are sold openly. Leaders have started large collages where you have to spend lakhs to get education.</p>
+
+**Commercialization of education has to stop immediately.**
 
 And even after obtaining a Degree after spending so much money you cannot get a job. To get a job you have to bribe again! Political leadership is holding the youth hostage in the name of Government jobs. Most of the Government jobs have fixed rates. From peon to the highest officer there is rampant corruption and nepotism.
-Aam Aadmi Party will provide jobs on impartial and transparent basis. Youth will be freed from the clutches of parties and leaders. Right now Government jobs are totally allotted under corruption, political interference and nepotism. 
 
-Aam Aadmi Party's Government will remove political interference, bring transparency to Government jobs and make them merit based.
+Aam Aadmi Party will provide jobs on impartial and transparent basis. Youth will be freed from the clutches of parties and leaders. Right now Government jobs are totally allotted under corruption, political interference and nepotism. Aam Aadmi Party's Government will remove political interference, bring transparency to Government jobs and make them merit based.
 
-> You have to bribe the banks if you want to start any business. 
+**Did you have to bribe the banks to start your business?**
 
 Hopefully, once Janlokpal Bill is passed, bribery will decrease, and youth would get some relief. It will be easy for a common man to avail bank loans to start a business.
 
