@@ -1,4 +1,4 @@
-<p class="lead">Education has been totally commercialized. Degrees are sold openly. Leaders have started large collages where you have to spend lakhs to get education.</p>
+<p class="lead">Education has been totally commercialized. Degrees are sold openly. Leaders have started large colleges where you have to spend lakhs to get education.</p>
 
 **Commercialization of education has to stop immediately.**
 
