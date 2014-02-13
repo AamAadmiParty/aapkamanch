@@ -1,0 +1,86 @@
+{% block title %}Markdown Cheatsheet{% endblock %}
+
+{% block content %}
+<h3>Headers</h3>
+
+<div><pre># Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+	
+Header 1
+======
+
+Header 2
+------
+</pre></div>
+<hr>
+<h3>Emphasis</h3>
+
+<pre>*italic* 
+_italic_
+
+**bold** 
+__bold__</pre>
+<hr>
+<h3>Lists</h3>
+<pre>1. Lorem ipsum dolor sit amet
+2. Lorem ipsum dolor sit amet
+*  Lorem ipsum dolor sit amet
+*  Lorem ipsum dolor sit amet
+-  Lorem ipsum dolor sit amet
++  Lorem ipsum dolor sit amet</pre>
+<hr>
+<h3>Links</h3>
+<pre>[Link](http://example.com)
+[Link](http://example.com "With title attribute")
+
+# Reference-style.
+# [Link][where]
+# [where]: http://example.com
+# [where]: http://example.com "With title attribute"</pre>
+<hr>
+<h3>Images</h3>
+<pre>![alt text](http://example.com/image.png)
+![alt text](http://example.com/image.png "Optional title") 
+
+# Reference-style.
+# ![alt text][where]
+# [where]: http://example.com/image.png</pre>
+<hr>
+<h3>Code and Syntax Highlighting</h3>
+<pre>Indent 4 spaces for code
+Select a block of quote and press the Tab button it will automatically prepend the 4 needed spaces before every line.
+Use the code.
+
+Use the`code`.
+Code fences
+
+```ruby 
+require 'sinatra'
+
+get '/hi' do
+"Hello World!"
+end
+```</pre>
+<hr>
+<h3>Blockquotes</h3>
+
+<pre>> Lorem ipsum dolor sit amet
+> consectetur adipiscing elit
+>
+> ## Header
+> 
+> 1. List
+> 2. List
+> 
+> > Nested blockquote.
+> 
+> # code
+> <?php phpinfo(); ?></pre>
+<hr>
+<h3>Horizontal Line</h3>
+<pre>---</pre>
+{% endblock %}
