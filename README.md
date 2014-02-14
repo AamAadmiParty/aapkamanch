@@ -13,7 +13,7 @@ Currently all information is shared via Facebook, Whatsapp, SMS, emails. There i
 
 ### Install
 
-AAP Ka Manch is built on MySQL and webnotes framework (Python). To install it locally, you will need to install
+AAP Ka Manch is built on MySQL and frappe framework (Python). To install it locally, you will need to install
 
 #### Pre-requisites
 
@@ -28,16 +28,16 @@ AAP Ka Manch is built on MySQL and webnotes framework (Python). To install it lo
 1. Setup Python Virtualenv (optional - only if you are running multiple python projects requiring different versions of libraries)
 1. Install pip: `sudo easy_install pip`
 1. Create a `bench` directory
-1. Clone `wnframework` in the `bench` as `webnotes`: `git clone https://github.com/webnotes/wnframework.git webnotes` and checkout `4.0.0-wip` branch
-1. Install python libraries `sudo pip install webnotes/requirements.txt`
+1. Clone `frappe` in the `bench` as `frappe`: `git clone https://github.com/frappe/frappe.git frappe` and checkout `4.0.0-wip` branch
+1. Install python libraries `sudo pip install frappe/requirements.txt`
 1. Clone `aapkamanch` in `bench`: `git clone https://github.com/AamAadmiParty/aapkamanch.git`
-1. Install the packages: `pip install -e webnotes/` and `pip install -e aapkamanch/`
+1. Install the packages: `pip install -e frappe/` and `pip install -e aapkamanch/`
 1. Create `sites` directory
 1. Create `apps.txt`: `echo aapkamanch >> sites/apps.txt`
 1. Change to `sites` directory
-1. Setup a site: `webnotes test.appkamanch.org --install aapkamanch`
+1. Setup a site: `frappe test.appkamanch.org --install aapkamanch`
 1. To test facebook login, add `127.0.0.1  test.aapkamanch.org` to `/etc/hosts`
-1. Start serving: `webnotes test.aapkamanch.org --serve`
+1. Start serving: `frappe test.aapkamanch.org --serve`
 1. Start a browser and go to `http://test.aapkamanch.org:8000`
 
 Putting it all together:
@@ -46,28 +46,28 @@ Putting it all together:
 sudo easy_install pip
 mkdir bench
 cd bench
-git clone https://github.com/webnotes/wnframework.git webnotes
-cd webnotes
+git clone https://github.com/frappe/frappe.git frappe
+cd frappe
 git checkout 4.0.0-wip
 cd ..
-sudo pip install webnotes/requirements.txt
+sudo pip install frappe/requirements.txt
 git clone https://github.com/AamAadmiParty/aapkamanch.git
-pip install -e webnotes/
+pip install -e frappe/
 pip install -e aapkamanch/
 mkdir sites
 echo aapkamanch >> sites/apps.txt
 cd sites
-webnotes test.appkamanch.org --install aapkamanch
-webnotes test.aapkamanch.org --serve
+frappe test.appkamanch.org --install aapkamanch
+frappe test.aapkamanch.org --serve
 ```
 
 #### Pulling Latest Updates
 
 1. Update your git repositories
 1. Go to `bench/sites` directory
-1. Run `webnotes test.aapkamanch.org --latest`
-1. Run `webnotes test.aapkamanch.org --build`
-1. Run `webnotes test.aapkamanch.org --flush`
+1. Run `frappe test.aapkamanch.org --latest`
+1. Run `frappe test.aapkamanch.org --build`
+1. Run `frappe test.aapkamanch.org --flush`
 
 #### Admin Login
 

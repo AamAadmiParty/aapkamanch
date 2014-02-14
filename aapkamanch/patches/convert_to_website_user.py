@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import webnotes
+import frappe
 
 def execute():
-	webnotes.conn.sql("""update `tabProfile` set user_type='Website User' where fb_username is not null""")
+	frappe.conn.sql("""update `tabProfile` set user_type='Website User' where fb_username is not null""")

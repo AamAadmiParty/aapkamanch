@@ -2,15 +2,15 @@
 
 from __future__ import unicode_literals
 
-import webnotes, json
+import frappe, json
 import os
 
 def get_user_image():
-	return webnotes.cache().get_value(webnotes.session.user + ":user_image", 
-		lambda: webnotes.conn.get_value("Profile", webnotes.session.user, "user_image"))
+	return frappe.cache().get_value(frappe.session.user + ":user_image", 
+		lambda: frappe.conn.get_value("Profile", frappe.session.user, "user_image"))
 
 def update_website_context(context):
 	context.update({
-		"total_users": webnotes.cache().get_value("total_users", 
-			lambda: str(webnotes.conn.sql("""select count(*) from tabProfile""")[0][0]))
+		"total_users": frappe.cache().get_value("total_users", 
+			lambda: str(frappe.conn.sql("""select count(*) from tabProfile""")[0][0]))
 	})

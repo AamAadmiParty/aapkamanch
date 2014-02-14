@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-import webnotes, json
+import frappe, json
 
 def after_install():
 	from .import_groups import import_groups

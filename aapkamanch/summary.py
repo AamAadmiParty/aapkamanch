@@ -3,11 +3,11 @@
 from __future__ import unicode_literals
 
 import os
-import webnotes
-from webnotes.utils import today, add_days, getdate, get_datetime
-from webnotes.utils.email_lib.bulk import send
-from webnotes.webutils import get_access
-from webnotes.templates.generators.website_group import get_pathname
+import frappe
+from frappe.utils import today, add_days, getdate, get_datetime
+from frappe.utils.email_lib.bulk import send
+from frappe.website.permissions import get_access
+from frappe.templates.generators.website_group import get_pathname
 
 def send_daily_summary(for_date=None, event_date=None):
 	if not for_date:
@@ -24,7 +24,7 @@ def send_daily_summary(for_date=None, event_date=None):
 		# no updates!
 		return
 		
-	for user in webnotes.conn.sql_list("""select name from `tabProfile`
+	for user in frappe.conn.sql_list("""select name from `tabProfile`
 		where user_type='Website User' and enabled=1 
 		and name not in ('Administrator', 'Guest')"""):
 		
@@ -67,7 +67,7 @@ def prepare_daily_summary(user, posts, events, render_opts=None):
 def get_posts_and_events(for_date, event_date):
 	"""get a dict of posts per group and group properties"""
 	# get public posts
-	posts = webnotes.conn.sql("""select *,
+	posts = frappe.conn.sql("""select *,
 		(select count(pc.name) from `tabPost` pc where pc.parent_post=p.name) as post_reply_count
 		from `tabPost` p
 		where date(creation)=%s and ifnull(parent_post, '')='' and
@@ -80,7 +80,7 @@ def get_posts_and_events(for_date, event_date):
 		process_posts(posts)
 	
 	# get all events, later filtered by access
-	events = webnotes.conn.sql("""select *,
+	events = frappe.conn.sql("""select *,
 		(select count(pc.name) from `tabPost` pc where pc.parent_post=p.name) as post_reply_count
 		from `tabPost` p where is_event=1 and date(event_datetime)=%s and ifnull(parent_post, '')=''
 		order by event_datetime, website_group""", (event_date,), as_dict=True)
@@ -91,33 +91,33 @@ def get_posts_and_events(for_date, event_date):
 	return posts, events
 
 def process_posts(posts, is_event=False):
-	if not hasattr(webnotes.local, "summary_commons"):
-		webnotes.local.summary_commons = webnotes._dict({
+	if not hasattr(frappe.local, "summary_commons"):
+		frappe.local.summary_commons = frappe._dict({
 			"website_group": {},
 			"profile": {}
 		})
 		
-	summary_commons = webnotes.local.summary_commons
+	summary_commons = frappe.local.summary_commons
 		
 	for post in posts:
 		# profile data
 		if not summary_commons.profile.get(post.owner):
-			summary_commons.profile[post.owner] = webnotes.conn.get_value("Profile", post.owner, 
+			summary_commons.profile[post.owner] = frappe.conn.get_value("Profile", post.owner, 
 				["first_name", "last_name", "user_image"], as_dict=True)
 				
 		post.update(summary_commons.profile.get(post.owner) or {})
 		
 		# group data
 		if not summary_commons.website_group.get(post.website_group):
-			opts = webnotes.conn.get_value("Website Group", post.website_group, ["group_title", "group_type"], 
+			opts = frappe.conn.get_value("Website Group", post.website_group, ["group_title", "group_type"], 
 				as_dict=True) or {}
-			opts.update(webnotes.conn.get_value("Website Sitemap", {"ref_doctype": "Website Group",
+			opts.update(frappe.conn.get_value("Website Sitemap", {"ref_doctype": "Website Group",
 				"docname": post.website_group}, ["name", "lft", "rgt"], as_dict=True) or {})
 
 			opts["pathname"] = opts["name"]
 			del opts["name"]
 				
-			opts["parents"] = webnotes.conn.sql("""select name, page_title as group_title from `tabWebsite Sitemap`
+			opts["parents"] = frappe.conn.sql("""select name, page_title as group_title from `tabWebsite Sitemap`
 					where lft < %s and rgt > %s order by lft asc""", (opts.lft, opts.rgt), as_dict=True)
 			summary_commons.website_group[post.website_group] = opts
 		
@@ -146,6 +146,6 @@ def get_summary_template():
 	global daily_summary_template
 	
 	if not daily_summary_template:
-		daily_summary_template = webnotes.get_template("templates/emails/daily_summary.html")
+		daily_summary_template = frappe.get_template("templates/emails/daily_summary.html")
 
 	return daily_summary_template

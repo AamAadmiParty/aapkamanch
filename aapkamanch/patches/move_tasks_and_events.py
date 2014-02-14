@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import webnotes
+import frappe
 from aapkamanch.unit import _add_unit
 from aapkamanch.helpers import clear_cache
 
@@ -10,14 +10,14 @@ def execute():
 	
 def move_tasks_and_events():
 	"""move tasks to tasks unit, events to events unit"""
-	unit_tasks = dict(webnotes.conn.sql("""select parent_unit, name from `tabUnit`
+	unit_tasks = dict(frappe.conn.sql("""select parent_unit, name from `tabUnit`
 		where unit_type='Tasks'"""))
-	unit_events = dict(webnotes.conn.sql("""select parent_unit, name from `tabUnit`
+	unit_events = dict(frappe.conn.sql("""select parent_unit, name from `tabUnit`
 		where unit_type='Events'"""))
 	
-	for post in webnotes.conn.sql_list("""select name from `tabPost` 
+	for post in frappe.conn.sql_list("""select name from `tabPost` 
 		where is_task=1 or is_event=1"""):
-		post = webnotes.bean("Post", post)
+		post = frappe.bean("Post", post)
 		if post.doc.is_task:
 			if not unit_tasks.get(post.doc.unit):
 				# create unit of type Tasks

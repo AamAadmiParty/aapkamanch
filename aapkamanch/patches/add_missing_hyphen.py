@@ -1,13 +1,13 @@
-import webnotes
+import frappe
 
 def execute():
-	webnotes.conn.sql("""update tabUnit 
+	frappe.conn.sql("""update tabUnit 
 		set name=replace(name, " ", "-"),
 		parent_unit = replace(parent_unit, " ", "-"),
 		old_parent = replace(old_parent, " ", "-")""")
 		
-	webnotes.conn.sql("""update `tabUnit Profile` 
+	frappe.conn.sql("""update `tabUnit Profile` 
 		set parent=replace(parent, " ", "-")""")
 
-	webnotes.conn.sql("""update `tabPost` 
+	frappe.conn.sql("""update `tabPost` 
 		set unit=replace(unit, " ", "-")""")
